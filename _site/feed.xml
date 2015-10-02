@@ -4,19 +4,37 @@
     <title>datajet - Personalized search and recommendation technologies</title>
     <description>TODO
 </description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 02 Oct 2015 16:19:49 +0200</pubDate>
-    <lastBuildDate>Fri, 02 Oct 2015 16:19:49 +0200</lastBuildDate>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 02 Oct 2015 17:56:54 +0200</pubDate>
+    <lastBuildDate>Fri, 02 Oct 2015 17:56:54 +0200</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
-        <title>Test post</title>
-        <description>&lt;p&gt;Blah blah blah and so on&lt;/p&gt;
+        <title>Building infrastructure for a real-time search and recommendation platform</title>
+        <description>&lt;p&gt;At datajet we are logging 182 million requests daily, stemming from interactions like product views and purchases on our customer’s sites and apps. We use these events to power algorithms that optimize the relevancy of our search results and product recommendations.&lt;/p&gt;
+
+&lt;p&gt;We built our first prototype in September 2014 consisting of a two server setup, one for data collection and crunching, and one for serving our first search service. &lt;a href=&quot;http://glinden.blogspot.de/2006/11/marissa-mayer-at-web-20.html&quot;&gt;Speed is paramount for eCommerce&lt;/a&gt; and search in particular, so we deployed our services on metal in our customer’s data centers to minimize network delays. The latter can be huge (~300-600ms) if you have a globally distributed customer base like us. However, deploying our apps “locally” increased deployment complexity considerably. Our customer base grew and so did the diversity of server operating systems we needed to support in testing and deployment. &lt;/p&gt;
+
+&lt;h2 id=&quot;containerize-and-awsize-all-the-things&quot;&gt;Containerize and AWSize all the things&lt;/h2&gt;
+
+&lt;p&gt;The first step to minimize this complexity was using Docker containers for deployments to abstract away the differences of the underlying server operating systems. This made our life easier but not simple. Frequently our services would be affected by maintenance on our customer’s hardware. Also some customers were using older CentOS distributions that needed special attention to get Docker up and running.&lt;/p&gt;
+
+&lt;p&gt;Finally we decided to move to the Amazon’s AWS platform to a have homogenous platform for our services. We chose AWS over Google mainly for the clearer documentation on data center location. This allowed us to pick a location that would be close to our customer’s data center to minimize network delays and respect data privacy requirements which highly depended on the legal framework our customers operated in.&lt;/p&gt;
+
+&lt;h2 id=&quot;containerized-complexity&quot;&gt;Containerized complexity&lt;/h2&gt;
+
+&lt;p&gt;While Docker improved our deployment process considerably, orchestrating even just a small number of containers comes &lt;a href=&quot;https://valdhaus.co/writings/docker-misconceptions/&quot;&gt;with it’s own challenges&lt;/a&gt;. Just a year ago the number of Docker orchestration options were scarce. &lt;a href=&quot;http://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html&quot;&gt;EC2 container service&lt;/a&gt; was in private beta, &lt;a href=&quot;http://kubernetes.io/&quot;&gt;Google’s Kubernetes&lt;/a&gt; was still in stealth mode and others like &lt;a href=&quot;https://coreos.com/using-coreos/containers/&quot;&gt;CoreOS Quay&lt;/a&gt;, or &lt;a href=&quot;https://docs.docker.com/compose/&quot;&gt;Docker’s own solution&lt;/a&gt; were not available yet. Over the course of 2015 the number of options increased steadily and there does not seem to be a company that is &lt;a href=&quot;https://www.quora.com/What-is-the-best-Docker-Linux-Container-orchestration-tool&quot;&gt;either offering an orchestration solution as service or open-sourcing its inhouse tech&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;apache-mesos-to-the-rescue&quot;&gt;Apache Mesos to the rescue&lt;/h2&gt;
+
+&lt;p&gt;Still, in November 2014 we were left with the option of hand-wiring our own solution or using something like &lt;a href=&quot;http://mesos.apache.org/&quot;&gt;Apache Mesos&lt;/a&gt; that was already being put through it’s paces at Twitter or Airbnb. However, we had some concerns of over-engineering since our number of servers was far from being in the hundreds. Also vanilla Mesos required hand-wiring a lot of custom parts to handle actual deployment. Luckily we came across &lt;a href=&quot;https://github.com/mesosphere/marathon&quot;&gt;Mesosphere’s Marathon&lt;/a&gt; and have been running it along with Mesos for almost a year now successfully in production. We will share our learnings from using them in our next blog post.&lt;/p&gt;
+
+&lt;p&gt;We’re hiring! Help us to build infrastructure and crunch data at scale.&lt;/p&gt;
 </description>
         <pubDate>Fri, 02 Oct 2015 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/test-post.html</link>
-        <guid isPermaLink="true">http://localhost:4000/test-post.html</guid>
+        <link>/Building-infrastructure-for-a-real-time-search-and-recommendation-platform-post.html</link>
+        <guid isPermaLink="true">/Building-infrastructure-for-a-real-time-search-and-recommendation-platform-post.html</guid>
         
         
       </item>

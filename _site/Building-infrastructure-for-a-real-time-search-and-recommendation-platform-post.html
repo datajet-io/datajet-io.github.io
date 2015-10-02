@@ -6,12 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>About</title>
-  <meta name="description" content="TODO
-">
+  <title>Building infrastructure for a real-time search and recommendation platform</title>
+  <meta name="description" content="At datajet we are logging 182 million requests daily, stemming from interactions like product views and purchases on our customer’s sites and apps. We use th...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="/about/">
+  <link rel="canonical" href="/Building-infrastructure-for-a-real-time-search-and-recommendation-platform-post.html">
   <link rel="alternate" type="application/rss+xml" title="datajet - Personalized search and recommendation technologies" href="/feed.xml" />
   <link href="/css/all.min.css" rel="stylesheet">
 </head>
@@ -52,15 +51,30 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">About</h1>
+    <h1 class="post-title">Building infrastructure for a real-time search and recommendation platform</h1>
+    <p class="post-meta">Oct 2, 2015</p>
   </header>
 
   <article class="post-content">
-    <p>This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at <a href="http://jekyllrb.com/">jekyllrb.com</a></p>
+    <p>At datajet we are logging 182 million requests daily, stemming from interactions like product views and purchases on our customer’s sites and apps. We use these events to power algorithms that optimize the relevancy of our search results and product recommendations.</p>
 
-<p>You can find the source code for the Jekyll new theme at: <a href="https://github.com/jglovier/jekyll-new">github.com/jglovier/jekyll-new</a></p>
+<p>We built our first prototype in September 2014 consisting of a two server setup, one for data collection and crunching, and one for serving our first search service. <a href="http://glinden.blogspot.de/2006/11/marissa-mayer-at-web-20.html">Speed is paramount for eCommerce</a> and search in particular, so we deployed our services on metal in our customer’s data centers to minimize network delays. The latter can be huge (~300-600ms) if you have a globally distributed customer base like us. However, deploying our apps “locally” increased deployment complexity considerably. Our customer base grew and so did the diversity of server operating systems we needed to support in testing and deployment. </p>
 
-<p>You can find the source code for Jekyll at <a href="https://github.com/jekyll/jekyll">github.com/jekyll/jekyll</a></p>
+<h2 id="containerize-and-awsize-all-the-things">Containerize and AWSize all the things</h2>
+
+<p>The first step to minimize this complexity was using Docker containers for deployments to abstract away the differences of the underlying server operating systems. This made our life easier but not simple. Frequently our services would be affected by maintenance on our customer’s hardware. Also some customers were using older CentOS distributions that needed special attention to get Docker up and running.</p>
+
+<p>Finally we decided to move to the Amazon’s AWS platform to a have homogenous platform for our services. We chose AWS over Google mainly for the clearer documentation on data center location. This allowed us to pick a location that would be close to our customer’s data center to minimize network delays and respect data privacy requirements which highly depended on the legal framework our customers operated in.</p>
+
+<h2 id="containerized-complexity">Containerized complexity</h2>
+
+<p>While Docker improved our deployment process considerably, orchestrating even just a small number of containers comes <a href="https://valdhaus.co/writings/docker-misconceptions/">with it’s own challenges</a>. Just a year ago the number of Docker orchestration options were scarce. <a href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html">EC2 container service</a> was in private beta, <a href="http://kubernetes.io/">Google’s Kubernetes</a> was still in stealth mode and others like <a href="https://coreos.com/using-coreos/containers/">CoreOS Quay</a>, or <a href="https://docs.docker.com/compose/">Docker’s own solution</a> were not available yet. Over the course of 2015 the number of options increased steadily and there does not seem to be a company that is <a href="https://www.quora.com/What-is-the-best-Docker-Linux-Container-orchestration-tool">either offering an orchestration solution as service or open-sourcing its inhouse tech</a>.</p>
+
+<h2 id="apache-mesos-to-the-rescue">Apache Mesos to the rescue</h2>
+
+<p>Still, in November 2014 we were left with the option of hand-wiring our own solution or using something like <a href="http://mesos.apache.org/">Apache Mesos</a> that was already being put through it’s paces at Twitter or Airbnb. However, we had some concerns of over-engineering since our number of servers was far from being in the hundreds. Also vanilla Mesos required hand-wiring a lot of custom parts to handle actual deployment. Luckily we came across <a href="https://github.com/mesosphere/marathon">Mesosphere’s Marathon</a> and have been running it along with Mesos for almost a year now successfully in production. We will share our learnings from using them in our next blog post.</p>
+
+<p>We’re hiring! Help us to build infrastructure and crunch data at scale.</p>
 
   </article>
 
