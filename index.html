@@ -1,3 +1,7 @@
+---
+layout: nil
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Add Your favicon here -->
-    <link rel="icon" href="src/img/favicon.ico">
+    <link rel="icon" href="{{ "/img/favicon.ico" | prepend: site.baseurl | prepend: site.url }}">
 
     <title>datajet - Personalized search and recommendation technologies</title>
 
@@ -18,7 +22,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link href="dist/css//min/all.min.css" rel="stylesheet">
+    <link href="{{ "/css/all.min.css" | prepend: site.baseurl | prepend: site.url }}" rel="stylesheet">
 
 </head>
 <body id="page-top">
@@ -33,7 +37,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#" style="background-color:transparent; margin-top:6px; padding-left: 0;">
-                <img src="src/img/logo-datajet.png" alt="logo" style="height:40px;"/>
+                <img src="{{ "/img/logo-datajet.png" | prepend: site.baseurl | prepend: site.url }}" alt="logo" style="height:40px;"/>
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -115,6 +119,6 @@
     </div>
 </section>
 
-<script src="dist/js/min/all.min.js"></script>
+<script src="{{ "/js/all.min.js" | prepend: site.baseurl | prepend: site.url }}"></script>
 </body>
 </html>
