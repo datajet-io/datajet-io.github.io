@@ -4,10 +4,10 @@
     <title>datajet - Personalized search and recommendation technologies</title>
     <description>TODO
 </description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 02 Oct 2015 14:10:00 +0200</pubDate>
-    <lastBuildDate>Fri, 02 Oct 2015 14:10:00 +0200</lastBuildDate>
+    <link>http://datajet.io/</link>
+    <atom:link href="http://datajet.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 02 Oct 2015 15:04:18 +0200</pubDate>
+    <lastBuildDate>Fri, 02 Oct 2015 15:04:18 +0200</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -15,8 +15,8 @@
         <description>&lt;p&gt;Blah blah blah and so on&lt;/p&gt;
 </description>
         <pubDate>Fri, 02 Oct 2015 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/blog/2015/10/02/test-post.html</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2015/10/02/test-post.html</guid>
+        <link>http://datajet.io/test-post.html</link>
+        <guid isPermaLink="true">http://datajet.io/test-post.html</guid>
         
         
       </item>
