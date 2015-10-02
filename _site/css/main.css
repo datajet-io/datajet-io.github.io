@@ -313,8 +313,7 @@ pre {
   color: #333;
   font-size: 16px;
   line-height: 2;
-  margin-bottom: 30px;
-  font-family: MerriweatherLight; }
+  margin-bottom: 30px; }
   .post-content h2 {
     font-size: 32px; }
     @media screen and (max-width: 800px) {
