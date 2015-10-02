@@ -1,0 +1,13 @@
+# Site settings
+permalink: /blog/:categories/:year/:month/:day/:title.html
+title: datajet - Personalized search and recommendation technologies
+email: discovery@rocket-internet.de
+description: > # this means to ignore newlines until "baseurl:"
+  TODO
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://datajet.io" # the base hostname & protocol for your site
+twitter_username: datajet_io
+github_username:  datajet-io
+
+# Build settings
+markdown: kramdown
