@@ -316,9 +316,9 @@ pre {
   line-height: 2;
   margin-bottom: 30px; }
   .post-content h2 {
+    font-size: 32px;
     margin-top: 40px;
-    margin-bottom: 40px;
-    font-size: 32px; }
+    margin-bottom: 40px; }
     @media screen and (max-width: 800px) {
       .post-content h2 {
         font-size: 28px; } }
