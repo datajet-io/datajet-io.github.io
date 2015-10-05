@@ -15,6 +15,7 @@ Checkout these packages for atom, they might help: [markdown-preview-plus](https
     ---
     layout: post
     title: Blogging Like a Hacker
+    author: John Doe
     ---
 
 **2. Save your post under _ _posts_**
