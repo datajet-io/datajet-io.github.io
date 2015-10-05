@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Building infrastructure for a real-time search and recommendation platform
+author: Petar Djekic
 ---
 
 At datajet we are logging 182 million requests daily, stemming from interactions like product views and purchases on our customer’s sites and apps. We use these events to power algorithms that optimize the relevancy of our search results and product recommendations.
