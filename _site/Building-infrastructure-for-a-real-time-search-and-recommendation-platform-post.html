@@ -9,13 +9,13 @@
   <title>Building infrastructure for a real-time search and recommendation platform</title>
   <meta name="description" content="At datajet we are logging 182 million requests daily, stemming from interactions like product views and purchases on our customer’s sites and apps. We use th...">
 
-  <link rel="canonical" href="http://localhost:4000/Building-infrastructure-for-a-real-time-search-and-recommendation-platform-post.html">
-  <link rel="alternate" type="application/rss+xml" title="datajet - Personalized search and recommendation technologies" href="http://localhost:4000/feed.xml" />
+  <link rel="canonical" href="http://datajet.io/Building-infrastructure-for-a-real-time-search-and-recommendation-platform-post.html">
+  <link rel="alternate" type="application/rss+xml" title="datajet - Personalized search and recommendation technologies" href="http://datajet.io/feed.xml" />
 
-  <link href="http://localhost:4000/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://datajet.io/css/bootstrap.min.css" rel="stylesheet">
 
-  <link href="http://localhost:4000/css/style.min.css" rel="stylesheet">
-  <link href="http://localhost:4000/css/main.css" rel="stylesheet">
+  <link href="http://datajet.io/css/style.min.css" rel="stylesheet">
+  <link href="http://datajet.io/css/main.css" rel="stylesheet">
 
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -45,8 +45,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://localhost:4000" style="background-color:transparent; margin-top:6px; padding-left: 0;">
-                <img src="http://localhost:4000/img/logo-datajet-small.png" alt="logo" style="width:140px;height:40px;" />
+            <a class="navbar-brand" href="http://datajet.io" style="background-color:transparent; margin-top:6px; padding-left: 0;">
+                <img src="http://datajet.io/img/logo-datajet-small.png" alt="logo" style="width:140px;height:40px;" />
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -83,7 +83,7 @@
 
 <h2 id="containerized-complexity">Containerized complexity</h2>
 
-<p>While Docker improved our deployment process considerably, orchestrating even just a small number of containers comes <a href="https://valdhaus.co/writings/docker-misconceptions/">with it’s own challenges</a>. Just a year ago the number of Docker orchestration options were scarce. <a href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html">EC2 container service</a> was in private beta, <a href="http://kubernetes.io/">Google’s Kubernetes</a> was still in stealth mode and others like <a href="https://coreos.com/using-coreos/containers/">CoreOS Quay</a>, or <a href="https://docs.docker.com/compose/">Docker’s own solution</a> were not available yet. Over the course of 2015 the number of options increased steadily and there does not seem to be a company that is <a href="https://www.quora.com/What-is-the-best-Docker-Linux-Container-orchestration-tool">either offering an orchestration solution as service or open-sourcing its inhouse tech</a>.</p>
+<p>While Docker improved our deployment process considerably, orchestrating even just a small number of containers comes <a href="https://valdhaus.co/writings/docker-misconceptions/">with its own challenges</a>. Just a year ago the number of Docker orchestration options were scarce. <a href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html">EC2 container service</a> was in private beta, <a href="http://kubernetes.io/">Google’s Kubernetes</a> was still in stealth mode and others like <a href="https://coreos.com/using-coreos/containers/">CoreOS Quay</a>, or <a href="https://docs.docker.com/compose/">Docker’s own solution</a> were not available yet. Over the course of 2015 the number of options increased steadily and there does not seem to be a company that is <a href="https://www.quora.com/What-is-the-best-Docker-Linux-Container-orchestration-tool">either offering an orchestration solution as service or open-sourcing its inhouse tech</a>.</p>
 
 <h2 id="apache-mesos-to-the-rescue">Apache Mesos to the rescue</h2>
 
