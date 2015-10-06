@@ -4,12 +4,16 @@ layout: default
 <style>
 /** Social Button CSS **/
 
+.social-sharing {
+  margin-top: 50px;
+}
+
 .share-btn {
   display: inline-block;
   color: #ffffff;
   border: none;
-  padding: 0.5em;
-  width: 4em;
+  padding: 0.2em;
+  width: 3em;
   box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
   outline: none;
   text-align: center;
@@ -57,7 +61,7 @@ layout: default
     {{ content }}
   </article>
 
-  <div>
+  <div class="social-sharing">
     <!-- Twitter -->
     <a href="http://twitter.com/share?url={{ site.url }}{{ page.url }}&amp;text={{ page.title }}" target="_blank" class="share-btn twitter">
       <i class="fa fa-twitter"></i>
