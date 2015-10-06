@@ -11,3 +11,5 @@ github_username:  datajet-io
 
 # Build settings
 markdown: kramdown
+
+exclude: ["README.md"]
