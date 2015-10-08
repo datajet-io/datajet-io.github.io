@@ -29,4 +29,6 @@ On several occasions healthy ElasticSearch nodes were restarted by Marathon whic
 
 Despite the hurdles we experienced, we never regretted the decision of choosing Mesos. It allows us to easily prototype and iterate on our search and recommendation services since the cost of releasing new services is negligible. We’re also looking forward to reaping the benefits of better resource utilization as we grow. Mesos’ eco-system has a vibrant community with rapid release cycles, and major challenges like running stateful services are being actively addressed with dynamic reservation and persistent volumes.
 
-_We’re hiring! [Help us to build infrastructure and crunch data at scale](mailto:team@datajet.io)._
+**We’re hiring!**
+
+Build infrastructure that handles billions of API calls or crunch terabytes of data to help people discover products they love. Drop us a line at [team@datajet.io](mailto:team@datajet.io) if you like to join the fun.
