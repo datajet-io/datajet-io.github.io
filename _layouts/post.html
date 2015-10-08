@@ -40,16 +40,67 @@ layout: default
 .share-btn.facebook    { background: #3B5998; }
 .share-btn.linkedin    { background: #4875B4; }
 .share-btn.email       { background: #444444; }
+.share-btn.hacker-news       { background: #F15000; }
 
 </style>
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
+<script src="{{ "/js/jquery-2.1.1.js" | prepend: site.baseurl | prepend: site.url }}"></script>
+<script>
+$(document).ready(function(){
+    $('.hn-linkbutton').hnButton();
+});
+(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=143990792601851";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+}(document, 'script', 'facebook-jssdk'));
+$.fn.hnButton = function() {
+  // this is the button to be upgraded
+  var linkbutton = this;
+  var title = document.title;
+  var thisUrl = window.location.href;
+  if (linkbutton.data('url')) {
+    thisUrl = linkbutton.data('url');
+  }
+  if (linkbutton.data('title')) {
+    title = linkbutton.data('title');
+  }
+  var hnUrlPrefix = "https://news.ycombinator.com/item?id=";
+
+  // default button action
+  linkbutton.click(function(evt){
+    evt.preventDefault();
+    window.open('http://news.ycombinator.com/submitlink?u='+encodeURIComponent(thisUrl)+'&t='+encodeURIComponent(title));
+  });
+
+  if (linkbutton.length) {
+    var api = 'https://hn.algolia.com/api/v1/search';
+    var params = {
+      tags: 'story',
+      query: thisUrl,
+      restrictSearchableAttributes: 'url',
+      advancedSyntax: true
+    };
+    $.getJSON(api, params, function(data){
+      if (data.nbHits > 0) {
+        $.each(data.hits, function(index, item){
+          if (item.url === thisUrl) {
+            // this is our item!
+            var hnPostLink = hnUrlPrefix + item.objectID;
+            linkbutton.unbind('click');
+            linkbutton.attr('href', hnPostLink);
+            linkbutton.text('Discuss/vote on Hacker News (' + item.points + ')');
+            return;
+          }
+        });
+      }
+    });
+  }
+  return linkbutton;
+};
+</script>
 <div class="post">
 
   <header class="post-header">
@@ -62,6 +113,11 @@ layout: default
   </article>
 
   <div class="social-sharing">
+    <!-- Hacker News -->
+    <a href="#" target="blank" class="share-btn hacker-news hn-linkbutton" data-url="{{ page.url }}" data-title="{{ page.title }}">
+      <i class="fa fa-hacker-news"></i>
+    </a>
+
     <!-- Twitter -->
     <a href="http://twitter.com/share?url={{ site.url }}{{ page.url }}&amp;text={{ page.title }}" target="_blank" class="share-btn twitter">
       <i class="fa fa-twitter"></i>

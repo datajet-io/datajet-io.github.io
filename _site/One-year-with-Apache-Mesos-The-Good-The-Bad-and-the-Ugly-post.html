@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>One year with Apache Mesos - The Good, The Bad, and the Ugly</title>
+  <meta name="description" content="We chose Apache Mesos as the backbone of our infrastructure, to serve a global customer base and solve some of the technical challenges we faced from our mic...">
+
+  <link rel="canonical" href="http://datajet.io/One-year-with-Apache-Mesos-The-Good-The-Bad-and-the-Ugly-post.html">
+  <link rel="alternate" type="application/rss+xml" title="datajet - Personalized search and recommendation technologies" href="http://datajet.io/feed.xml" />
+
+  <link href="http://datajet.io/css/bootstrap.min.css" rel="stylesheet">
+
+  <link href="http://datajet.io/css/style.min.css" rel="stylesheet">
+  <link href="http://datajet.io/css/main.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68424990-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</head>
+
+
+  <body>
+
+    <header>
+
+<nav class="navbar navbar-default" role="navigation" style="margin:0;">
+    <div class="container">
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://datajet.io" style="background-color:transparent; margin-top:6px; padding-left: 0;">
+                <img src="http://datajet.io/img/logo-datajet-small.png" alt="logo" style="width:140px;height:40px;" />
+            </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="page-scroll" href="https://github.com/datajet-io">Github</a></li>
+                <li><a class="page-scroll" href="/blog">Blog</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <style>
+/** Social Button CSS **/
+
+.social-sharing {
+  margin-top: 50px;
+}
+
+.share-btn {
+  display: inline-block;
+  color: #ffffff;
+  border: none;
+  padding: 0.2em;
+  width: 3em;
+  box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
+  outline: none;
+  text-align: center;
+}
+
+.share-btn:visited {
+  color: #fff;
+}
+
+.share-btn:hover {
+  color: #eeeeee;
+}
+
+.share-btn:active {
+  position: relative;
+  top: 2px;
+  box-shadow: none;
+  color: #e2e2e2;
+  outline: none;
+}
+
+.share-btn.twitter     { background: #55acee; }
+.share-btn.google-plus { background: #dd4b39; }
+.share-btn.facebook    { background: #3B5998; }
+.share-btn.linkedin    { background: #4875B4; }
+.share-btn.email       { background: #444444; }
+.share-btn.hacker-news       { background: #F15000; }
+
+</style>
+<div id="fb-root"></div>
+<script src="http://datajet.io/js/jquery-2.1.1.js"></script>
+<script>
+$(document).ready(function(){
+    $('.hn-linkbutton').hnButton();
+});
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=143990792601851";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+$.fn.hnButton = function() {
+  // this is the button to be upgraded
+  var linkbutton = this;
+  var title = document.title;
+  var thisUrl = window.location.href;
+  if (linkbutton.data('url')) {
+    thisUrl = linkbutton.data('url');
+  }
+  if (linkbutton.data('title')) {
+    title = linkbutton.data('title');
+  }
+  var hnUrlPrefix = "https://news.ycombinator.com/item?id=";
+
+  // default button action
+  linkbutton.click(function(evt){
+    evt.preventDefault();
+    window.open('http://news.ycombinator.com/submitlink?u='+encodeURIComponent(thisUrl)+'&t='+encodeURIComponent(title));
+  });
+
+  if (linkbutton.length) {
+    var api = 'https://hn.algolia.com/api/v1/search';
+    var params = {
+      tags: 'story',
+      query: thisUrl,
+      restrictSearchableAttributes: 'url',
+      advancedSyntax: true
+    };
+    $.getJSON(api, params, function(data){
+      if (data.nbHits > 0) {
+        $.each(data.hits, function(index, item){
+          if (item.url === thisUrl) {
+            // this is our item!
+            var hnPostLink = hnUrlPrefix + item.objectID;
+            linkbutton.unbind('click');
+            linkbutton.attr('href', hnPostLink);
+            linkbutton.text('Discuss/vote on Hacker News (' + item.points + ')');
+            return;
+          }
+        });
+      }
+    });
+  }
+  return linkbutton;
+};
+</script>
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">One year with Apache Mesos - The Good, The Bad, and the Ugly</h1>
+    <p class="post-meta">Domen Pogacnik | October 8, 2015</p>
+  </header>
+
+  <article class="post-content">
+    <p>We chose <a href="http://mesos.apache.org">Apache Mesos</a> as the backbone of our infrastructure, <a href="http://datajet.io/Building-infrastructure-for-a-real-time-search-and-recommendation-platform-post.html">to serve a global customer base</a> and solve some of the technical challenges we faced from our microservice-oriented architecture. These challenges were instrumenting diverse execution environment as well as, service discovery and deployment. Getting hardware provisioned and setting up a deployment process was always a necessary evil to get our stuff out the door and Mesos promised us to solve these issues.</p>
+
+<p>We use our infrastructure to log millions of events like product views and purchases daily and serve search and recommendation results from our APIs. After running Mesos in production for about a year we thought it would be a good time to reflect on the things we learned so far.</p>
+
+<h2 id="the-good---releasing-a-new-service">The Good - Releasing a (new) service</h2>
+<p>Pre-Mesos we had to prepare the necessary execution environments from testing to production and everything in between. Using Docker alongside Mesos allows us to encapsulate execution environments inside the container. That frees us from the effort of provisioning the infrastructure of every new microservice we want to release.</p>
+
+<p>Our release process initially consisted of pushing to a service’s git release branch, which automatically triggered the continuous integration process. <a href="https://mesosphere.github.io/marathon">Marathon</a> serves as deployment manager. In coordination with Mesos it allocates a suitable machine for the service, and deploys it by pulling it from our private Docker hub onto the allocated machine.</p>
+
+<p>However, for external software like ElasticSearch we have no need for continuous integration and we release them directly from our local dev environment. To handle this use case we developed Shovel, which we plan to open-source shortly. It automates the process from building the Docker image containing the microservice to finally releasing them to the public. To release a microservice today we only have to prepare a Dockerfile and provide basic configuration. The basic configuration includes settings like public URL endpoint or amount of required CPU and memory resources. The rest of the release process is then completely handled by Shovel. To further simplify bootstrapping, we have a service template that contains commonly used components and allows us release a new microservice in minutes.</p>
+
+<h2 id="the-bad---version-dependencies">The Bad - Version dependencies</h2>
+<p>Mesos is still in its early days, probably best exemplified by the very sub-1.0 version numbers. New Mesos releases often include important bug fixes but upgrading has been a pain point for us due to the number of moving parts that led to catch-22 situations.</p>
+
+<p>As an example, we experienced <a href="https://github.com/docker/docker/issues/9139">memory leaks with Docker 1.6</a> but were <a href="https://issues.apache.org/jira/browse/MESOS-2986">not able to upgrade</a> for some time even though the bug got fixed in Docker 1.8. Upgrading Docker would have required upgrading to a Mesos version (0.23) that was <a href="https://github.com/mesosphere/marathon/releases/tag/v0.10.0">untested with Marathon version 0.10</a>.</p>
+
+<h2 id="the-ugly---stateful-services">The Ugly - Stateful Services</h2>
+<p>Our search and recommendation services rely extensively on ElasticSearch. Therefore we deployed Elasticsearch running on Marathon as we do with our microservices. The promise of upgrading by just deploying a new Docker image and scaling-up by increasing the instance count in Marathon sounded very enticing. However, we later regretted making this decision and deployed subsequent stateful software like Apache Kafka not on Mesos.</p>
+
+<p>On several occasions healthy ElasticSearch nodes were restarted by Marathon which often resulted in partial downtime of our service. After some investigation we found out that the issue occurs due to <a href="https://github.com/mesosphere/marathon/issues/1553">a failure to reconcile the running application state on Marathon master failover</a>. The issue was solved in the latest stable release but gracefully shutting down (stateful) services remains <a href="https://github.com/mesosphere/marathon/issues/712">a pain point of Marathon</a> that has not been solved yet.</p>
+
+<h2 id="whats-next">What’s next?</h2>
+
+<p>Despite the hurdles we experienced, we never regretted the decision of choosing Mesos. It allows us to easily prototype and iterate on our search and recommendation services since the cost of releasing new services is negligible. We’re also looking forward to reaping the benefits of better resource utilization as we grow. Mesos’ eco-system has a vibrant community with rapid release cycles, and major challenges like running stateful services are being actively addressed with dynamic reservation and persistent volumes.</p>
+
+<p><strong>We’re hiring!</strong></p>
+
+<p>Build infrastructure that handles billions of API calls or crunch terabytes of data to help people discover products they love. Drop us a line at <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#116;&#101;&#097;&#109;&#064;&#100;&#097;&#116;&#097;&#106;&#101;&#116;&#046;&#105;&#111;">&#116;&#101;&#097;&#109;&#064;&#100;&#097;&#116;&#097;&#106;&#101;&#116;&#046;&#105;&#111;</a> if you like to join the fun.</p>
+
+  </article>
+
+  <div class="social-sharing">
+    <!-- Hacker News -->
+    <a href="#" target="blank" class="share-btn hacker-news hn-linkbutton" data-url="/One-year-with-Apache-Mesos-The-Good-The-Bad-and-the-Ugly-post.html" data-title="One year with Apache Mesos - The Good, The Bad, and the Ugly">
+      <i class="fa fa-hacker-news"></i>
+    </a>
+
+    <!-- Twitter -->
+    <a href="http://twitter.com/share?url=http://datajet.io/One-year-with-Apache-Mesos-The-Good-The-Bad-and-the-Ugly-post.html&amp;text=One year with Apache Mesos - The Good, The Bad, and the Ugly" target="_blank" class="share-btn twitter">
+      <i class="fa fa-twitter"></i>
+    </a>
+
+    <!-- Facebook -->
+    <a href="http://www.facebook.com/sharer/sharer.php?u=http://datajet.io/One-year-with-Apache-Mesos-The-Good-The-Bad-and-the-Ugly-post.html" target="_blank" class="share-btn facebook">
+      <i class="fa fa-facebook"></i>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="http://www.linkedin.com/shareArticle?url=http://datajet.io/One-year-with-Apache-Mesos-The-Good-The-Bad-and-the-Ugly-post.html&amp;title=One year with Apache Mesos - The Good, The Bad, and the Ugly&amp;source=datajet.io" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:?subject=One year with Apache Mesos - The Good, The Bad, and the Ugly&amp;body=Check this out: http://datajet.io/One-year-with-Apache-Mesos-The-Good-The-Bad-and-the-Ugly-post.html." target="_blank" class="share-btn email">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </div>
+
+</div>
+
+      </div>
+    </div>
+
+    
+  <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
+          <p><strong>&copy; datajet</strong></p>
+      </div>
+  </div>
+
+
+  </body>
+
+</html>
