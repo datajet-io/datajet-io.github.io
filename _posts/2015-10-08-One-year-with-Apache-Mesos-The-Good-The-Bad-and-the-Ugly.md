@@ -4,7 +4,7 @@ title: One year with Apache Mesos - The Good, The Bad, and the Ugly
 author: Domen Pogacnik
 ---
 
-We chose [Apache Mesos](http://mesos.apache.org) as the backbone of our infrastructure, [to serve a global customer base](http://datajet.io/Building-infrastructure-for-a-real-time-search-and-recommendation-platform-post.html) and solve some of the technical challenges we faced from our microservice-oriented architecture. These challenges were instrumenting diverse execution environment as well as, service discovery and deployment. Getting hardware provisioned and setting up a deployment process was always a necessary evil to get our stuff out the door and Mesos promised us to solve these issues.
+We chose [Apache Mesos](http://mesos.apache.org) as the backbone of our infrastructure, [to serve a global customer base](http://datajet.io/Building-infrastructure-for-a-real-time-search-and-recommendation-platform.html) and solve some of the technical challenges we faced from our microservice-oriented architecture. These challenges were instrumenting diverse execution environment as well as, service discovery and deployment. Getting hardware provisioned and setting up a deployment process was always a necessary evil to get our stuff out the door and Mesos promised us to solve these issues.
 
 We use our infrastructure to log millions of events like product views and purchases daily and serve search and recommendation results from our APIs. After running Mesos in production for about a year we thought it would be a good time to reflect on the things we learned so far.
 
