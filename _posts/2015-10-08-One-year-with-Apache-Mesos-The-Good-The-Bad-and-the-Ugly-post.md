@@ -1,7 +1,7 @@
 ---
 layout: post
 title: One year with Apache Mesos - The Good, The Bad, and the Ugly
-author: Petar Djekic, Domen Pogacnik
+author: Domen Pogacnik
 ---
 
 We chose [Apache Mesos](http://mesos.apache.org) as the backbone of our infrastructure, [to serve a global customer base](http://datajet.io/Building-infrastructure-for-a-real-time-search-and-recommendation-platform-post.html) and solve some of the technical challenges we faced from our microservice-oriented architecture. These challenges were instrumenting diverse execution environment as well as, service discovery and deployment. Getting hardware provisioned and setting up a deployment process was always a necessary evil to get our stuff out the door and Mesos promised us to solve these issues.
