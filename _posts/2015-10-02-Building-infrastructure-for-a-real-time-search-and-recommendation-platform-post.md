@@ -24,4 +24,4 @@ Still, in November 2014 we were left with the option of hand-wiring our own solu
 
 **We’re hiring!**
 
-Build infrastructure that handles billions of API calls or crunch terabytes of data to help people discover products they love. Drop us a line at [team@datajet.io](mailto:team@datajet.io).
+Build infrastructure that handles billions of API calls or crunch terabytes of data to help people discover products they love. Drop us a line at [team@datajet.io](mailto:team@datajet.io) if you would like to join the fun.
