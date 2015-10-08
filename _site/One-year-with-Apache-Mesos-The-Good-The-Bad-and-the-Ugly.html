@@ -155,7 +155,6 @@ $.fn.hnButton = function() {
             var hnPostLink = hnUrlPrefix + item.objectID;
             linkbutton.unbind('click');
             linkbutton.attr('href', hnPostLink);
-            linkbutton.text('Discuss/vote on Hacker News (' + item.points + ')');
             return;
           }
         });
