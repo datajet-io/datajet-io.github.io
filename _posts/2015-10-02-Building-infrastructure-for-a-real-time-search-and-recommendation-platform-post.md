@@ -22,4 +22,6 @@ While Docker improved our deployment process considerably, orchestrating even ju
 
 Still, in November 2014 we were left with the option of hand-wiring our own solution or using something like [Apache Mesos](http://mesos.apache.org/) that was already being put through its paces at Twitter or Airbnb. However, we had some concerns of over-engineering since our number of servers was far from being in the hundreds. Also vanilla Mesos required hand-wiring a lot of custom parts to handle actual deployment. Luckily we came across [Mesosphere's Marathon](https://github.com/mesosphere/marathon) and have been running it along with Mesos for almost a year now successfully in production. We will share our learnings from using them in our next blog post.
 
-We’re hiring! Help us to build infrastructure and crunch data at scale.
+**We’re hiring!**
+
+Help us to build infrastructure that handles billions of API calls and crunch terabytes of data to help people discover products they love. Drop us a line at [team@datajet.io](<a href="mailto:team@datajet.io?subject=Joining datajet”></a>).
