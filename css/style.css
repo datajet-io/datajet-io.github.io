@@ -315,6 +315,23 @@ h1 {
   font-weight: 500;
 }
 
+.icons {
+  padding: 15px;
+  border-radius: 45px;
+  background-color: #f2f2f2;
+  text-align: center;
+  width: 82px;
+  margin-top: 15px;
+}
+
+.icons img {
+  width: 50px;
+}
+
+.icons-section {
+  margin-top: 20px;
+}
+
 /* Sections
 ------------------------- */
 
