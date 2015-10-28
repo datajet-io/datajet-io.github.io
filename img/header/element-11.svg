@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<svg width="710" height="360" xmlns="http://www.w3.org/2000/svg">
+ <style type="text/css">.st0{fill:#6077DF;}
+	.st1{fill:#FFCA00;}
+	.st2{fill:#035E87;}
+	.st3{enable-background:new    ;}
+	.st4{fill:#BDBDBD;}
+	.st5{fill:#C9C9C9;}
+	.st6{fill:#FFFFFF;}
+	.st7{fill:#EBEBEB;}
+	.st8{fill:#999999;}
+	.st9{fill:#FFB300;}
+	.st10{fill:#3C3D00;}
+	.st11{fill:#F5F5F5;}
+	.st12{fill:#212221;}
+	.st13{fill:#F2A012;}
+	.st14{fill:#D68E10;}
+	.st15{fill:#4B4B4B;}
+	.st16{fill:#4F4F4F;}
+	.st17{fill:#333333;}
+	.st18{fill:#484848;}
+	.st19{fill:#DE8E11;}
+	.st20{fill:#D68910;}
+	.st21{fill:#EB9611;}
+	.st22{fill:#EDA800;}
+	.st23{fill:#BF7B0F;}
+	.st24{fill:#F5AE02;}
+	.st25{fill:#F29B12;}
+	.st26{fill:#E89A11;}
+	.st27{fill:#A11D11;}
+	.st28{opacity:0.18;}
+	.st29{fill:#415464;}
+	.st30{fill:#4CDAB0;}
+	.st31{fill:#E0E0E0;}
+	.st32{opacity:0.75;fill:#3A4F9B;}
+	.st33{opacity:0.27;fill:#375056;}
+	.st34{fill:#BA8B75;}
+	.st35{fill:#242424;}
+	.st36{fill:#2B3E4F;}
+	.st37{fill:#DCDCDC;}
+	.st38{fill:#DEB09D;}
+	.st39{fill:#EBF1F5;}
+	.st40{fill:#025074;}
+	.st41{fill:#E9AE93;}
+	.st42{fill:#291222;}
+	.st43{fill:#3E1C33;}
+	.st44{fill:#E9C2B0;}
+	.st45{fill:#F9CFB3;}
+	.st46{clip-path:url(#SVGID_2_);enable-background:new    ;}
+	.st47{fill:#AA2A41;}
+	.st48{fill:#D43451;}
+	.st49{fill:#FF3F61;}
+	.st50{fill:#9F273C;}
+	.st51{fill:none;stroke:#6AEFC3;stroke-miterlimit:10;}
+	.st52{fill:none;stroke:#6AEFC3;stroke-miterlimit:10;stroke-dasharray:5.915,5.915;}
+	.st53{fill:none;stroke:#6AEFC3;stroke-miterlimit:10;stroke-dasharray:6.0713,6.0713;}
+	.st54{fill:none;stroke:#6AEFC3;stroke-miterlimit:10;stroke-dasharray:5.9151,5.9151;}
+	.st55{fill:none;stroke:#6AEFC3;stroke-miterlimit:10;stroke-dasharray:6.0712,6.0712;}
+	.st56{fill:#CCCCCC;}
+	.st57{fill:#E6E6E6;}
+	.st58{fill:#F2F2F2;}
+	.st59{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
+	.st60{opacity:0.27;}
+	.st61{fill:#375056;}
+	.st62{fill:#6EC6E6;}
+	.st63{opacity:0.17;}
+	.st64{fill:#28A7C9;}
+	.st65{fill:#ADECF7;}
+	.st66{clip-path:url(#SVGID_4_);}
+	.st67{fill:#FEC363;}
+	.st68{fill:#353F49;}
+	.st69{fill:#474F59;}
+	.st70{clip-path:url(#SVGID_6_);}
+	.st71{fill:#A3A3EF;}
+	.st72{fill:#BABAF4;}
+	.st73{clip-path:url(#SVGID_8_);}
+	.st74{fill:#F2B50A;}
+	.st75{opacity:0.15;}
+	.st76{fill:#97723F;}
+	.st77{fill:#856231;}
+	.st78{fill:#BD553D;}
+	.st79{fill:#3E626A;}
+	.st80{opacity:0.3;}
+	.st81{opacity:0.42;}
+	.st82{opacity:0.5;}
+	.st83{fill:none;stroke:#6AEFC3;stroke-miterlimit:10;stroke-dasharray:6,6;}
+	.st84{clip-path:url(#SVGID_10_);}
+	.st85{fill:#3FBC92;}
+	.st86{fill:#FDFFFE;}
+	.st87{fill:#2B0D04;}
+	.st88{fill:#134663;}
+	.st89{fill:#DEF3EE;}
+	.st90{clip-path:url(#SVGID_12_);enable-background:new    ;}
+	.st91{clip-path:url(#SVGID_14_);}
+	.st92{clip-path:url(#SVGID_16_);}
+	.st93{clip-path:url(#SVGID_18_);}
+	.st94{clip-path:url(#SVGID_20_);enable-background:new    ;}
+	.st95{clip-path:url(#SVGID_22_);}
+	.st96{clip-path:url(#SVGID_24_);}
+	.st97{clip-path:url(#SVGID_26_);}
+	.st98{clip-path:url(#SVGID_28_);enable-background:new    ;}
+	.st99{clip-path:url(#SVGID_30_);}
+	.st100{clip-path:url(#SVGID_32_);}
+	.st101{clip-path:url(#SVGID_34_);}
+	.st102{fill:#2FB286;}
+	.st103{clip-path:url(#SVGID_36_);}
+	.st104{clip-path:url(#SVGID_38_);}
+	.st105{opacity:0.2;}
+	.st106{fill:#585858;}
+	.st107{fill:#616161;}
+	.st108{fill:#505050;}
+	.st109{fill:#414141;}
+	.st110{fill:#232423;}
+	.st111{fill:#424342;}
+	.st112{fill:#C27508;}
+	.st113{fill:#F0910A;}
+	.st114{fill:#3E3F3E;}
+	.st115{fill:#2F302F;}
+	.st116{fill:#1F1F1F;}
+	.st117{fill:#272727;}
+	.st118{fill:#1E1E1E;}
+	.st119{clip-path:url(#SVGID_40_);enable-background:new    ;}
+	.st120{clip-path:url(#SVGID_42_);}
+	.st121{clip-path:url(#SVGID_44_);}
+	.st122{clip-path:url(#SVGID_46_);}
+	.st123{opacity:0.75;}
+	.st124{fill:#3A4F9B;}
+	.st125{fill:#2E2F2E;}
+	.st126{fill:#303130;}
+	.st127{fill:#3D3E3D;}
+	.st128{fill:#A26207;}
+	.st129{fill:#A86507;}
+	.st130{clip-path:url(#SVGID_48_);}
+	.st131{clip-path:url(#SVGID_50_);}
+	.st132{opacity:0.7656;fill:#3A4F9B;}
+	.st133{opacity:0.7812;fill:#3A4F9B;}
+	.st134{opacity:0.7969;fill:#3A4F9B;}
+	.st135{opacity:0.8125;fill:#3A4F9B;}
+	.st136{opacity:0.8281;fill:#3A4F9B;}
+	.st137{opacity:0.8438;fill:#3A4F9B;}
+	.st138{opacity:0.8594;fill:#3A4F9B;}
+	.st139{opacity:0.875;fill:#3A4F9B;}
+	.st140{opacity:0.8906;fill:#3A4F9B;}
+	.st141{opacity:0.9062;fill:#3A4F9B;}
+	.st142{opacity:0.9219;fill:#3A4F9B;}
+	.st143{opacity:0.9375;fill:#3A4F9B;}
+	.st144{opacity:0.9531;fill:#3A4F9B;}
+	.st145{opacity:0.9688;fill:#3A4F9B;}
+	.st146{opacity:0.9844;fill:#3A4F9B;}
+	.st147{clip-path:url(#SVGID_52_);}
+	.st148{clip-path:url(#SVGID_54_);}
+	.st149{clip-path:url(#SVGID_56_);}
+	.st150{clip-path:url(#SVGID_58_);}
+	.st151{clip-path:url(#SVGID_60_);enable-background:new    ;}
+	.st152{clip-path:url(#SVGID_62_);}
+	.st153{clip-path:url(#SVGID_64_);}
+	.st154{clip-path:url(#SVGID_66_);}
+	.st155{clip-path:url(#SVGID_68_);}
+	.st156{clip-path:url(#SVGID_70_);enable-background:new    ;}
+	.st157{clip-path:url(#SVGID_72_);enable-background:new    ;}
+	.st158{clip-path:url(#SVGID_74_);}
+	.st159{clip-path:url(#SVGID_76_);}
+	.st160{clip-path:url(#SVGID_78_);}
+	.st161{clip-path:url(#SVGID_80_);}
+	.st162{clip-path:url(#SVGID_82_);}
+	.st163{clip-path:url(#SVGID_84_);}</style>
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="362" width="712" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect x="0" y="-150" id="svg_1" height="600" width="710" class="st0"/>
+  <g id="svg_2">
+   <g id="svg_3">
+    <g id="svg_4">
+     <polyline id="svg_5" points="12.70001220703125,138.29998779296875 10,137 12.70001220703125,135.5999755859375 " class="st51"/>
+     <line id="svg_6" y2="12.599988" x2="258.700012" y1="132.999988" x1="18.000012" class="st52"/>
+     <polyline id="svg_7" points="261.4000244140625,11.29998779296875 264,10 266.70001220703125,11.29998779296875 " class="st51"/>
+     <line id="svg_8" y2="224.399988" x2="693.000012" y1="13.999988" x1="272.200012" class="st53"/>
+     <polyline id="svg_9" points="695.7000122070312,225.79998779296875 698.3999633789062,227.0999755859375 695.7000122070312,228.5 " class="st51"/>
+     <line id="svg_10" y2="351.499988" x2="449.700012" y1="231.099988" x1="690.400012" class="st54"/>
+     <polyline id="svg_11" points="447.10003662109375,352.79998779296875 444.4000244140625,354.0999755859375 441.70001220703125,352.79998779296875 " class="st51"/>
+     <line id="svg_12" y2="139.699988" x2="15.400012" y1="350.099988" x1="436.300012" class="st55"/>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

@@ -9,7 +9,7 @@
 -------------------------------------------------- */
 body {
   color: #676a6c;
-  font-family: 'Open Sans', helvetica, arial, sans-serif;
+  font-family: 'Fira Sans', sans-serif;
 }
 span.navy {
   color: #1ab394;
@@ -78,8 +78,7 @@ h1 {
   text-transform: uppercase;
 }
 .navbar-nav > li > a {
-  padding-top: 25px;
-  border-top: 6px solid transparent;
+  padding-top: 22px;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover {
@@ -109,7 +108,7 @@ h1 {
   display: block;
   font-size: 14px;
   background: #1ab394;
-  padding: 15px 20px 15px 20px;
+  padding: 10px 20px 10px 20px;
   border-radius: 0 0px 5px 5px;
   font-weight: 700;
   transition: all 0.3s ease-in-out 0s;
@@ -127,7 +126,7 @@ h1 {
   border-radius: 0;
 }
 .nav > li > a {
-  padding: 25px 10px 15px 10px;
+  padding: 23px 10px 15px 10px;
 }
 .navbar-scroll .navbar-nav > li > a {
   padding: 20px 10px;
@@ -155,7 +154,8 @@ h1 {
 -------------------------------------------------- */
 /* Carousel base class */
 .carousel {
-  height: 470px;
+  height: 420px;
+  overflow: hidden;
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
@@ -164,7 +164,7 @@ h1 {
 /* Declare heights because of positioning of img element */
 .carousel .item {
   height: 470px;
-  background-color: #777;
+  background-color: #5f79de;
 }
 .carousel-inner > .item > img {
   position: absolute;
@@ -217,33 +217,28 @@ h1 {
 }
 .carousel-caption {
   position: absolute;
-  top: 100px;
-  left: 0;
+  top: 50px;
+  right: 0;
   bottom: auto;
-  right: auto;
   text-align: left;
+  width: 420px;
+  left: inherit;
 }
 .carousel-caption.blank {
   top: 140px;
 }
-.carousel-image {
-  position: absolute;
-  right: 10px;
-  top: 150px;
-}
+
 .carousel-indicators {
   padding-right: 60px;
 }
 .carousel-caption h1 {
-  font-weight: 700;
-  font-size: 38px;
-  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 30px;
   text-shadow: none;
-  letter-spacing: -1.5px;
+  color: #fff;
+  line-height: 42px;
 }
 .carousel-caption p {
-  font-weight: 700;
-  text-transform: uppercase;
   text-shadow: none;
 }
 .caption-link {
@@ -256,16 +251,82 @@ h1 {
   text-decoration: none;
   color: inherit;
 }
+
+.carousel img {
+  position: absolute;
+}
+
+.carousel-image-11 {
+  left: 150px;
+  top: 206px;
+  width: 560px;
+}
+
+.carousel-image-03 {
+  left: -10px;
+  top: 220px;
+  width: 310px;
+}
+
+.carousel-image-04 {
+  left: 120px;
+  top: 20px;
+  width: 460px;
+}
+
+.carousel-image-09 {
+  left: 105px;
+  top: 85px;
+  width: 460px;
+}
+
+.carousel-image-10 {
+  left: 360px;
+  top: 5px;
+  width: 250px;
+}
+
+.carousel-image-05 {
+  left: 455px;
+  top: 265px;
+  width: 250px;
+}
+
+.carousel-image-07 {
+  left: 450px;
+  top: 290px;
+  width: 75px;
+}
+
+.carousel-image-08 {
+  left: 655px;
+  top: 275px;
+  width: 55px;
+}
+
+.carousel-image-12 {
+  left: 275px;
+  top: 94px;
+  width: 170px;
+}
+
+.bottom-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
 /* Sections
 ------------------------- */
+
+#footer {
+  background-color: #0f183d;
+}
 .services {
   padding-top: 60px;
 }
 .services h2 {
   font-size: 20px;
-  letter-spacing: -1px;
-  font-weight: 600;
-  text-transform: uppercase;
+  font-weight: 500;
 }
 .features-block {
   margin-top: 40px;
@@ -357,7 +418,6 @@ li.pricing-title {
   padding-top: 40px;
   padding-bottom: 60px;
   background-color: #1ab394;
-  background-image: url('../img/avatar_all.png');
 }
 .big-icon {
   font-size: 56px;
@@ -366,10 +426,10 @@ li.pricing-title {
   color: #1ab394;
 }
 .contact {
-  background-image: url('../img/word_map.png');
   background-position: 50% 50%;
   background-repeat: no-repeat;
   margin-top: 60px;
+  padding-top: 20px;
 }
 /* Buttons - only primary custom button
 ------------------------- */
@@ -441,7 +501,7 @@ fieldset[disabled] .btn-primary.active {
   }
   /* Bump up size of carousel content */
   .carousel-caption p {
-    margin-bottom: 20px;
+    margin-top: 30px;
     font-size: 14px;
     line-height: 1.4;
   }
@@ -488,7 +548,7 @@ fieldset[disabled] .btn-primary.active {
     border-radius: 0;
   }
   .nav > li > a {
-    padding: 25px 10px 15px 10px;
+    padding: 20px 10px 10px 10px
   }
   .navbar-nav > li > a {
     padding: 20px 10px;
