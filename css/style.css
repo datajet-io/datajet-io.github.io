@@ -211,8 +211,11 @@ h1 {
   right: 50px;
   bottom: auto;
   text-align: left;
-  width: 380px;
+  width: 420px;
   left: inherit;
+  background-color: rgba(95, 120, 222, 0.7);
+  padding: 0 20px;
+  border-radius: 15px;
 }
 .carousel-caption.blank {
   top: 140px;
@@ -335,6 +338,29 @@ h1 {
 
 #footer {
   padding: 15px 0;
+}
+
+@media (max-width: 768px) {
+  .carousel  {
+    height: 200px;
+  }
+
+  .carousel img {
+    display: none;
+  }
+
+  .carousel-caption {
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+    top: 10px;
+    left: 0;
+  }
+
+  .icons {
+    margin-left: 0;
+    text-align: center;
+  }
 }
 
 /* Sections
@@ -523,27 +549,7 @@ fieldset[disabled] .btn-primary.active {
     font-size: 50px;
   }
 }
-@media (max-width: 1200px) {
-  .carousel-image {
-    display: none;
-  }
 
-  .carousel {
-    height: 200px;
-  }
-
-  .carousel-caption {
-    position: static;
-    width: 100%;
-    text-align: center;
-  }
-
-  .icons {
-    margin-left: 0;
-    text-align: center;
-  }
-
-}
 @media (max-width: 768px) {
 
   .carousel-caption h1 {

@@ -5,7 +5,7 @@ email: discovery@rocket-internet.de
 description: > # this means to ignore newlines until "baseurl:"
   datajet helps your’s customers discovery products they love using its search and recommendation technology
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://datajet.io/" # the base hostname & protocol for your site
+url: "http://datajet.io" # the base hostname & protocol for your site
 twitter_username: datajet_io
 github_username:  datajet-io
 
