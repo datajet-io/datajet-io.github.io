@@ -74,8 +74,6 @@ h1 {
   color: #333;
   font-family: 'Open Sans', helvetica, arial, sans-serif;
   font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
 }
 .navbar-nav > li > a {
   padding-top: 22px;
@@ -209,19 +207,11 @@ h1 {
 }
 .carousel-caption {
   position: absolute;
-  top: 100px;
-  left: 0;
-  bottom: auto;
-  right: auto;
-  text-align: left;
-}
-.carousel-caption {
-  position: absolute;
   top: 50px;
-  right: 0;
+  right: 50px;
   bottom: auto;
   text-align: left;
-  width: 450px;
+  width: 380px;
   left: inherit;
 }
 .carousel-caption.blank {
@@ -251,6 +241,8 @@ h1 {
   text-decoration: none;
   color: inherit;
 }
+
+/* Custom CSS */
 
 .carousel img {
   position: absolute;
@@ -282,7 +274,7 @@ h1 {
 
 .carousel-image-10 {
   left: 360px;
-  top: 5px;
+  top: 15px;
   width: 250px;
 }
 
@@ -305,8 +297,8 @@ h1 {
 }
 
 .carousel-image-12 {
-  left: 275px;
-  top: 94px;
+  left: 300px;
+  top: 92px;
   width: 170px;
 }
 
@@ -316,29 +308,34 @@ h1 {
 }
 
 .icons {
-  padding: 15px;
-  border-radius: 45px;
-  background-color: #f2f2f2;
-  text-align: center;
-  width: 70px;
-  margin-top: 15px;
-  margin-left: 40px;
+  margin-top: 20px;
+  margin-left: 60px;
 }
 
 .icons img {
-  width: 40px;
+  width: 70px;
 }
 
 .icons-section {
   margin-top: 20px;
 }
 
+.navbar-toggle {
+  margin-top: 16px;
+}
+
+.carousel-fallback img {
+  max-width: 707px;
+  width: 100%;
+}
+
+.title {
+  padding-left: 40px;
+}
+
 /* Sections
 ------------------------- */
 
-#footer {
-  background-color: #0f183d;
-}
 .services {
   padding-top: 60px;
 }
@@ -517,27 +514,34 @@ fieldset[disabled] .btn-primary.active {
   .navbar-wrapper .navbar {
     border-radius: 4px;
   }
-  /* Bump up size of carousel content */
-  .carousel-caption p {
-    margin-top: 30px;
-    font-size: 14px;
-    line-height: 1.4;
-  }
+
   .featurette-heading {
     font-size: 50px;
   }
 }
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
   .carousel-image {
     display: none;
   }
+
+  .carousel {
+    height: 200px;
+  }
+
+  .carousel-caption {
+    position: static;
+    width: 100%;
+    text-align: center;
+  }
+
+  .icons {
+    margin-left: 0;
+    text-align: center;
+  }
+
 }
 @media (max-width: 768px) {
-  .carousel-caption,
-  .carousel-caption.blank {
-    left: 5%;
-    top: 80px;
-  }
+
   .carousel-caption h1 {
     font-size: 28px;
   }
@@ -547,7 +551,6 @@ fieldset[disabled] .btn-primary.active {
   .navbar-default {
     background-color: #fff;
     border-color: #fff;
-    padding: 15px 0;
   }
   .navbar-default .navbar-nav > .active > a:focus {
     background: transparent;
