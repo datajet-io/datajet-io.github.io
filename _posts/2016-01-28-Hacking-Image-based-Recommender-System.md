@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hacking an Image-based Recommender
+title: Hacking an Image-based Recommender System
 author: Domen Pogacnik
 ---
 
