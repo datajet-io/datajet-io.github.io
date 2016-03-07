@@ -82,12 +82,16 @@ dataJetDemo = {
 
         var demoId = this.getCookie('demoId');
 
-        if (demoId == 'pYJDcB') {
+        if (this.getUrlArgs()['key'] !== undefined) {
+            if (this.getUrlArgs()['key'] == 'pYJDcB') {
+                this.setCookie('demoId', this.getUrlArgs()['key'], 100);
+                demoId = this.getUrlArgs()['key'];
+                valid = true;
+            } else {
+                valid = false;
+            }
+        } else if (demoId == 'pYJDcB') {
             var valid = true;
-        } else if (this.getUrlArgs()['key'] == 'pYJDcB') {
-            this.setCookie('demoId', this.getUrlArgs()['key'], 100);
-            demoId = this.getUrlArgs()['key'];
-            valid = true;
         } else {
             this.setCookie('demoId','', 0);
             valid = false;

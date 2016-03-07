@@ -6,9 +6,54 @@
 </description>
     <link>http://datajet.io/</link>
     <atom:link href="http://datajet.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 09 Oct 2015 12:23:30 +0200</pubDate>
-    <lastBuildDate>Fri, 09 Oct 2015 12:23:30 +0200</lastBuildDate>
-    <generator>Jekyll v2.5.3</generator>
+    <pubDate>Mon, 07 Mar 2016 16:24:10 +0100</pubDate>
+    <lastBuildDate>Mon, 07 Mar 2016 16:24:10 +0100</lastBuildDate>
+    <generator>Jekyll v3.0.0</generator>
+    
+      <item>
+        <title>Hacking an Image-based Recommender System</title>
+        <description>&lt;p&gt;Recently we came across Grace Avery’s &lt;a href=&quot;http://blog.thehackerati.com/post/126701202241/eigenstyle&quot;&gt;interesting&lt;/a&gt; approach to create an image-based recommender system for fashion. As we work with a lot of fashion related e-commerce companies ourselves the post immediately took our attention.&lt;/p&gt;
+
+&lt;p&gt;A common use case for recommender systems is to find products that are somehow similar to each other. We set our goal to find dresses of a similar style to a given seed dress. Similar to Grace’s approach we extract the latent factors from images using &lt;a href=&quot;https://en.wikipedia.org/wiki/Principal_component_analysis&quot;&gt;PCA&lt;/a&gt;. However, Instead of feeding them to a logistic regression classifier we compare the feature vectors directly to find similar dresses. We omit the classification step due to lack of explicit user feedback, a common limitation with e-Commerce recommender systems [1].&lt;/p&gt;
+
+&lt;p&gt;We experimented with different similarity metrics to compare the feature vector and settled for cosine similarity at first. &lt;a href=&quot;https://indico.io/blog/clothing-similarity-how-a-program-is-more-fashionable-than-me/&quot;&gt;Later we came across&lt;/a&gt; &lt;a href=&quot;https://lvdmaaten.github.io/tsne/&quot;&gt;t-SNE&lt;/a&gt; which yielded even better results.&lt;/p&gt;
+
+&lt;p&gt;Our dataset contains 892 pictures of long dresses from one of our customer’s product catalogue. Images were scaled down to a uniform size and fed in a raw form to the PCA method; we kept 10 best principal components.&lt;/p&gt;
+
+&lt;p&gt;So enough talking - show us the goods. For a quick taste we include three examples that, we think, our recommender got right and for a balanced view the same number of examples that would need improvement. The leftmost image in all examples is the seed image - the one we’re searching similar images for.&lt;/p&gt;
+
+&lt;p&gt;The good&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/w7qLX22.png&quot; alt=&quot;Example 1&quot; /&gt;
+&lt;img src=&quot;http://i.imgur.com/7gZNCff.png&quot; alt=&quot;Example 2&quot; /&gt;
+&lt;img src=&quot;http://i.imgur.com/98Z7Bum.png&quot; alt=&quot;Example 3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The bad&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/TWNswPh.png&quot; alt=&quot;Example 1&quot; /&gt;
+&lt;img src=&quot;http://i.imgur.com/Kcxnggc.png&quot; alt=&quot;Example 2&quot; /&gt;
+&lt;img src=&quot;http://i.imgur.com/vYHaDHF.png&quot; alt=&quot;Example 3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;From the example above we can see the universal usefulness and power of the PCA method. Nevertheless every method has its disadvantages. In this case the major disadvantage is that we do not know what the latent factors represent, e.g. if it is color, the shape or the pattern, which makes tuning the factors unfeasible.&lt;/p&gt;
+
+&lt;p&gt;Imagine buying a new formal night dress. Some might argue that a color of the dress for that particular occasion plays a crucial role. Unfortunately, here the PCA method falls short as we don’t know which latent factor describes the color. An obvious way to improve results would then be to add the explicit color feature to the mix. In addition, small differences like cut-outs can make the difference whether a dress is for formal or more casual occasions. So while a purely PCA-based approach provides a simple baseline for doing item-based recommendation in fashion, it needs further tuning due to the number of false-positives.&lt;/p&gt;
+
+&lt;p&gt;Lately there’s a lot of buzz about deep learning, especially when it comes to learning from images. Deep convolutional neural network have indeed proved themselves on the image classification tasks and it feels they would be a perfect fit for our problem as well.&lt;/p&gt;
+
+&lt;p&gt;P.S.
+Here’s the visualization of our dataset using t-SNE (click on the image for higher resolution)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://i.imgur.com/sCpFNr2.jpg&quot;&gt;&lt;img src=&quot;http://i.imgur.com/sCpFNr2.jpg&quot; alt=&quot;t-sne&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;References:
+[1] Y. Hu, Y. Koren, C. Volinsky: Collaborative Filtering for Implicit Feedback Datasets&lt;/p&gt;
+</description>
+        <pubDate>Thu, 28 Jan 2016 00:00:00 +0100</pubDate>
+        <link>http://datajet.io/hacking-image-based-recommender-system.html</link>
+        <guid isPermaLink="true">http://datajet.io/hacking-image-based-recommender-system.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>One year with Apache Mesos - The Good, The Bad, and the Ugly</title>
@@ -42,8 +87,8 @@
 &lt;p&gt;Build infrastructure that handles billions of API calls or crunch terabytes of data to help people discover products they love. Drop us a line at &lt;a href=&quot;&amp;#109;&amp;#097;&amp;#105;&amp;#108;&amp;#116;&amp;#111;:&amp;#116;&amp;#101;&amp;#097;&amp;#109;&amp;#064;&amp;#100;&amp;#097;&amp;#116;&amp;#097;&amp;#106;&amp;#101;&amp;#116;&amp;#046;&amp;#105;&amp;#111;&quot;&gt;&amp;#116;&amp;#101;&amp;#097;&amp;#109;&amp;#064;&amp;#100;&amp;#097;&amp;#116;&amp;#097;&amp;#106;&amp;#101;&amp;#116;&amp;#046;&amp;#105;&amp;#111;&lt;/a&gt; if you like to join the fun.&lt;/p&gt;
 </description>
         <pubDate>Thu, 08 Oct 2015 00:00:00 +0200</pubDate>
-        <link>http://datajet.io/One-year-with-Apache-Mesos-The-Good-The-Bad-and-the-Ugly.html</link>
-        <guid isPermaLink="true">http://datajet.io/One-year-with-Apache-Mesos-The-Good-The-Bad-and-the-Ugly.html</guid>
+        <link>http://datajet.io/one-year-with-apache-mesos-the-good-the-bad-and-the-ugly.html</link>
+        <guid isPermaLink="true">http://datajet.io/one-year-with-apache-mesos-the-good-the-bad-and-the-ugly.html</guid>
         
         
       </item>
@@ -73,8 +118,8 @@
 &lt;p&gt;Build infrastructure that handles billions of API calls or crunch terabytes of data to help people discover products they love. Drop us a line at &lt;a href=&quot;&amp;#109;&amp;#097;&amp;#105;&amp;#108;&amp;#116;&amp;#111;:&amp;#116;&amp;#101;&amp;#097;&amp;#109;&amp;#064;&amp;#100;&amp;#097;&amp;#116;&amp;#097;&amp;#106;&amp;#101;&amp;#116;&amp;#046;&amp;#105;&amp;#111;&quot;&gt;&amp;#116;&amp;#101;&amp;#097;&amp;#109;&amp;#064;&amp;#100;&amp;#097;&amp;#116;&amp;#097;&amp;#106;&amp;#101;&amp;#116;&amp;#046;&amp;#105;&amp;#111;&lt;/a&gt; if you like to join the fun.&lt;/p&gt;
 </description>
         <pubDate>Fri, 02 Oct 2015 00:00:00 +0200</pubDate>
-        <link>http://datajet.io/Building-infrastructure-for-a-real-time-search-and-recommendation-platform.html</link>
-        <guid isPermaLink="true">http://datajet.io/Building-infrastructure-for-a-real-time-search-and-recommendation-platform.html</guid>
+        <link>http://datajet.io/building-infrastructure-for-a-real-time-search-and-recommendation-platform.html</link>
+        <guid isPermaLink="true">http://datajet.io/building-infrastructure-for-a-real-time-search-and-recommendation-platform.html</guid>
         
         
       </item>
