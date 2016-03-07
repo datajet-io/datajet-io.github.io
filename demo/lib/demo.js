@@ -88,6 +88,7 @@ dataJetDemo = {
                 demoId = this.getUrlArgs()['key'];
                 valid = true;
             } else {
+                this.setCookie('demoId','', 0);
                 valid = false;
             }
         } else if (demoId == 'pYJDcB') {
