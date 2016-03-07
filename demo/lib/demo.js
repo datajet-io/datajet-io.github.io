@@ -79,7 +79,6 @@ dataJetDemo = {
     },
 
     getCustomer: function() {
-
         var demoId = this.getCookie('demoId');
 
         if (this.getUrlArgs()['key'] !== undefined) {
@@ -156,7 +155,7 @@ dataJetDemo = {
             var id = $(e.relatedTarget)[0].id;
             var title = $('#' + id).find('.product-title').text();
 
-            $('.modal-title').text(title);
+            $('#modal .modal-title').text(title);
 
             var payload = {
                 "source": "fishApp",
@@ -199,9 +198,9 @@ dataJetDemo = {
 
                     items += that.getProductTemplate(data);
 
-                    $('.modal-body').html(items, 3);
+                    $('#modal .modal-body').html(items, 3);
                 } else {
-                    $('.modal-body').html('Sorry, we couldnt find any similar items');
+                    $('#modal .modal-body').html('Sorry, we couldnt find any similar items');
                 }
             });
         });
@@ -231,8 +230,9 @@ dataJetDemo = {
         });
 
         $('#modal, #modal-category').on('hidden.bs.modal', function () {
-            $('.modal-title').text('');
-            $('.modal-body').text('')
+            var el = $(this);
+            el.find('.modal-title').text('');
+            el.find('.modal-body').text('')
         });
     },
 
