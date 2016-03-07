@@ -1,4 +1,4 @@
-jetLore = {
+dataJetDemo = {
     data: {
         recentlyViewed: {}
     },
@@ -21,12 +21,15 @@ jetLore = {
     },
 
     init: function() {
-        this.showSuggester();
-        this.showSearch();
-        this.showProductDetailModal();
-        this.showRecentlyViewedFeed();
-        this.showTrendingProductsFeed();
-        this.showPopularCategories();
+        if (this.getCustomer()) {
+            this.getUserCookie();
+            this.showSuggester();
+            this.showSearch();
+            this.showProductDetailModal();
+            this.showRecentlyViewedFeed();
+            this.showTrendingProductsFeed();
+            this.showPopularCategories();
+        }
     },
 
     ucwords: function(str) {
@@ -43,6 +46,62 @@ jetLore = {
         }
         url = url.slice(0, -1);
         return url;
+    },
+
+    getUrlArgs: function() {
+        var request = {};
+        var pairs = document.location.href.substring(document.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < pairs.length; i++) {
+            if(!pairs[i])
+                continue;
+            var pair = pairs[i].split('=');
+            request[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+        }
+        return request;
+    },
+
+    setCookie: function (cname, cvalue, days) {
+        var d = new Date();
+        d.setTime(d.getTime() + (days*24*60*60*1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    },
+
+    getCookie: function (cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+        }
+        return "";
+    },
+
+    getCustomer: function() {
+
+        var demoId = this.getCookie('demoId');
+
+        if (demoId == 'pYJDcB') {
+            var valid = true;
+        } else if (this.getUrlArgs()['key'] == 'pYJDcB') {
+            this.setCookie('demoId', this.getUrlArgs()['key'], 100);
+            demoId = this.getUrlArgs()['key'];
+            valid = true;
+        } else {
+            this.setCookie('demoId','', 0);
+            valid = false;
+        }
+
+        if (valid) {
+            $('.header, .footer').removeClass('hidden');
+            $('#logo').attr('src', 'img/' + demoId + '.png');
+            return true;
+        }
+    },
+
+    getUserCookie: function() {
+
     },
 
     getProductTemplate: function(data, limit, isSearch) {
@@ -180,23 +239,15 @@ jetLore = {
             e.preventDefault();
         });
 
-        var $_GET = {};
+        var urlArgs = this.getUrlArgs();
 
-        document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
-            function decode(s) {
-                return decodeURIComponent(s.split("+").join(" "));
-            }
-
-            $_GET[decode(arguments[1])] = decode(arguments[2]);
-        });
-
-        if ($_GET['q'] !== undefined && $_GET['q'] !== '') {
+        if (urlArgs['q'] !== undefined && urlArgs['q'] !== '') {
             var url = this.buildUrl(this.settings.searchUrl, {
                 fields: 'id,title,price,images,brand',
                 dum: 'replace',
                 size: 18,
                 dum_count: 0,
-                q: $_GET['q'],
+                q: urlArgs['q'],
                 key: this.settings.clientKey,
                 rq: 5,
                 gs: 5
@@ -214,7 +265,7 @@ jetLore = {
                 if (data && data.items) {
                     var dum = (data.dum) ? ' matched with <strong>"' + data.dum.sq + '"</strong>, ' : '';
 
-                    $('.info').html('Searched for <strong>"' + $_GET['q'] + '"</strong>,' + dum + ' found <strong>'  + data.count + '</strong> products');
+                    $('.info').html('Searched for <strong>"' + urlArgs['q'] + '"</strong>,' + dum + ' found <strong>'  + data.count + '</strong> products');
 
                     var items = that.getProductTemplate(data, 4, true);
                     $('.search-results').html(items);
@@ -294,7 +345,7 @@ jetLore = {
         });
     },
 
-    showYouMightBeInterestedFeed () {
+    showYouMightBeInterestedFeed: function() {
         var that = this;
 
         var itemArr = {};
@@ -400,6 +451,6 @@ jetLore = {
     }
 };
 
-$('document').ready(function() {
-    jetLore.init();
+$(document).ready(function() {
+    dataJetDemo.init();
 });
