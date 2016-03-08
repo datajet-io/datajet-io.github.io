@@ -218,7 +218,7 @@ dataJetDemo = {
     showSearch: function(filters) {
         var that = this;
 
-        function search(keyword, filters) {
+        function search(keyword) {
             if (keyword !== undefined && keyword !== '') {
                 var url = that.buildUrl(that.settings.searchUrl, {
                     fields: 'id,title,price,images,brand',
@@ -231,10 +231,11 @@ dataJetDemo = {
                     gs: 5
                 });
 
-                url += '&facet=price&facet=color&facet=brand&';
+                url += '&facet=price&facet=color&facet=brand';
 
-                if (filters) {
-                    url += filters;
+                for (var i = 0; i <= that.data.filters.length; i++) {
+                    if (that.data.filters[i] !== undefined)
+                        url += '&filter=brand:' + that.data.filters[i];
                 }
 
                 $('.search-results, .filter-brand ul, .filter-color ul').html('');
@@ -248,8 +249,30 @@ dataJetDemo = {
                         $('.search-results').html(items);
                         $('.search, .search-header').removeClass('hidden');
 
+                        function brandClick() {
+                            var el = $(this).find('input');
+                            if (el[0].checked) {
+                                var index = that.data.filters.indexOf(el.val());
+                                if (index > -1) {
+                                    that.data.filters.splice(index, 1);
+                                }
+                            } else {
+                                if (that.data.filters.indexOf(el.val()) == -1)
+                                    that.data.filters.push(el.val());
+                            }
+
+                            search($('#suggestions').val());
+                        }
+
                         $.each(data.facets.brand, function(i) {
-                            $('.filter-brand ul').append('<li><input type="checkbox" id="brand-' + data.facets.brand[i].id + '" value="' + data.facets.brand[i].text + '"><label for="brand-' + data.facets.brand[i].id + '">' + data.facets.brand[i].text + ' (' + data.facets.brand[i].count + ')</label></li>')
+                            var li = $('<li><input type="checkbox" value="' + data.facets.brand[i].id + '"><label for="brand-' + data.facets.brand[i].id + '">' + data.facets.brand[i].text + ' (' + data.facets.brand[i].count + ')</label></li>');
+                            $('.filter-brand ul').append(li);
+
+                            if (that.data.filters.indexOf(data.facets.brand[i].id) > -1) {
+                                li.find('input').prop('checked', true);
+                            }
+
+                            li.click(brandClick);
                         });
 
                         $.each(data.facets.color, function(i) {
@@ -271,12 +294,7 @@ dataJetDemo = {
 
         $('#search-button, #reset-filters').click(function(e) {
             e.preventDefault();
-            search($('#suggestions').val(), null);
-        });
-
-        $('#filter-brand input').click(function(e) {
-            e.preventDefault();
-            search($('#suggestions').val(), filters);
+            search($('#suggestions').val());
         });
     },
 
@@ -354,9 +372,8 @@ dataJetDemo = {
             });
         }
 
-        setTimeout( function() {
+        setTimeout(function() {
             var items = that.getProductTemplate(itemArr, 5);
-
             $('#interested-in-carousel > .carousel-inner').append(items);
             $('.interested-in').removeClass('hide');
             $('#interested-in-carousel').carousel({interval: false});
