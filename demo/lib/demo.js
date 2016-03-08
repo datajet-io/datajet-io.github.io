@@ -15,7 +15,6 @@ dataJetDemo = {
         popularCategoriesUrl: 'http://feed-test2.usw.datajet.io/1.1/popularcategories',
         searchUrl: 'https://hawk.usw.datajet.io/1.0/product/',
         rankerUrl: 'https://ranker.datajet.io/0.1/score',
-        pondUrl: 'https://pond.datajet.io/log',
         imgUrl: 'http://seer.usw.datajet.io/i',
         hawkImgUrl: '//media.linio.com.mx'
     },
@@ -119,7 +118,7 @@ dataJetDemo = {
             var imageUrl = (isSearch) ? that.settings.hawkImgUrl + data.items[i].images[0].slug + '-product.jpg' : data.items[i].images[0];
 
             items +=
-                '<a id="' + data.items[i].id.replace('mx:','') + '" class="product" data-toggle="modal" data-target="#modal">' +
+                '<div class="product"><a href="//' + data.items[i].url + '" target="_blank">' +
                 '<img class="product-image" src="' + imageUrl + '" title="' + data.items[i].title + '" />' +
                 '<div class="product-title"><strong>' + data.items[i].brand.name + '</strong> ' + data.items[i].title + '</div>';
 
@@ -133,10 +132,11 @@ dataJetDemo = {
                 }
             }
 
+            items += '</a>';
+            items += '<a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal">more like this</a>';
             items += '<div class="product-brand hide">' + data.items[i].brand.name + '</div>';
             items += '<div class="product-group-id hide">' + data.items[i].group_id + '</div>';
-
-            items += '</a>';
+            items += '</div>';
         });
 
         items += '</div>';
@@ -153,35 +153,9 @@ dataJetDemo = {
 
         $('#modal').on('shown.bs.modal', function (e) {
             var id = $(e.relatedTarget)[0].id;
-            var title = $('#' + id).find('.product-title').text();
+            var title = $('#' + id).parent().find('.product-title').text();
 
             $('#modal .modal-title').text(title);
-
-            var payload = {
-                "source": "fishApp",
-                "consumer_id": that.settings.clientKey,
-                "payload": {
-                    "title": title,
-                    "skuConfig": $('#' + id).find('.product-group-id').text(),
-                    "sku": id,
-                    "brand": $('#' + id).find('.product-brand').text()
-                },
-                "event": "view",
-                "local_timestamp": new Date().getTime(),
-                "client": {
-                    "device": "Simulator",
-                    "application": "rocketinternet.Discovery-Demo",
-                    "platform": navigator.platform + ', ' + navigator.appVersion
-                },
-                "bid": that.settings.bid
-            };
-
-            var pondUrl = that.buildUrl(that.settings.pondUrl, {
-                key: that.settings.clientKey,
-                p: JSON.stringify(payload)
-            });
-
-            $.get(pondUrl);
 
             var url = that.buildUrl(that.settings.moreLikeThisUrl, {
                 sku: id.replace('mx--', ''),
@@ -191,9 +165,9 @@ dataJetDemo = {
             $.get(url, function(data) {
                 if (data && data.items) {
 
-                    var items = '<img class="modal-image" src="'+ $('#' + id).find('.product-image').attr('src') +'" title="'+ $('#' + id).find('.product-title').text() +'" />';
+                    var items = '<img class="modal-image" src="'+ $('#' + id).parent().find('.product-image').attr('src') +'" title="'+ $('#' + id).parent().find('.product-title').text() +'" />';
 
-                    items += '<div class="modal-text"><div class="modal-brand">' + $('#' + id).find('.product-brand').text() + '</div>' + title + '</div><div style="clear: both"></div>';
+                    items += '<div class="modal-text"><div class="modal-brand">' + $('#' + id).parent().find('.product-brand').text() + '</div>' + title + '</div><div style="clear: both"></div>';
                     items += '<hr /><h4>Similar Products</h4>';
 
                     items += that.getProductTemplate(data);

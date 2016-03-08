@@ -520,6 +520,10 @@ ul, li {
     padding-left: 0;
 }
 
+a:hover, a:active, a:focus {
+    text-decoration: none;
+}
+
 h3 {
     margin-bottom: 20px;
 }
@@ -561,7 +565,6 @@ h3 {
     vertical-align: top;
     margin-bottom: 20px;
 }
-
 
 .product:hover {
     text-decoration: none;
@@ -628,6 +631,7 @@ h3 {
 .product-title {
     max-height: 38px;
     overflow: hidden;
+    color: black;
 }
 
 .product-price {
