@@ -21,7 +21,6 @@ dataJetDemo = {
 
     init: function() {
         if (this.getCustomer()) {
-            this.getUserCookie();
             this.showSuggester();
             this.showSearch();
             this.showProductDetailModal();
@@ -104,7 +103,7 @@ dataJetDemo = {
     },
 
     getUserCookie: function() {
-
+        return this.getCookie('DJUCID');
     },
 
     getProductTemplate: function(data, limit, isSearch) {
@@ -192,9 +191,7 @@ dataJetDemo = {
 
             $.get(url, function(data) {
                 if (data && data.items) {
-
                     var items = that.getProductTemplate(data);
-
                     $('#modal-category .modal-body').html(items, 3);
                     $('#modal-category .modal-title').text(that.ucwords(title));
                 } else {
@@ -275,9 +272,9 @@ dataJetDemo = {
     showRecentlyViewedFeed: function() {
         var url = this.buildUrl(this.settings.recentlyViewedUrl, {
             size: 15,
-            from: 'now-1w',
+            from: 'now-1d',
             key: this.settings.feedKey,
-            uuid: this.settings.bid
+            uuid: this.getUserCookie()
         });
 
         var that = this;
@@ -376,7 +373,7 @@ dataJetDemo = {
                 var rankerUrl = that.buildUrl(that.settings.rankerUrl, {
                     product_id: ids,
                     key: that.settings.feedKey,
-                    uuid: that.settings.bid
+                    uuid: that.getUserCookie()
                 });
 
                 var rankedData = {};
