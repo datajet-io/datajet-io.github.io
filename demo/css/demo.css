@@ -620,6 +620,7 @@ h3 {
 
 .search-results .product {
     width: 25%;
+    cursor: default;
 }
 
 .product img {

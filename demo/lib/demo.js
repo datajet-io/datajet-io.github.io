@@ -116,10 +116,14 @@ dataJetDemo = {
 
             var imageUrl = (isSearch) ? that.settings.hawkImgUrl + data.items[i].images[0].slug + '-product.jpg' : data.items[i].images[0];
 
-            items +=
-                '<div class="product"><a href="//' + data.items[i].url + '" target="_blank">' +
-                '<img class="product-image" src="' + imageUrl + '" title="' + data.items[i].title + '" />' +
-                '<div class="product-title"><strong>' + data.items[i].brand.name + '</strong> ' + data.items[i].title + '</div>';
+            items += '<div class="product">';
+
+            if (!isSearch) {
+                items += '<a href="//' + data.items[i].url + '" target="_blank">';
+            }
+
+            items += '<img class="product-image" src="' + imageUrl + '" title="' + data.items[i].title + '" />' +
+            '<div class="product-title"><strong>' + data.items[i].brand.name + '</strong> ' + data.items[i].title + '</div>';
 
             if (data.items[i].price) {
                 if (data.items[i].price.current) {
@@ -131,7 +135,10 @@ dataJetDemo = {
                 }
             }
 
-            items += '</a>';
+            if (!isSearch) {
+                items += '</a>';
+            }
+
             items += '<a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal">more like this</a>';
             items += '<div class="product-brand hide">' + data.items[i].brand.name + '</div>';
             items += '<div class="product-group-id hide">' + data.items[i].group_id + '</div>';
