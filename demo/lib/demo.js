@@ -1,6 +1,7 @@
 dataJetDemo = {
     data: {
-        recentlyViewed: {}
+        recentlyViewed: {},
+        filters: []
     },
 
     settings: {
@@ -215,65 +216,68 @@ dataJetDemo = {
     },
 
     showSearch: function(filters) {
-
         var that = this;
 
-        $('#reset-filters').click(function(e) {
+        function search(keyword, filters) {
+            if (keyword !== undefined && keyword !== '') {
+                var url = that.buildUrl(that.settings.searchUrl, {
+                    fields: 'id,title,price,images,brand',
+                    dum: 'replace',
+                    size: 18,
+                    dum_count: 0,
+                    q: keyword,
+                    key: that.settings.clientKey,
+                    rq: 5,
+                    gs: 5
+                });
+
+                url += '&facet=price&facet=color&facet=brand&';
+
+                if (filters) {
+                    url += filters;
+                }
+
+                $('.search-results, .filter-brand ul, .filter-color ul').html('');
+
+                $.get(url, function(data) {
+                    if (data && data.items) {
+                        var dum = (data.dum) ? ' matched with <strong>"' + data.dum.sq + '"</strong>, ' : '';
+
+                        $('.info').html('Searched for <strong>"' + keyword + '"</strong>,' + dum + ' found <strong>'  + data.count + '</strong> products');
+                        var items = that.getProductTemplate(data, 4, true);
+                        $('.search-results').html(items);
+                        $('.search, .search-header').removeClass('hidden');
+
+                        $.each(data.facets.brand, function(i) {
+                            $('.filter-brand ul').append('<li><input type="checkbox" id="brand-' + data.facets.brand[i].id + '" value="' + data.facets.brand[i].text + '"><label for="brand-' + data.facets.brand[i].id + '">' + data.facets.brand[i].text + ' (' + data.facets.brand[i].count + ')</label></li>')
+                        });
+
+                        $.each(data.facets.color, function(i) {
+                            if (data.facets.color[i].text) {
+                                $('.filter-color ul').append('<li><input type="checkbox" id="color-' + data.facets.color[i].text + '" value="' + data.facets.color[i].text + '"><label for="color-' + data.facets.color[i].text + '">' + data.facets.color[i].text + ' (' + data.facets.color[i].count + ')</label></li>')
+                            }
+                        });
+
+                        $('#price-min').val(data.facets.price.min);
+                        $('#price-max').val(data.facets.price.max);
+
+                    } else {
+                        $('.search-header').removeClass('hidden');
+                        $('.info').text('Couldnt find any results');
+                    }
+                });
+            }
+        }
+
+        $('#search-button, #reset-filters').click(function(e) {
             e.preventDefault();
+            search($('#suggestions').val(), null);
         });
 
-        var urlArgs = this.getUrlArgs();
-
-        if (urlArgs['q'] !== undefined && urlArgs['q'] !== '') {
-            var url = this.buildUrl(this.settings.searchUrl, {
-                fields: 'id,title,price,images,brand',
-                dum: 'replace',
-                size: 18,
-                dum_count: 0,
-                q: urlArgs['q'],
-                key: this.settings.clientKey,
-                rq: 5,
-                gs: 5
-            });
-
-            url += '&facet=price&facet=color&facet=brand&';
-
-            if (filters) {
-                url += filters;
-            }
-
-            $('.search-results, .filter-brand ul, .filter-color ul').html('');
-
-            $.get(url, function(data) {
-                if (data && data.items) {
-                    var dum = (data.dum) ? ' matched with <strong>"' + data.dum.sq + '"</strong>, ' : '';
-
-                    $('.info').html('Searched for <strong>"' + urlArgs['q'] + '"</strong>,' + dum + ' found <strong>'  + data.count + '</strong> products');
-
-                    var items = that.getProductTemplate(data, 4, true);
-                    $('.search-results').html(items);
-
-                    $('.search, .search-header').removeClass('hidden');
-
-                    $.each(data.facets.brand, function(i) {
-                        $('.filter-brand ul').append('<li><input type="checkbox" id="brand-' + data.facets.brand[i].id + '" value="' + data.facets.brand[i].id + '"><label for="brand-' + data.facets.brand[i].id + '">' + data.facets.brand[i].text + ' (' + data.facets.brand[i].count + ')</label></li>')
-                    });
-
-                    $.each(data.facets.color, function(i) {
-                        if (data.facets.color[i].text) {
-                            $('.filter-color ul').append('<li><input type="checkbox" id="color-' + data.facets.color[i].text + '" value="' + data.facets.color[i].text + '"><label for="color-' + data.facets.color[i].text + '">' + data.facets.color[i].text + ' (' + data.facets.color[i].count + ')</label></li>')
-                        }
-                    });
-
-                    $('#price-min').val(data.facets.price.min);
-                    $('#price-max').val(data.facets.price.max);
-
-                } else {
-                    $('.search-header').removeClass('hidden');
-                    $('.info').text('Couldnt find any results');
-                }
-            });
-        }
+        $('#filter-brand input').click(function(e) {
+            e.preventDefault();
+            search($('#suggestions').val(), filters);
+        });
     },
 
     showRecentlyViewedFeed: function() {
