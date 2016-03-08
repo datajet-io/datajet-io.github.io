@@ -120,7 +120,7 @@ dataJetDemo = {
             items += '<div class="product">';
 
             if (!isSearch) {
-                items += '<a href="//' + data.items[i].url + '" target="_blank">';
+                items += '<a href="//' + data.items[i].url + '">';
             }
 
             items += '<img class="product-image" src="' + imageUrl + '" title="' + data.items[i].title + '" />' +
@@ -338,7 +338,7 @@ dataJetDemo = {
         var itemArr = {};
         itemArr.items = [];
 
-        for (var k = 0; (k<3 &&  k< that.data.recentlyViewed.items.length); k++) {
+        for (var k = 0; (k<3); k++) {
             var url = that.buildUrl(that.settings.moreLikeThisUrl, {
                 sku: that.data.recentlyViewed.items[k].id,
                 key: that.settings.feedKey
@@ -347,19 +347,20 @@ dataJetDemo = {
             $.get(url, function(data) {
                 if (data && data.items) {
                     for (var i = 0; i<5; i++) {
-                        itemArr.items.push(data.items[i]);
+                        if (itemArr.items.indexOf(data.items[i]) == -1)
+                            itemArr.items.push(data.items[i]);
                     }
-                }
-
-                if (itemArr.items.length == 15) {
-                    var items = that.getProductTemplate(itemArr, 5);
-
-                    $('#interested-in-carousel > .carousel-inner').append(items);
-                    $('.interested-in').removeClass('hide');
-                    $('#interested-in-carousel').carousel({interval: false});
                 }
             });
         }
+
+        setTimeout( function() {
+            var items = that.getProductTemplate(itemArr, 5);
+
+            $('#interested-in-carousel > .carousel-inner').append(items);
+            $('.interested-in').removeClass('hide');
+            $('#interested-in-carousel').carousel({interval: false});
+        }, 1000);
     },
 
     showTrendingProductsFeed: function() {
@@ -425,7 +426,7 @@ dataJetDemo = {
                 $.each(data.items, function(i) {
                     items +=
                         '<div class="col-md-4">' +
-                        '<a id="' + data.items[i].title.replace(' ','-').replace(' ','-') + '" href="#" target="_blank" class="product-link" data-toggle="modal" data-target="#modal-category">' +
+                        '<a id="' + data.items[i].title.replace(' ','-').replace(' ','-') + '" href="#" class="product-link" data-toggle="modal" data-target="#modal-category">' +
                         '<div class="category" style="background-image: url(' + data.items[i].images[0] + ')">' +
                         '<div class="product-title" data-val="' + data.items[i].title + '">' + that.ucwords(data.items[i].title) + '</div>' +
                         '</div></a></div>';
