@@ -183,8 +183,8 @@ dataJetDemo = {
             var title = $('#' + id).find('.product-title').attr('data-val');
 
             var url = that.buildUrl(that.settings.bestSellersUrl, {
-                size: 5,
-                from: 'now-1w',
+                size: 6,
+                from: 'now-1d',
                 category: title,
                 key: that.settings.feedKey
             });
@@ -302,7 +302,7 @@ dataJetDemo = {
 
         var url = this.buildUrl(this.settings.bestSellersUrl, {
             size: 15,
-            from: 'now-1w',
+            from: 'now-1d',
             key: this.settings.feedKey,
             category: categoryTitle
         });
@@ -354,7 +354,7 @@ dataJetDemo = {
     showTrendingProductsFeed: function() {
         var url = this.buildUrl(this.settings.trendingProductsUrl, {
             size: 15,
-            from: 'now-1w',
+            from: 'now-1d',
             key: this.settings.feedKey
         });
 
