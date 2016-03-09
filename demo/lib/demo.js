@@ -1,7 +1,10 @@
 dataJetDemo = {
     data: {
         recentlyViewed: {},
-        filters: []
+        brandFilters: [],
+        colorFilters: [],
+        priceFilters: [],
+        categoryFilters: []
     },
 
     settings: {
@@ -270,9 +273,22 @@ dataJetDemo = {
 
                 url += '&facet=price&facet=color&facet=brand';
 
-                for (var i = 0; i <= that.data.filters.length; i++) {
-                    if (that.data.filters[i] !== undefined)
-                        url += '&filter=brand:' + that.data.filters[i];
+                for (var i = 0; i <= that.data.brandFilters.length; i++) {
+                    if (that.data.brandFilters[i] !== undefined)
+                        url += '&filter=brand:' + that.data.brandFilters[i];
+                }
+
+                for (var i = 0; i <= that.data.colorFilters.length; i++) {
+                    if (that.data.colorFilters[i] !== undefined)
+                        url += '&filter=color:' + that.data.colorFilters[i];
+                }
+
+                if (that.data.priceFilters['min']) {
+                    url += '&filter=price_min:' + that.data.priceFilters['min'];
+                }
+
+                if (that.data.priceFilters['max']) {
+                    url += '&filter=price_max:' + that.data.priceFilters['max'];
                 }
 
                 $('.search-results, .filter-brand ul, .filter-color ul').html('');
@@ -291,37 +307,76 @@ dataJetDemo = {
                         function brandClick() {
                             var el = $(this).find('input');
                             if (el[0].checked) {
-                                var index = that.data.filters.indexOf(el.val());
+                                var index = that.data.brandFilters.indexOf(el.val());
                                 if (index > -1) {
-                                    that.data.filters.splice(index, 1);
+                                    that.data.brandFilters.splice(index, 1);
                                 }
                             } else {
-                                if (that.data.filters.indexOf(el.val()) == -1)
-                                    that.data.filters.push(el.val());
+                                if (that.data.brandFilters.indexOf(el.val()) == -1)
+                                    that.data.brandFilters.push(el.val());
                             }
 
                             search($('#suggestions').val());
                         }
 
-                        $.each(data.facets.brand, function(i) {
-                            var li = $('<li><input type="checkbox" value="' + data.facets.brand[i].id + '"><label for="brand-' + data.facets.brand[i].id + '">' + data.facets.brand[i].text + ' (' + data.facets.brand[i].count + ')</label></li>');
-                            $('.filter-brand ul').append(li);
+                        if (data.facets.brand) {
+                            $.each(data.facets.brand, function(i) {
+                                var li = $('<li><input type="checkbox" value="' + data.facets.brand[i].id + '"><label for="brand-' + data.facets.brand[i].id + '">' + data.facets.brand[i].text + ' (' + data.facets.brand[i].count + ')</label></li>');
+                                $('.filter-brand ul').append(li);
 
-                            if (that.data.filters.indexOf(data.facets.brand[i].id) > -1) {
-                                li.find('input').prop('checked', true);
+                                if (that.data.brandFilters.indexOf(data.facets.brand[i].id) > -1) {
+                                    li.find('input').prop('checked', true);
+                                }
+
+                                li.click(brandClick);
+                            });
+                        }
+
+                        function colorClick() {
+                            var el = $(this).find('input');
+                            if (el[0].checked) {
+                                var index = that.data.colorFilters.indexOf(el.val());
+                                if (index > -1) {
+                                    that.data.colorFilters.splice(index, 1);
+                                }
+                            } else {
+                                if (that.data.colorFilters.indexOf(el.val()) == -1)
+                                    that.data.colorFilters.push(el.val());
                             }
 
-                            li.click(brandClick);
-                        });
+                            search($('#suggestions').val());
+                        }
 
-                        $.each(data.facets.color, function(i) {
-                            if (data.facets.color[i].text) {
-                                $('.filter-color ul').append('<li><input type="checkbox" id="color-' + data.facets.color[i].text + '" value="' + data.facets.color[i].text + '"><label for="color-' + data.facets.color[i].text + '">' + data.facets.color[i].text + ' (' + data.facets.color[i].count + ')</label></li>')
-                            }
-                        });
+                        if (data.facets.color) {
+                            $.each(data.facets.color, function(i) {
+                                if (data.facets.color[i].text) {
+                                    var li = $('<li><input type="checkbox" value="' + data.facets.color[i].text + '"><label for="brand-' + data.facets.color[i].id + '">' + data.facets.color[i].text + ' (' + data.facets.color[i].count + ')</label></li>');
+                                    $('.filter-color ul').append(li);
 
-                        $('#price-min').val(data.facets.price.min);
-                        $('#price-max').val(data.facets.price.max);
+                                    if (that.data.colorFilters.indexOf(data.facets.color[i].text) > -1) {
+                                        li.find('input').prop('checked', true);
+                                    }
+
+                                    li.click(colorClick);
+                                }
+                            });
+
+                            $('.filter-color-title').removeClass('hidden')
+                        }
+
+                        if (data.facets.price) {
+                            $('#price-min, #price-max').bind('keypress', function(e) {
+                                if (e.keyCode == 13){
+                                    that.data.priceFilters['min'] = $('#price-min').val();
+                                    that.data.priceFilters['max'] = $('#price-max').val();
+                                    search($('#suggestions').val());
+                                }
+                            });
+
+                            $('#price-min').val(data.facets.price.min);
+                            $('#price-max').val(data.facets.price.max);
+                            $('.filter-price-title').removeClass('hidden');
+                        }
 
                     } else {
                         $('.search-header').removeClass('hidden');
@@ -331,7 +386,7 @@ dataJetDemo = {
             }
         }
 
-        $('#search-button, #reset-filters').click(function(e) {
+        $('#search-button').click(function(e) {
             e.preventDefault();
             search($('#suggestions').val());
         });

@@ -400,7 +400,7 @@ input#suggestions {
     box-sizing: border-box;
     padding: 8px 36px 7px 8px;
     width: 402px;
-    margin-top: 15px;
+    margin-top: 10px;
     border-radius: 3px;
 }
 
@@ -539,7 +539,7 @@ h3 {
 
 .header button {
     margin-left: 10px;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 .footer {
@@ -696,11 +696,13 @@ h3 {
 }
 
 #price-min, #price-max {
-    width: 50px;
+    width: 70px;
 }
 
 .filters label {
-    margin-left: 5px;
+    margin-left: 7px;
     display: inline-block;
     font-weight: normal;
+    max-width: 144px;
+    vertical-align: top;
 }
