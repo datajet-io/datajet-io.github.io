@@ -682,11 +682,12 @@ h3 {
     color: black;
     position: absolute;
     padding: 7px;
-    bottom: 30px;
+    bottom: 90px;
     background-color: #EEE;
     border-radius: 3px;
     width: 86%;
     margin-left: 7%;
+    opacity: 0.75;
 }
 
 .carousel-control.right {

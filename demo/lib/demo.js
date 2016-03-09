@@ -142,8 +142,13 @@ dataJetDemo = {
 
             var imageUrl = 'img/placeholder.png';
 
-            if (data.items[i].images)
-                imageUrl = (isSearch) ? that.customer[that.getCustomer()].imgUrl + data.items[i].images[0].slug + '-product.jpg' : data.items[i].images[0];
+            if (data.items[i].images) {
+                if (that.getCustomer().name == 'linio') {
+                    imageUrl = (isSearch) ? that.customer[that.getCustomer()].imgUrl + data.items[i].images[0].slug + '-product.jpg' : data.items[i].images[0];
+                } else {
+                    imageUrl = data.items[i].images[0];
+                }
+            }
 
             items += '<div class="product">';
 
@@ -180,7 +185,7 @@ dataJetDemo = {
 
     showSuggester: function() {
         window.suggest = Datajet.usw(this.customer[this.getCustomer()].feedKey);
-        window.imgUrl = this.settings.imgUrl;
+        window.imgUrl = this.customer[this.getCustomer()].imgUrl;
     },
 
     showProductDetailModal: function() {
@@ -273,7 +278,9 @@ dataJetDemo = {
                         var dum = (data.dum) ? ' matched with <strong>"' + data.dum.sq + '"</strong>, ' : '';
 
                         $('.info').html('Searched for <strong>"' + keyword + '"</strong>,' + dum + ' found <strong>'  + data.count + '</strong> products');
+
                         var items = that.getProductTemplate(data, 4, true);
+
                         $('.search-results').html(items);
                         $('.search, .search-header').removeClass('hidden');
 
