@@ -5,19 +5,29 @@ dataJetDemo = {
     },
 
     settings: {
-        bid: '1561876629',
-        ucid: 'ccf2578673102fd8',
-        clientKey: 'A32E23F56z7iC8CB947n12878C3d4157',
-        feedKey: 'pYJDcBMdGR4tUM1OADt42LGvFSj7U5U',
-        recentlyViewedUrl: 'http://feed.usw.datajet.io/1.1/recentlyviewed',
-        moreLikeThisUrl: 'http://feed.usw.datajet.io/1.1/morelikethis',
-        bestSellersUrl: 'http://feed.usw.datajet.io/1.1/bestsellers',
-        trendingProductsUrl: 'http://feed.usw.datajet.io/1.1/trendingProducts',
-        popularCategoriesUrl: 'http://feed-test2.usw.datajet.io/1.1/popularcategories',
-        searchUrl: 'https://hawk.usw.datajet.io/1.0/product/',
+        recentlyViewedUrl: 'http://feed.REGION.datajet.io/1.1/recentlyviewed',
+        moreLikeThisUrl: 'http://feed.REGION.datajet.io/1.1/morelikethis',
+        bestSellersUrl: 'http://feed.REGION.datajet.io/1.1/bestsellers',
+        trendingProductsUrl: 'http://feed.REGION.datajet.io/1.1/trendingProducts',
+        popularCategoriesUrl: 'http://feed.REGION.datajet.io/1.1/popularcategories',
+        searchUrl: 'https://hawk.REGION.datajet.io/1.0/product/',
         rankerUrl: 'https://ranker.datajet.io/0.1/score',
-        imgUrl: 'http://seer.usw.datajet.io/i',
-        hawkImgUrl: '//media.linio.com.mx'
+        imgUrl: 'http://seer.REGION.datajet.io/i'
+    },
+
+    customer: {
+        pYJDcB: {
+            name: 'Linio',
+            feedKey: 'pYJDcBMdGR4tUM1OADt42LGvFSj7U5U',
+            imgUrl: '//media.linio.com.mx',
+            region: 'usw'
+        },
+        jYNzew: {
+            name: 'Home24',
+            feedKey: 'jYNzewm744UMzDRUssQw46QzJhfRoCc',
+            imgUrl: '//media.linio.com.mx',
+            region: 'euw'
+        }
     },
 
     init: function() {
@@ -96,7 +106,7 @@ dataJetDemo = {
         var demoId = this.getCookie('demoId');
 
         if (this.getUrlArgs()['key'] !== undefined) {
-            if (this.getUrlArgs()['key'] == 'pYJDcB') {
+            if (this.customer[this.getUrlArgs()['key']] !== undefined) {
                 this.setCookie('demoId', this.getUrlArgs()['key'], 100);
                 demoId = this.getUrlArgs()['key'];
                 valid = true;
@@ -104,7 +114,7 @@ dataJetDemo = {
                 this.setCookie('demoId','', 0);
                 valid = false;
             }
-        } else if (demoId == 'pYJDcB') {
+        } else if (this.customer[demoId] !== undefined) {
             var valid = true;
         } else {
             this.setCookie('demoId','', 0);
@@ -114,7 +124,7 @@ dataJetDemo = {
         if (valid) {
             $('.header, .footer').removeClass('hidden');
             $('#logo').attr('src', 'img/' + demoId + '.png');
-            return true;
+            return demoId;
         }
     },
 
@@ -130,7 +140,7 @@ dataJetDemo = {
             if (i != 0 && (i % limit) == 0)
                 items += '</div><div class="item">';
 
-            var imageUrl = (isSearch) ? that.settings.hawkImgUrl + data.items[i].images[0].slug + '-product.jpg' : data.items[i].images[0];
+            var imageUrl = (isSearch) ? that.customer[that.getCustomer()].imgUrl + data.items[i].images[0].slug + '-product.jpg' : data.items[i].images[0];
 
             items += '<div class="product">';
 
@@ -166,7 +176,7 @@ dataJetDemo = {
     },
 
     showSuggester: function() {
-        window.suggest = Datajet.usw(this.settings.feedKey);
+        window.suggest = Datajet.usw(this.customer[this.getCustomer()].feedKey);
         window.imgUrl = this.settings.imgUrl;
     },
 
@@ -179,9 +189,9 @@ dataJetDemo = {
 
             $('#modal .modal-title').text(title);
 
-            var url = that.buildUrl(that.settings.moreLikeThisUrl, {
+            var url = that.buildUrl(that.settings.moreLikeThisUrl.replace('REGION', this.customer[this.getCustomer()].region), {
                 sku: id.replace('mx--', ''),
-                key: that.settings.feedKey
+                key: that.customer[that.getCustomer()].feedKey
             });
 
             $.get(url, function(data) {
@@ -205,11 +215,11 @@ dataJetDemo = {
             var id = $(e.relatedTarget)[0].id;
             var title = $('#' + id).find('.product-title').attr('data-val');
 
-            var url = that.buildUrl(that.settings.bestSellersUrl, {
+            var url = that.buildUrl(that.settings.bestSellersUrl.replace('REGION', this.customer[this.getCustomer()].region), {
                 size: 6,
                 from: 'now-1d',
                 category: title,
-                key: that.settings.feedKey
+                key: that.customer[that.getCustomer()].feedKey
             });
 
             $.get(url, function(data) {
@@ -235,13 +245,13 @@ dataJetDemo = {
 
         function search(keyword) {
             if (keyword !== undefined && keyword !== '') {
-                var url = that.buildUrl(that.settings.searchUrl, {
+                var url = that.buildUrl(that.settings.searchUrl.replace('REGION', this.customer[this.getCustomer()].region), {
                     fields: 'id,title,price,images,brand',
                     dum: 'replace',
                     size: 18,
                     dum_count: 0,
                     q: keyword,
-                    key: that.settings.clientKey,
+                    key: that.customer[that.getCustomer()].feedKey,
                     rq: 5,
                     gs: 5
                 });
@@ -314,10 +324,10 @@ dataJetDemo = {
     },
 
     showRecentlyViewedFeed: function() {
-        var url = this.buildUrl(this.settings.recentlyViewedUrl, {
+        var url = this.buildUrl(this.settings.recentlyViewedUrl.replace('REGION', this.customer[this.getCustomer()].region), {
             size: 15,
             from: 'now-1d',
-            key: this.settings.feedKey,
+            key: this.customer[this.getCustomer()].feedKey,
             uuid: this.getUserCookie()
         });
 
@@ -344,10 +354,10 @@ dataJetDemo = {
             var categoryTitle = data[data.length - 1].name;
         }
 
-        var url = this.buildUrl(this.settings.bestSellersUrl, {
+        var url = this.buildUrl(this.settings.bestSellersUrl.replace('REGION', this.customer[this.getCustomer()].region), {
             size: 15,
             from: 'now-1d',
-            key: this.settings.feedKey,
+            key: this.customer[this.getCustomer()].feedKey,
             category: categoryTitle
         });
 
@@ -372,9 +382,9 @@ dataJetDemo = {
         itemArr.items = [];
 
         for (var k = 0; (k<3); k++) {
-            var url = that.buildUrl(that.settings.moreLikeThisUrl, {
+            var url = that.buildUrl(that.settings.moreLikeThisUrl.replace('REGION', this.customer[this.getCustomer()].region), {
                 sku: that.data.recentlyViewed.items[k].id,
-                key: that.settings.feedKey
+                key: that.customer[that.getCustomer()].feedKey
             });
 
             $.get(url, function(data) {
@@ -397,10 +407,10 @@ dataJetDemo = {
     },
 
     showTrendingProductsFeed: function() {
-        var url = this.buildUrl(this.settings.trendingProductsUrl, {
+        var url = this.buildUrl(this.settings.trendingProductsUrl.replace('REGION', this.customer[this.getCustomer()].region), {
             size: 15,
             from: 'now-1d',
-            key: this.settings.feedKey
+            key: this.customer[this.getCustomer()].feedKey
         });
 
         var that = this;
@@ -417,7 +427,7 @@ dataJetDemo = {
 
                 var rankerUrl = that.buildUrl(that.settings.rankerUrl, {
                     product_id: ids,
-                    key: that.settings.feedKey,
+                    key: that.customer[that.getCustomer()].feedKey,
                     uuid: that.getUserCookie()
                 });
 
@@ -438,16 +448,17 @@ dataJetDemo = {
                     $('.trending-products').removeClass('hide');
                     $('#trending-products-carousel > .carousel-inner').append(items);
                     $('#trending-products-carousel').carousel({interval: false});
+                    $('.customer').text(that.customer[that.getCustomer()].name)
                 });
             }
         });
     },
 
     showPopularCategories: function() {
-        var url = this.buildUrl(this.settings.popularCategoriesUrl, {
+        var url = this.buildUrl(this.settings.popularCategoriesUrl.replace('REGION', this.customer[this.getCustomer()].region), {
             size: 6,
             from: 'now-1d',
-            key: this.settings.feedKey
+            key: this.customer[this.getCustomer()].feedKey
         });
 
         var that = this;
