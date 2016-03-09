@@ -218,7 +218,7 @@ dataJetDemo = {
             var id = $(e.relatedTarget)[0].id;
             var title = $('#' + id).find('.product-title').attr('data-val');
 
-            var url = that.buildUrl(that.settings.bestSellersUrl.replace('REGION', this.customer[this.getCustomer()].region), {
+            var url = that.buildUrl(that.settings.bestSellersUrl.replace('REGION', that.customer[that.getCustomer()].region), {
                 size: 6,
                 from: 'now-1d',
                 category: title,
@@ -248,7 +248,7 @@ dataJetDemo = {
 
         function search(keyword) {
             if (keyword !== undefined && keyword !== '') {
-                var url = that.buildUrl(that.settings.searchUrl.replace('REGION', this.customer[this.getCustomer()].region), {
+                var url = that.buildUrl(that.settings.searchUrl.replace('REGION', that.customer[that.getCustomer()].region), {
                     fields: 'id,title,price,images,brand',
                     dum: 'replace',
                     size: 18,
