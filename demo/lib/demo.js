@@ -38,6 +38,21 @@ dataJetDemo = {
             });
     },
 
+    shuffle: function shuffle(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+
+        while (0 !== currentIndex) {
+
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        return array;
+    },
+
     buildUrl: function(uri, queryArgs) {
         var url = uri + '?';
         for (var name in queryArgs) {
@@ -373,6 +388,7 @@ dataJetDemo = {
         }
 
         setTimeout(function() {
+            itemArr.items = that.shuffle(itemArr.items);
             var items = that.getProductTemplate(itemArr, 5);
             $('#interested-in-carousel > .carousel-inner').append(items);
             $('.interested-in').removeClass('hide');
