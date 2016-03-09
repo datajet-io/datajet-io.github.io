@@ -140,7 +140,10 @@ dataJetDemo = {
             if (i != 0 && (i % limit) == 0)
                 items += '</div><div class="item">';
 
-            var imageUrl = (isSearch) ? that.customer[that.getCustomer()].imgUrl + data.items[i].images[0].slug + '-product.jpg' : data.items[i].images[0];
+            var imageUrl = 'img/placeholder.png';
+
+            if (data.items[i].images)
+                imageUrl = (isSearch) ? that.customer[that.getCustomer()].imgUrl + data.items[i].images[0].slug + '-product.jpg' : data.items[i].images[0];
 
             items += '<div class="product">';
 
