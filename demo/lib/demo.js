@@ -143,7 +143,7 @@ dataJetDemo = {
             var imageUrl = 'img/placeholder.png';
 
             if (data.items[i].images) {
-                if (that.getCustomer().name == 'linio') {
+                if (that.customer[that.getCustomer()].name == 'Linio') {
                     imageUrl = (isSearch) ? that.customer[that.getCustomer()].imgUrl + data.items[i].images[0].slug + '-product.jpg' : data.items[i].images[0];
                 } else {
                     imageUrl = data.items[i].images[0];
@@ -184,8 +184,12 @@ dataJetDemo = {
     },
 
     showSuggester: function() {
-        window.suggest = Datajet.usw(this.customer[this.getCustomer()].feedKey);
-        window.imgUrl = this.customer[this.getCustomer()].imgUrl;
+        if (this.customer[this.getCustomer()].region == 'usw') {
+            window.suggest = Datajet.usw(this.customer[this.getCustomer()].feedKey);
+        } else {
+            window.suggest = Datajet.euw(this.customer[this.getCustomer()].feedKey);
+        }
+        window.imgUrl = this.settings.imgUrl.replace('REGION', this.customer[this.getCustomer()].region);
     },
 
     showProductDetailModal: function() {
@@ -197,7 +201,7 @@ dataJetDemo = {
 
             $('#modal .modal-title').text(title);
 
-            var url = that.buildUrl(that.settings.moreLikeThisUrl.replace('REGION', this.customer[this.getCustomer()].region), {
+            var url = that.buildUrl(that.settings.moreLikeThisUrl.replace('REGION', that.customer[that.getCustomer()].region), {
                 sku: id.replace('mx--', ''),
                 key: that.customer[that.getCustomer()].feedKey
             });
