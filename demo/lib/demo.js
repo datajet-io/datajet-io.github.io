@@ -302,24 +302,43 @@ dataJetDemo = {
 
                         var dum = (data.dum) ? ' matched with <strong>"' + data.dum.sq + '"</strong>, ' : '';
 
-                        $('.info').html('Searched for <strong>"' + keyword + '"</strong>,' + dum + ' found <strong>'  + data.count + '</strong> products');
+                        $('.info').html('Searched for <strong>"' + keyword + '"</strong>,' + dum + ' found <strong>'  + data.count + '</strong> products<div id="related-queries"></div>');
 
+                        if (data.guided_search) {
+                            var guidedSearch = '<ul>';
 
-                        var guidedSearch = '<ul><li><strong>Guided Search:</strong></li> ';
+                            for (var i = 0; i <= data.guided_search.length; i++) {
+                                if (data.guided_search[i] !== undefined)
+                                    guidedSearch += '<li><a href="#">' + data.guided_search[i] + '</a></li>';
+                            }
 
-                        for (var i = 0; i <= data.guided_search.length; i++) {
-                            if (data.guided_search[i] !== undefined)
-                                guidedSearch += '<li><a href="#">' + data.guided_search[i] + '</a></li>';
+                            guidedSearch += '</ul>';
+
+                            $('#guided-search').html(guidedSearch).find('a').click(function(e) {
+                                e.preventDefault();
+                                var newVal = $('#suggestions').val() + ' ' +  $(this).text();
+                                $('#suggestions').val(newVal);
+                                search(newVal);
+                            });
                         }
 
-                        guidedSearch += '</ul>';
+                        if (data.related_queries) {
+                            var relatedQueries = 'Related Queries: ';
 
-                        $('#guided-search').html(guidedSearch).find('a').click(function(e) {
-                            e.preventDefault();
-                            var newVal = $('#suggestions').val() + ' ' +  $(this).text();
-                            $('#suggestions').val(newVal);
-                            search(newVal);
-                        });
+                            for (var i = 0; i <= data.related_queries.length; i++) {
+                                if (data.related_queries[i] !== undefined)
+                                    relatedQueries += '<a href="#">' + data.related_queries[i] + '</a>, ';
+                            }
+
+                            relatedQueries = relatedQueries.substring(0, relatedQueries.length - 2);
+
+                            $('#related-queries').html(relatedQueries).find('a').click(function(e) {
+                                e.preventDefault();
+                                var newVal = $(this).text();
+                                $('#suggestions').val(newVal);
+                                search(newVal);
+                            });
+                        }
 
                         var items = that.getProductTemplate(data, 4, true);
 

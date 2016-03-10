@@ -551,11 +551,13 @@ h3 {
 }
 
 .title {
-    display: inline-block;
+    float: left;
 }
 
 .info {
-    margin-left: 45px;
+    margin-top: 28px;
+    float: left;
+    margin-left: 55px;
 }
 
 .product {
@@ -616,6 +618,7 @@ h3 {
 
 .search-header {
     margin-bottom: 15px;
+    padding-top: 20px;
 }
 
 .search-results .product {
@@ -716,8 +719,17 @@ h3 {
 #guided-search li {
     float: left;
     margin-right: 5px;
+    background-color: #E8E8E8;
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-size: 13px;
 }
 
 #price-min-text, #price-max-text {
     font-size: 11px;
+}
+
+#related-queries {
+    font-size: 13px;
+    margin-top: 2px;
 }
