@@ -157,9 +157,7 @@ dataJetDemo = {
 
             items += '<div class="product">';
 
-            if (!isSearch) {
-                items += '<a href="//' + data.items[i].url + '">';
-            }
+            items += '<a href="http://' + data.items[i].url.replace('http:', '') + '">';
 
             items += '<img class="product-image" src="' + imageUrl + '" title="' + data.items[i].title + '" />' +
             '<div class="product-title"><strong>' + data.items[i].brand.name + '</strong> ' + data.items[i].title + '</div>';
@@ -174,9 +172,8 @@ dataJetDemo = {
                 }
             }
 
-            if (!isSearch) {
-                items += '</a>';
-            }
+            items += '</a>';
+
 
             items += '<a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal">more like this</a>';
             items += '<div class="product-brand hide">' + data.items[i].brand.name + '</div>';
@@ -263,7 +260,7 @@ dataJetDemo = {
         function search(keyword) {
             if (keyword !== undefined && keyword !== '') {
                 var url = that.buildUrl(that.settings.searchUrl.replace('REGION', that.customer[that.getCustomer()].region), {
-                    fields: 'id,title,price,images,brand',
+                    fields: 'id,title,price,images,brand,url',
                     dum: 'replace',
                     size: 18,
                     sort:'relevance',
