@@ -294,8 +294,6 @@ dataJetDemo = {
                     url += '&filter=price_max:' + that.data.priceFilters['max'];
                 }
 
-                $('.search-results, .filter-brand ul, .filter-color ul').html('');
-
                 $.get(url, function(data) {
                     if (data && data.items) {
                         $('#suggestionResults').hide();
@@ -361,16 +359,17 @@ dataJetDemo = {
                         }
 
                         if (data.facets.brand) {
+                            var li = '';
                             $.each(data.facets.brand, function(i) {
-                                var li = $('<li><input type="checkbox" value="' + data.facets.brand[i].id + '"><label for="brand-' + data.facets.brand[i].id + '">' + data.facets.brand[i].text + ' (' + data.facets.brand[i].count + ')</label></li>');
-                                $('.filter-brand ul').append(li);
-
+                                var checked = '';
                                 if (that.data.brandFilters.indexOf(data.facets.brand[i].id) > -1) {
-                                    li.find('input').prop('checked', true);
+                                    checked = ' checked="checked"';
                                 }
 
-                                li.click(brandClick);
+                                li += '<li><input' + checked + ' type="checkbox" value="' + data.facets.brand[i].id + '"><label>' + data.facets.brand[i].text + ' (' + data.facets.brand[i].count + ')</label></li>';
                             });
+
+                            $('.filter-brand ul').html(li).find('li').click(brandClick);
                         }
 
                         function colorClick() {
@@ -389,20 +388,19 @@ dataJetDemo = {
                         }
 
                         if (data.facets.color) {
+                            li = '';
                             $.each(data.facets.color, function(i) {
-                                if (data.facets.color[i].text) {
-                                    var li = $('<li><input type="checkbox" value="' + data.facets.color[i].text + '"><label for="brand-' + data.facets.color[i].id + '">' + data.facets.color[i].text + ' (' + data.facets.color[i].count + ')</label></li>');
-                                    $('.filter-color ul').append(li);
-
-                                    if (that.data.colorFilters.indexOf(data.facets.color[i].text) > -1) {
-                                        li.find('input').prop('checked', true);
-                                    }
-
-                                    li.click(colorClick);
+                                var checked = '';
+                                if (that.data.colorFilters.indexOf(data.facets.color[i].text) > -1) {
+                                    checked = ' checked="checked"';
                                 }
+
+                                li += '<li><input' + checked + ' type="checkbox" value="' + data.facets.color[i].text + '"><label>' + data.facets.color[i].text + ' (' + data.facets.color[i].count + ')</label></li>';
                             });
 
+                            $('.filter-color ul').html(li).find('li').click(colorClick);
                             $('.filter-color-title').removeClass('hidden')
+
                         }
 
                         if (data.facets.price) {
