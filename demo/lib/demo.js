@@ -274,7 +274,7 @@ dataJetDemo = {
                     category_dept: 1
                 });
 
-                url += '&facet=price&facet=color&facet=brand&facet=category&';
+                url += '&facet=price&facet=color&facet=brand&facet=category';
 
                 for (var i = 0; i <= that.data.brandFilters.length; i++) {
                     if (that.data.brandFilters[i] !== undefined)
@@ -316,8 +316,12 @@ dataJetDemo = {
                                 e.preventDefault();
                                 var newVal = $('#suggestions').val() + ' ' +  $(this).text();
                                 $('#suggestions').val(newVal);
+                                that.data.brandFilters = [];
+                                that.data.priceFilters = [];
                                 search(newVal);
                             });
+                        } else {
+                            $('#guided-search').html('')
                         }
 
                         if (data.related_queries) {
@@ -334,6 +338,8 @@ dataJetDemo = {
                                 e.preventDefault();
                                 var newVal = $(this).text();
                                 $('#suggestions').val(newVal);
+                                that.data.brandFilters = [];
+                                that.data.priceFilters = [];
                                 search(newVal);
                             });
                         }
@@ -370,6 +376,11 @@ dataJetDemo = {
                             });
 
                             $('.filter-brand ul').html(li).find('li').click(brandClick);
+                            $('.filter-brand-title').show();
+                        }
+                        else {
+                            that.data.brandFilters = [];
+                            $('.filter-brand ul').html('')
                         }
 
                         function colorClick() {
@@ -399,12 +410,14 @@ dataJetDemo = {
                             });
 
                             $('.filter-color ul').html(li).find('li').click(colorClick);
-                            $('.filter-color-title').removeClass('hidden')
+                            $('.filter-color-title, .filter-color').show();
 
+                        } else {
+                            $('.filter-color-title, .filter-color').hide();
                         }
 
                         if (data.facets.price) {
-                            $('#price-min, #price-max').bind('keypress', function(e) {
+                            $('#price-min, #price-max').off('keypress').on('keypress', function(e) {
                                 if (e.keyCode == 13){
                                     that.data.priceFilters['min'] = $('#price-min').val();
                                     that.data.priceFilters['max'] = $('#price-max').val();
@@ -414,12 +427,26 @@ dataJetDemo = {
 
                             $('#price-min-text').text('min: ' + data.facets.price.min);
                             $('#price-max-text').text('max: ' + data.facets.price.max);
-                            $('.filter-price-title').removeClass('hidden');
+                            $('.filter-price-title, .filter-price').show();
+                        } else {
+                            delete that.data.priceFilters['min'];
+                            delete that.data.priceFilters['max'];
+                            $('#price-min').val('');
+                            $('#price-max').val('');
                         }
 
                     } else {
                         $('.search-header').removeClass('hidden');
                         $('.info').text('Couldnt find any results');
+                        $('#guided-search').html('');
+                        $('.search-results').html('');
+                        that.data.brandFilters = [];
+                        that.data.priceFilters = [];
+                        $('.filter-brand ul').html('');
+                        $('.filter-price-title, .filter-price').hide();
+                        $('.filter-brand-title').hide();
+                        $('#price-min').val('');
+                        $('#price-max').val('');
                     }
                 });
             }
