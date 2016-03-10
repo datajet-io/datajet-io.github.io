@@ -394,16 +394,19 @@ dataJetDemo = {
                                 if ($(this).attr('data-deep') == 3) {
                                     that.data.categoryFilters.splice(-1,1);
                                 }
-                                if ($(this).attr('data-deep') == 2) {
+                                else if ($(this).attr('data-deep') == 2) {
                                     that.data.categoryFilters.splice(-1,2);
                                 }
-                                if ($(this).attr('data-deep') == 1) {
+                                else if ($(this).attr('data-deep') == 1) {
                                     that.data.categoryFilters.splice(-1,3);
                                 }
                             } else {
+                                if ($(this).attr('data-deep') == 1) {
+                                    that.data.categoryFilters.splice(-1,2);
+                                }
+
                                 that.data.categoryFilters[$(this).attr('data-deep') - 1] = el.attr('data-value');
                             }
-
                             search($('#suggestions').val());
                         }
 
