@@ -298,7 +298,6 @@ dataJetDemo = {
 
                 $.get(url, function(data) {
                     if (data && data.items) {
-                        $('#suggestionResults').hide();
 
                         var dum = (data.dum) ? ' matched with <strong>"' + data.dum.sq + '"</strong>, ' : '';
 
