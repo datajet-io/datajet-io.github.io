@@ -706,3 +706,18 @@ h3 {
     max-width: 144px;
     vertical-align: top;
 }
+
+#guided-search {
+    position: absolute;
+    left: 0;
+    top: 55px;
+}
+
+#guided-search li {
+    float: left;
+    margin-right: 5px;
+}
+
+#price-min-text, #price-max-text {
+    font-size: 11px;
+}

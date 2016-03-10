@@ -23,13 +23,15 @@ dataJetDemo = {
             name: 'Linio',
             feedKey: 'pYJDcBMdGR4tUM1OADt42LGvFSj7U5U',
             imgUrl: '//media.linio.com.mx',
-            region: 'usw'
+            region: 'usw',
+            currency: '$'
         },
         jYNzew: {
             name: 'Home24',
             feedKey: 'jYNzewm744UMzDRUssQw46QzJhfRoCc',
             imgUrl: '//media.linio.com.mx',
-            region: 'euw'
+            region: 'euw',
+            currency: '€'
         }
     },
 
@@ -164,11 +166,11 @@ dataJetDemo = {
 
             if (data.items[i].price) {
                 if (data.items[i].price.current) {
-                    items += '<div class="product-price">$' + data.items[i].price.current + '</div>';
+                    items += '<div class="product-price">'+ that.customer[that.getCustomer()].currency + data.items[i].price.current + '</div>';
                 }
 
                 if (data.items[i].price.previous) {
-                    items += '<div class="product-price-old"><span>$' + data.items[i].price.previous + '</span> (' + Math.round(100 - (data.items[i].price.current * 100 / data.items[i].price.previous)) + '%)</div>';
+                    items += '<div class="product-price-old"><span>' + that.customer[that.getCustomer()].currency + data.items[i].price.previous + '</span> (' + Math.round(100 - (data.items[i].price.current * 100 / data.items[i].price.previous)) + '%)</div>';
                 }
             }
 
@@ -268,10 +270,11 @@ dataJetDemo = {
                     q: keyword,
                     key: that.customer[that.getCustomer()].feedKey,
                     rq: 5,
-                    gs: 5
+                    gs: 5,
+                    category_dept: 1
                 });
 
-                url += '&facet=price&facet=color&facet=brand';
+                url += '&facet=price&facet=color&facet=brand&facet=category&';
 
                 for (var i = 0; i <= that.data.brandFilters.length; i++) {
                     if (that.data.brandFilters[i] !== undefined)
@@ -295,9 +298,28 @@ dataJetDemo = {
 
                 $.get(url, function(data) {
                     if (data && data.items) {
+                        $('#suggestionResults').hide();
+
                         var dum = (data.dum) ? ' matched with <strong>"' + data.dum.sq + '"</strong>, ' : '';
 
                         $('.info').html('Searched for <strong>"' + keyword + '"</strong>,' + dum + ' found <strong>'  + data.count + '</strong> products');
+
+
+                        var guidedSearch = '<ul><li><strong>Guided Search:</strong></li> ';
+
+                        for (var i = 0; i <= data.guided_search.length; i++) {
+                            if (data.guided_search[i] !== undefined)
+                                guidedSearch += '<li><a href="#">' + data.guided_search[i] + '</a></li>';
+                        }
+
+                        guidedSearch += '</ul>';
+
+                        $('#guided-search').html(guidedSearch).find('a').click(function(e) {
+                            e.preventDefault();
+                            var newVal = $('#suggestions').val() + ' ' +  $(this).text();
+                            $('#suggestions').val(newVal);
+                            search(newVal);
+                        });
 
                         var items = that.getProductTemplate(data, 4, true);
 
@@ -373,8 +395,8 @@ dataJetDemo = {
                                 }
                             });
 
-                            $('#price-min').val(data.facets.price.min);
-                            $('#price-max').val(data.facets.price.max);
+                            $('#price-min-text').text('min: ' + data.facets.price.min);
+                            $('#price-max-text').text('max: ' + data.facets.price.max);
                             $('.filter-price-title').removeClass('hidden');
                         }
 
@@ -395,7 +417,7 @@ dataJetDemo = {
     showRecentlyViewedFeed: function() {
         var url = this.buildUrl(this.settings.recentlyViewedUrl.replace('REGION', this.customer[this.getCustomer()].region), {
             size: 15,
-            from: 'now-1d',
+            from: 'now-7d',
             key: this.customer[this.getCustomer()].feedKey,
             uuid: this.getUserCookie()
         });

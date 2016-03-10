@@ -36,6 +36,7 @@
                         <button id="search-button" class="btn btn-default" type="submit">Search!</button>
                       </span>
                     <div id="suggestionResults"></div>
+                    <div id="guided-search"></div>
                 </div>
             </form>
         </div>
@@ -53,12 +54,16 @@
     <div class="row search hidden">
         <div class="col-md-2">
             <div class="filters">
-                <h4>Filter Results</h4>
                 <h5 class="filter-price-title hidden">Price Range</h5>
-                <div class="filter-price">
-                    <input type="text" id="price-min" placeholder="min price">
-                    -
-                    <input type="text" id="price-max" placeholder="max price">
+                <div class="filter-price row">
+                    <div class="col-md-6">
+                        <div id="price-min-text"></div>
+                        <input type="text" id="price-min">
+                    </div>
+                    <div class="col-md-6">
+                        <div id="price-max-text"></div>
+                        <input type="text" id="price-max">
+                    </div>
                 </div>
                 <h5 class="filter-brand-title">Brand</h5>
                 <div class="filter-brand">
