@@ -19,7 +19,7 @@ $.widget("custom.catcomplete", $.ui.autocomplete, {
 
         switch (item.ty) {
             case 0: // Category
-                label = (brand) ? '<span class="dj-itemCategory">' + brand + ' <span class="dj-seperator">in</span> ' + title + '</span>' : '<span class="dj-itemCategory">' + title + ' <span class="dj-seperator">em</span> ' + cat + '</span>';
+                label = (brand) ? '<span class="dj-itemCategory">' + brand + ' <span class="dj-seperator">in</span> ' + title + '</span>' : '<span class="dj-itemCategory">' + title + ' <span class="dj-seperator">in</span> ' + cat + '</span>';
                 break;
             case 1:  // Product
                 var thumbnail = (item.th) ? '<span class="dj-itemThumbnail"><img src="' + imgUrl + '/m_' + item.th + '"></span>' : "";

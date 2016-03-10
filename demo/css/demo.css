@@ -708,6 +708,8 @@ h3 {
     font-weight: normal;
     max-width: 144px;
     vertical-align: top;
+    margin-left: -12px;
+    padding-left: 20px;
 }
 
 #guided-search {
@@ -733,3 +735,16 @@ h3 {
     font-size: 13px;
     margin-top: 2px;
 }
+
+.filter-category a {
+    color: black;
+}
+
+.filter-category a.checked {
+    font-weight: bold;
+}
+
+.filter-category li li{
+    margin-left: 15px;
+}
+

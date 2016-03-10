@@ -266,19 +266,20 @@ dataJetDemo = {
                     fields: 'id,title,price,images,brand',
                     dum: 'replace',
                     size: 18,
+                    sort:'relevance',
                     dum_count: 0,
                     q: keyword,
                     key: that.customer[that.getCustomer()].feedKey,
                     rq: 5,
                     gs: 5,
-                    category_dept: 1
+                    category_dept: 3
                 });
 
                 url += '&facet=price&facet=color&facet=brand&facet=category';
 
                 for (var i = 0; i <= that.data.brandFilters.length; i++) {
                     if (that.data.brandFilters[i] !== undefined)
-                        url += '&filter=brand:' + that.data.brandFilters[i];
+                        url += '&filter=brand:' + encodeURIComponent(that.data.brandFilters[i]);
                 }
 
                 for (i = 0; i <= that.data.colorFilters.length; i++) {
@@ -286,9 +287,8 @@ dataJetDemo = {
                         url += '&filter=color:' + that.data.colorFilters[i];
                 }
 
-                for (i = 0; i <= that.data.categoryFilters.length; i++) {
-                    if (that.data.categoryFilters[i] !== undefined)
-                        url += '&filter=category:' + that.data.categoryFilters[i];
+                if (that.data.categoryFilters.length > 0) {
+                    url += '&filter=category:' + encodeURIComponent(that.data.categoryFilters[that.data.categoryFilters.length - 1]);
                 }
 
                 if (that.data.priceFilters['min']) {
@@ -353,11 +353,13 @@ dataJetDemo = {
                         $('.search, .search-header').removeClass('hidden');
 
                         function brandClick() {
-                            var el = $(this).find('input');
+                            console.log('jier');
+                            var el = $(this).parent().find('input');
                             if (el[0].checked) {
                                 var index = that.data.brandFilters.indexOf(el.val());
                                 if (index > -1) {
                                     that.data.brandFilters.splice(index, 1);
+                                    console.log('hier')
                                 }
                             } else {
                                 if (that.data.brandFilters.indexOf(el.val()) == -1)
@@ -375,10 +377,10 @@ dataJetDemo = {
                                     checked = ' checked="checked"';
                                 }
 
-                                li += '<li><input' + checked + ' type="checkbox" value="' + data.facets.brand[i].id + '"><label>' + data.facets.brand[i].text + ' (' + data.facets.brand[i].count + ')</label></li>';
+                                li += '<li><input' + checked + ' type="checkbox" value="' + data.facets.brand[i].id + '" id="' + data.facets.brand[i].id + '"><label for="' + data.facets.brand[i].id + '">' + data.facets.brand[i].text + ' (' + data.facets.brand[i].count + ')</label></li>';
                             });
 
-                            $('.filter-brand ul').html(li).find('li').click(brandClick);
+                            $('.filter-brand ul').html(li).find('label').click(brandClick);
                             $('.filter-brand-title').show();
                         }
                         else {
@@ -386,18 +388,10 @@ dataJetDemo = {
                             $('.filter-brand ul').html('')
                         }
 
-                        function categoryClick() {
-                            var el = $(this).find('input');
-                            if (el[0].checked) {
-                                var index = that.data.categoryFilters.indexOf(el.val());
-                                if (index > -1) {
-                                    that.data.categoryFilters.splice(index, 1);
-                                }
-                            } else {
-                                if (that.data.categoryFilters.indexOf(el.val()) == -1)
-                                    that.data.categoryFilters.push(el.val());
-                            }
-
+                        function categoryClick(e) {
+                            e.preventDefault();
+                            var el = $(this);
+                            that.data.categoryFilters[$(this).attr('data-deep') - 1] = el.attr('data-value');
                             search($('#suggestions').val());
                         }
 
@@ -405,20 +399,54 @@ dataJetDemo = {
                             var li = '';
                             $.each(data.facets.category, function(i) {
                                 var checked = '';
-                                if (that.data.categoryFilters.indexOf(data.facets.category[i].id) > -1) {
-                                    checked = ' checked="checked"';
+                                var subCat = '';
+
+                                if (that.data.categoryFilters[0] == data.facets.category[i].id) {
+                                    checked = 'checked"';
+
+
+                                    if (data.facets.category[i].items) {
+                                        subCat = '<ul>';
+                                        $.each(data.facets.category[i].items, function(j) {
+                                            var subChecked = '';
+
+                                            var subSubCat = '';
+                                            if (that.data.categoryFilters[1] == data.facets.category[i].items[j].id) {
+                                                subChecked = 'checked';
+
+                                                if (data.facets.category[i].items[j].items) {
+                                                    subSubCat = '<ul>';
+                                                    $.each(data.facets.category[i].items[j].items, function(k) {
+                                                        var subSubChecked = '';
+
+                                                        if (that.data.categoryFilters[2] == data.facets.category[i].items[j].items[k].id) {
+                                                            subSubChecked = 'checked';
+                                                        }
+                                                        subSubCat += '<li><a href="#" class="' + subSubChecked + '" data-value="' + data.facets.category[i].items[j].items[k].id + '" data-deep="' + data.facets.category[i].items[j].items[k].deep + '">' + data.facets.category[i].items[j].items[k].text + ' (' + data.facets.category[i].items[j].count + ')</a></li>';
+                                                    });
+                                                    subSubCat += '</ul>';
+                                                }
+                                            }
+
+
+
+                                            subCat += '<li><a href="#" class="' + subChecked + '" data-value="' + data.facets.category[i].items[j].id + '" data-deep="' + data.facets.category[i].items[j].deep + '">' + data.facets.category[i].items[j].text + ' (' + data.facets.category[i].items[j].count + ')</a>' + subSubCat + '</li>';
+                                        });
+                                        subCat += '</ul>';
+                                    }
                                 }
 
-                                li += '<li><input' + checked + ' type="checkbox" value="' + data.facets.category[i].id + '"><label>' + data.facets.category[i].text + ' (' + data.facets.category[i].count + ')</label></li>';
+                                li += '<li><a href="#" class="' + checked + '" data-value="' + data.facets.category[i].id + '" data-deep="' + data.facets.category[i].deep + '">' + data.facets.category[i].text + ' (' + data.facets.category[i].count + ')</a>' + subCat + '</li>';
                             });
 
-                            $('.filter-category ul').html(li).find('li').click(categoryClick);
+                            $('.filter-category ul').html(li).find('a').click(categoryClick);
                             $('.filter-category-title').show();
                         }
                         else {
                             that.data.brandFilters = [];
                             $('.filter-brand ul').html('')
                         }
+
 
                         function colorClick() {
                             var el = $(this).find('input');
