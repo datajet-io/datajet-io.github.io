@@ -353,13 +353,11 @@ dataJetDemo = {
                         $('.search, .search-header').removeClass('hidden');
 
                         function brandClick() {
-                            console.log('jier');
                             var el = $(this).parent().find('input');
                             if (el[0].checked) {
                                 var index = that.data.brandFilters.indexOf(el.val());
                                 if (index > -1) {
                                     that.data.brandFilters.splice(index, 1);
-                                    console.log('hier')
                                 }
                             } else {
                                 if (that.data.brandFilters.indexOf(el.val()) == -1)
@@ -391,19 +389,34 @@ dataJetDemo = {
                         function categoryClick(e) {
                             e.preventDefault();
                             var el = $(this);
-                            that.data.categoryFilters[$(this).attr('data-deep') - 1] = el.attr('data-value');
+
+                            if (el.hasClass('checked')) {
+                                if ($(this).attr('data-deep') == 3) {
+                                    that.data.categoryFilters.splice(-1,1);
+                                }
+                                if ($(this).attr('data-deep') == 2) {
+                                    that.data.categoryFilters.splice(-1,2);
+                                }
+                                if ($(this).attr('data-deep') == 1) {
+                                    that.data.categoryFilters.splice(-1,3);
+                                }
+                            } else {
+                                that.data.categoryFilters[$(this).attr('data-deep') - 1] = el.attr('data-value');
+                            }
+
                             search($('#suggestions').val());
                         }
 
                         if (data.facets.category) {
-                            var li = '';
+
+                            li = '';
+
                             $.each(data.facets.category, function(i) {
                                 var checked = '';
                                 var subCat = '';
 
                                 if (that.data.categoryFilters[0] == data.facets.category[i].id) {
                                     checked = 'checked"';
-
 
                                     if (data.facets.category[i].items) {
                                         subCat = '<ul>';
@@ -422,14 +435,11 @@ dataJetDemo = {
                                                         if (that.data.categoryFilters[2] == data.facets.category[i].items[j].items[k].id) {
                                                             subSubChecked = 'checked';
                                                         }
-                                                        subSubCat += '<li><a href="#" class="' + subSubChecked + '" data-value="' + data.facets.category[i].items[j].items[k].id + '" data-deep="' + data.facets.category[i].items[j].items[k].deep + '">' + data.facets.category[i].items[j].items[k].text + ' (' + data.facets.category[i].items[j].count + ')</a></li>';
+                                                        subSubCat += '<li><a href="#" class="' + subSubChecked + '" data-value="' + data.facets.category[i].items[j].items[k].id + '" data-deep="' + data.facets.category[i].items[j].items[k].deep + '">' + data.facets.category[i].items[j].items[k].text + ' (' + data.facets.category[i].items[j].items[k].count + ')</a></li>';
                                                     });
                                                     subSubCat += '</ul>';
                                                 }
                                             }
-
-
-
                                             subCat += '<li><a href="#" class="' + subChecked + '" data-value="' + data.facets.category[i].items[j].id + '" data-deep="' + data.facets.category[i].items[j].deep + '">' + data.facets.category[i].items[j].text + ' (' + data.facets.category[i].items[j].count + ')</a>' + subSubCat + '</li>';
                                         });
                                         subCat += '</ul>';
@@ -446,7 +456,6 @@ dataJetDemo = {
                             that.data.brandFilters = [];
                             $('.filter-brand ul').html('')
                         }
-
 
                         function colorClick() {
                             var el = $(this).find('input');
