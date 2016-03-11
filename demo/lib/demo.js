@@ -640,24 +640,15 @@ dataJetDemo = {
                 });
 
                 var rankedData = {};
-                rankedData.items = [];
+                rankedData.items = data.items;
 
-                $.get(rankerUrl, function(dataRanked) {
-                    $.each(dataRanked.items, function(i) {
-                        $.each(data.items, function(j) {
-                            if (data.items[j].group_id == dataRanked.items[i].id.replace('mx:', '')) {
-                                rankedData.items.push(data.items[j]);
-                            }
-                        });
-                    });
 
-                    var items = that.getProductTemplate(rankedData, 5);
+                var items = that.getProductTemplate(data, 5);
 
-                    $('.trending-products').removeClass('hide');
-                    $('#trending-products-carousel > .carousel-inner').append(items);
-                    $('#trending-products-carousel').carousel({interval: false});
-                    $('.customer').text(that.customer[that.getCustomer()].name)
-                });
+                $('.trending-products').removeClass('hide');
+                $('#trending-products-carousel > .carousel-inner').append(items);
+                $('#trending-products-carousel').carousel({interval: false});
+                $('.customer').text(that.customer[that.getCustomer()].name)
             }
         });
     },
