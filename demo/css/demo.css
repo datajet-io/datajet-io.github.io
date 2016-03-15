@@ -595,9 +595,9 @@ h3 {
 }
 
 .modal-image {
-    width: 150px;
     float: left;
     margin-left: 20px;
+    max-height: 150px;
 }
 
 .modal-brand {

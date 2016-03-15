@@ -167,7 +167,7 @@ dataJetDemo = {
             if (data.items[i].url)
                 items += '<a href="http://' + data.items[i].url.replace('http:', '') + '">';
 
-            items += '<img class="product-image" src="' + imageUrl + '" title="' + data.items[i].title + '" />' +
+            items += '<div class="product-image"><img src="' + imageUrl + '" title="' + data.items[i].title + '" /></div>' +
             '<div class="product-title"><strong>' + data.items[i].brand.name + '</strong> ' + data.items[i].title + '</div>';
 
             if (data.items[i].price) {
@@ -251,7 +251,7 @@ dataJetDemo = {
             $.get(url, function(data) {
                 if (data && data.items) {
 
-                    var items = '<img class="modal-image" src="'+ $('#' + id).parent().find('.product-image').attr('src') +'" title="'+ $('#' + id).parent().find('.product-title').text() +'" />';
+                    var items = '<img class="modal-image" src="'+ $('#' + id).parent().find('.product-image > img').attr('src') +'" title="'+ $('#' + id).parent().find('.product-title').text() +'" />';
 
                     items += '<div class="modal-text"><div class="modal-brand">' + $('#' + id).parent().find('.product-brand').text() + '</div>' + title + '</div><div style="clear: both"></div>';
                     items += '<hr /><h4>Similar Products</h4>';
@@ -575,14 +575,14 @@ dataJetDemo = {
         var that = this;
 
         $.get(url, function(data) {
-            if (data && data.items && data.items[0]) {
+            if (data && data.items && data.items.length > 0) {
                 that.data.recentlyViewed = data;
                 that.showPopularInCategory();
                 that.showYouMightBeInterestedFeed();
 
                 var items = that.getProductTemplate(data, 5);
 
-                $('.recently-viewed').removeClass('hide');
+                $('.recently-viewed').removeClass('hidden');
                 $('#recently-viewed-carousel > .carousel-inner').append(items);
                 $('#recently-viewed-carousel').carousel({interval: false});
             }
@@ -605,10 +605,10 @@ dataJetDemo = {
         var that = this;
 
         $.get(url, function(data) {
-            if (data && data.items) {
+            if (data && data.items && data.items.length > 0) {
                 var items = that.getProductTemplate(data, 5);
 
-                $('.popular-category').removeClass('hide');
+                $('.popular-category').removeClass('hidden');
                 $('.popular-category-title').text(that.ucwords(categoryTitle));
                 $('#popular-category-carousel > .carousel-inner').append(items);
                 $('#popular-category-carousel').carousel({interval: false});
@@ -630,7 +630,7 @@ dataJetDemo = {
                 });
 
                 $.get(url, function(data) {
-                    if (data && data.items) {
+                    if (data && data.items && data.items.length > 0) {
                         for (var i = 0; i<5; i++) {
                             if (itemArr.items.indexOf(data.items[i]) == -1)
                                 itemArr.items.push(data.items[i]);
@@ -643,10 +643,13 @@ dataJetDemo = {
         setTimeout(function() {
             itemArr.items = that.shuffle(itemArr.items);
             var items = that.getProductTemplate(itemArr, 5);
-            $('#interested-in-carousel > .carousel-inner').append(items);
-            $('.interested-in').removeClass('hide');
-            $('#interested-in-carousel').carousel({interval: false});
-        }, 1000);
+
+            if (itemArr.items && itemArr.items.length > 0) {
+                $('#interested-in-carousel > .carousel-inner').append(items);
+                $('.interested-in').removeClass('hidden');
+                $('#interested-in-carousel').carousel({interval: false});
+            }
+        }, 4000);
     },
 
     showTrendingProductsFeed: function() {
@@ -659,10 +662,10 @@ dataJetDemo = {
         var that = this;
 
         $.get(url, function(data) {
-            if (data && data.items) {
+            if (data && data.items && data.items.length > 0) {
                 var items = that.getProductTemplate(data, 5);
 
-                $('.trending-products').removeClass('hide');
+                $('.trending-products').removeClass('hidden');
                 $('#trending-products-carousel > .carousel-inner').append(items);
                 $('#trending-products-carousel').carousel({interval: false});
                 $('.customer').text(that.customer[that.getCustomer()].name)
@@ -692,7 +695,7 @@ dataJetDemo = {
                         '</div></a></div>';
                 });
 
-                $('.popular-categories').removeClass('hide');
+                $('.popular-categories').removeClass('hidden');
                 $('.popular-categories.content').append(items);
             }
         });
