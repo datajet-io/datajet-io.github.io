@@ -136,6 +136,7 @@ dataJetDemo = {
         if (valid) {
             $('.header, .footer').removeClass('hidden');
             $('#logo').attr('src', 'img/' + demoId + '.png');
+            $('body').addClass(demoId);
             return demoId;
         }
     },
@@ -622,6 +623,17 @@ dataJetDemo = {
         var itemArr = {};
         itemArr.items = [];
 
+        function showItems(itemArr) {
+            itemArr.items = that.shuffle(itemArr.items);
+            var items = that.getProductTemplate(itemArr, 5);
+
+            if (itemArr.items && itemArr.items.length > 0) {
+                $('#interested-in-carousel > .carousel-inner').html(items);
+                $('.interested-in').removeClass('hidden');
+                $('#interested-in-carousel').carousel({interval: false});
+            }
+        }
+
         for (var k = 0; (k<3); k++) {
             if (that.data.recentlyViewed.items[k]) {
                 var url = that.buildUrl(that.settings.moreLikeThisUrl.replace('REGION', this.customer[this.getCustomer()].region), {
@@ -632,24 +644,15 @@ dataJetDemo = {
                 $.get(url, function(data) {
                     if (data && data.items && data.items.length > 0) {
                         for (var i = 0; i<5; i++) {
-                            if (itemArr.items.indexOf(data.items[i]) == -1)
+                            if (itemArr.items.indexOf(data.items[i]) == -1) {
                                 itemArr.items.push(data.items[i]);
+                                showItems(itemArr);
+                            }
                         }
                     }
                 });
             }
         }
-
-        setTimeout(function() {
-            itemArr.items = that.shuffle(itemArr.items);
-            var items = that.getProductTemplate(itemArr, 5);
-
-            if (itemArr.items && itemArr.items.length > 0) {
-                $('#interested-in-carousel > .carousel-inner').append(items);
-                $('.interested-in').removeClass('hidden');
-                $('#interested-in-carousel').carousel({interval: false});
-            }
-        }, 4000);
     },
 
     showTrendingProductsFeed: function() {
