@@ -157,7 +157,8 @@ dataJetDemo = {
 
             items += '<div class="product">';
 
-            items += '<a href="http://' + data.items[i].url.replace('http:', '') + '">';
+            if (data.items[i].url)
+                items += '<a href="http://' + data.items[i].url.replace('http:', '') + '">';
 
             items += '<img class="product-image" src="' + imageUrl + '" title="' + data.items[i].title + '" />' +
             '<div class="product-title"><strong>' + data.items[i].brand.name + '</strong> ' + data.items[i].title + '</div>';
@@ -172,8 +173,8 @@ dataJetDemo = {
                 }
             }
 
-            items += '</a>';
-
+            if (data.items[i].url)
+                items += '</a>';
 
             items += '<a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal">more like this</a>';
             items += '<div class="product-brand hide">' + data.items[i].brand.name + '</div>';
@@ -191,7 +192,39 @@ dataJetDemo = {
         } else {
             window.suggest = Datajet.euw(this.customer[this.getCustomer()].feedKey);
         }
+
         window.imgUrl = this.settings.imgUrl.replace('REGION', this.customer[this.getCustomer()].region);
+    },
+
+    ranker: function() {
+        var ids = '';
+
+        $.each(data.items, function(i) {
+            ids += data.items[i].group_id + ','
+        });
+
+        ids = ids.substring(0, ids.length - 1);
+
+        var rankerUrl = this.buildUrl(this.settings.rankerUrl, {
+            product_id: ids,
+            key: this.customer[this.getCustomer()].feedKey,
+            uuid: this.getUserCookie()
+        });
+
+        var rankedData = {};
+        rankedData.items = data.items;
+
+        $.get(rankerUrl, function(dataRanked) {
+            $.each(dataRanked.items, function(i) {
+                $.each(data.items, function(j) {
+                    if (data.items[j].group_id == dataRanked.items[i].id.replace('mx:', '')) {
+                        rankedData.items.push(data.items[j]);
+                    }
+                });
+            });
+
+            return rankedData;
+        });
     },
 
     showProductDetailModal: function() {
@@ -284,17 +317,14 @@ dataJetDemo = {
                         url += '&filter=color:' + that.data.colorFilters[i];
                 }
 
-                if (that.data.categoryFilters.length > 0) {
+                if (that.data.categoryFilters.length > 0)
                     url += '&filter=category:' + encodeURIComponent(that.data.categoryFilters[that.data.categoryFilters.length - 1]);
-                }
 
-                if (that.data.priceFilters['min']) {
+                if (that.data.priceFilters['min'])
                     url += '&filter=price_min:' + that.data.priceFilters['min'];
-                }
 
-                if (that.data.priceFilters['max']) {
+                if (that.data.priceFilters['max'])
                     url += '&filter=price_max:' + that.data.priceFilters['max'];
-                }
 
                 $.get(url, function(data) {
                     if (data && data.items) {
@@ -387,19 +417,15 @@ dataJetDemo = {
                             var el = $(this);
 
                             if (el.hasClass('checked')) {
-                                if ($(this).attr('data-deep') == 3) {
+                                if ($(this).attr('data-deep') == 3)
                                     that.data.categoryFilters.splice(-1,1);
-                                }
-                                else if ($(this).attr('data-deep') == 2) {
+                                else if ($(this).attr('data-deep') == 2)
                                     that.data.categoryFilters.splice(-1,2);
-                                }
-                                else if ($(this).attr('data-deep') == 1) {
+                                else if ($(this).attr('data-deep') == 1)
                                     that.data.categoryFilters.splice(-1,3);
-                                }
                             } else {
-                                if ($(this).attr('data-deep') == 1) {
+                                if ($(this).attr('data-deep') == 1)
                                     that.data.categoryFilters.splice(-1,2);
-                                }
 
                                 that.data.categoryFilters[$(this).attr('data-deep') - 1] = el.attr('data-value');
                             }
@@ -625,24 +651,6 @@ dataJetDemo = {
 
         $.get(url, function(data) {
             if (data && data.items) {
-                var ids = '';
-
-                $.each(data.items, function(i) {
-                    ids += data.items[i].group_id + ','
-                });
-
-                ids = ids.substring(0, ids.length - 1);
-
-                var rankerUrl = that.buildUrl(that.settings.rankerUrl, {
-                    product_id: ids,
-                    key: that.customer[that.getCustomer()].feedKey,
-                    uuid: that.getUserCookie()
-                });
-
-                var rankedData = {};
-                rankedData.items = data.items;
-
-
                 var items = that.getProductTemplate(data, 5);
 
                 $('.trending-products').removeClass('hide');
