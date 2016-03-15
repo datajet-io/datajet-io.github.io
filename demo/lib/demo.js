@@ -32,6 +32,13 @@ dataJetDemo = {
             imgUrl: '//media.linio.com.mx',
             region: 'euw',
             currency: '€'
+        },
+        eNU8ds: {
+            name: 'Dafiti',
+            feedKey: 'eNU8dsoL2vmD0XBxNLhaKHZbGxflaKE',
+            imgUrl: '//media.linio.com.mx',
+            region: 'sae',
+            currency: 'R$'
         }
     },
 
@@ -616,19 +623,21 @@ dataJetDemo = {
         itemArr.items = [];
 
         for (var k = 0; (k<3); k++) {
-            var url = that.buildUrl(that.settings.moreLikeThisUrl.replace('REGION', this.customer[this.getCustomer()].region), {
-                sku: that.data.recentlyViewed.items[k].id,
-                key: that.customer[that.getCustomer()].feedKey
-            });
+            if (that.data.recentlyViewed.items[k]) {
+                var url = that.buildUrl(that.settings.moreLikeThisUrl.replace('REGION', this.customer[this.getCustomer()].region), {
+                    sku: that.data.recentlyViewed.items[k].id,
+                    key: that.customer[that.getCustomer()].feedKey
+                });
 
-            $.get(url, function(data) {
-                if (data && data.items) {
-                    for (var i = 0; i<5; i++) {
-                        if (itemArr.items.indexOf(data.items[i]) == -1)
-                            itemArr.items.push(data.items[i]);
+                $.get(url, function(data) {
+                    if (data && data.items) {
+                        for (var i = 0; i<5; i++) {
+                            if (itemArr.items.indexOf(data.items[i]) == -1)
+                                itemArr.items.push(data.items[i]);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         setTimeout(function() {

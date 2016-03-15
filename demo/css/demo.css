@@ -574,7 +574,7 @@ h3 {
 }
 
 .modal .modal-body {
-    max-height: 400px;
+    max-height: 460px;
     overflow-y: auto;
 }
 
@@ -595,7 +595,7 @@ h3 {
 }
 
 .modal-image {
-    width: 200px;
+    width: 150px;
     float: left;
     margin-left: 20px;
 }
