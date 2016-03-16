@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Suggester Demo</title>
+    <link rel="stylesheet" href="suggester.css">
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="seer.min.js"></script>
+    <script src="seer.jquery.js"></script>
+    <script>
+        /* suggester config */
+        imgUrl = "http://seer.sae.datajet.io/i";
+        var CLIENT_KEY = '0EvqpslI1Z8LQeroeHrqW3BJMQWlaw2'; // Your key to access hawk
+        var FEED_KEY = 'eNU8dsoL2vmD0XBxNLhaKHZbGxflaKE'; // Your key to access feeds and seer
+        var API_HOST = 'hawk.euw.datajet.io';
+        var suggest = Datajet.sae(FEED_KEY);
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.ui-autocomplete').css('width', $('#suggestions').width());
+
+            if ($(window).width() < 768) {
+                $('body').addClass("mobile");
+            }
+            else {
+                $('body').removeClass("mobile");
+            }
+
+            $(window).resize(function () {
+                $('.ui-autocomplete').css('width', $('#suggestions').width());
+
+                if ($(window).width() < 768) {
+                    $('body').addClass("mobile");
+                    $('#suggestions').css('width', '100%');
+                }
+                else {
+                    $('body').removeClass("mobile");
+                    $('#suggestions').css('width', '406px');
+                }
+            });
+        });
+    </script>
+    <style>
+
+        body {
+            margin: 20px;
+        }
+
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="suggestions" name="q" placeholder="Search for products...">
+    </div>
+</body>
+</html>
