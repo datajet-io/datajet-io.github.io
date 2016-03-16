@@ -58,10 +58,10 @@ $.widget("custom.catcomplete", $.ui.autocomplete, {
             if (item.ty != currentType) {
                 switch (item.ty) {
                     case 0: // Category
-                        categoryName = "Search Results";
+                        categoryName = "SUGESTÕES DE BUSCA";
                         break;
                     case 1:  // Product
-                        categoryName = "Related Products";
+                        categoryName = "PRODUTOS RELACIONADOS";
                         break;
                     case 2:  // Search
                         categoryName = "Search for";
