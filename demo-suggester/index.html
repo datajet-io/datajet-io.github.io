@@ -20,18 +20,16 @@
 
     <script>
         $(document).ready(function() {
-            $('.ui-autocomplete').css('width', $('#suggestions').width());
-
             if ($(window).width() < 768) {
                 $('body').addClass("mobile");
+                $('#suggestions').css('width', '100%');
             }
             else {
                 $('body').removeClass("mobile");
+                $('#suggestions').css('width', '406px');
             }
 
             $(window).resize(function () {
-                $('.ui-autocomplete').css('width', $('#suggestions').width());
-
                 if ($(window).width() < 768) {
                     $('body').addClass("mobile");
                     $('#suggestions').css('width', '100%');
