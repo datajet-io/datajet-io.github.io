@@ -22,21 +22,17 @@
         $(document).ready(function() {
             if ($(window).width() < 768) {
                 $('body').addClass("mobile");
-                $('#suggestions').css('width', '100%');
             }
             else {
                 $('body').removeClass("mobile");
-                $('#suggestions').css('width', '406px');
             }
 
             $(window).resize(function () {
                 if ($(window).width() < 768) {
                     $('body').addClass("mobile");
-                    $('#suggestions').css('width', '100%');
                 }
                 else {
                     $('body').removeClass("mobile");
-                    $('#suggestions').css('width', '406px');
                 }
             });
         });
@@ -62,6 +58,10 @@
 
         #suggestions {
             border: none;
+            width: 100%!important;
+            line-height: 18px;
+            padding-left: 13px!important;
+            font-size: 16px!important;
         }
     </style>
 </head>
