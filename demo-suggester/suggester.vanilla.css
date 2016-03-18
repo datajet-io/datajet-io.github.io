@@ -1,0 +1,64 @@
+input#suggestions {
+    font-size: 13px;
+    padding: 6px;
+    min-width: 400px;
+    outline: none;
+    margin: 20px auto 0 auto;
+    display: block;
+}
+
+.dj-autocomplete-suggestions {
+    position: absolute;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    font-size: 12px;
+    display: block!important;
+
+}
+
+.dj-autocomplete-suggestion {
+    padding: 6px 10px 4px;
+    display: block;
+    color: black;
+    text-decoration: none;
+}
+
+.dj-autocomplete-suggestion.selected, .dj-autocomplete-suggestion:hover {
+    background-color: #f5f5f5;
+}
+
+.dj-autocomplete-suggestion.product {
+    width: 25%;
+    float: left;
+    text-align: center;
+    padding: 0 4px;
+    box-sizing: border-box;
+    height: 170px;
+}
+
+.dj-autocomplete-category {
+    display: block;
+    background: #ececec;
+    padding: 6px 10px 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.dj-item-img {
+    max-width: 100%;
+    margin: 5px 0;
+}
+
+.dj-item-brand {
+    display: block;
+}
+
+.dj-item-price {
+    display: block;
+}
+
+.dj-item-title {
+    display: block;
+    height: 27px;
+    overflow: hidden;
+}
