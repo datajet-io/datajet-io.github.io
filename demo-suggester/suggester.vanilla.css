@@ -1,10 +1,23 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
 input#suggestions {
     font-size: 13px;
     padding: 6px;
-    min-width: 400px;
+    width: 380px;
     outline: none;
-    margin: 20px auto 0 auto;
+    margin: 20px auto;
     display: block;
+    box-sizing: border-box;
+}
+
+@media only screen and (min-device-width: 780px) {
+    input#suggestions {
+        width: 100%;
+        margin: 0 auto;
+    }
 }
 
 .dj-autocomplete-suggestions {
