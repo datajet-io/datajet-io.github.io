@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="hawk" id="html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Demo</title>
+
+    <link rel="icon" href="http://datajet.io/img/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/demo.css">
+
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script src="lib/seer.vanilla.min.js"></script>
+    <script src="lib/demo.js"></script>
+</head>
+<body>
+<div class="container">
+    <!--Header-->
+    <div class="row header hidden">
+        <i class='icon-spinner icon-spin icon-large'></i>
+        <div class="col-xs-4">
+            <a href="/demo" class="logo"><img id="logo" /></a>
+        </div>
+        <div class="col-xs-6">
+            <form>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="suggestions" name="q" placeholder="Search for products...">
+                      <span class="input-group-btn button-container">
+                        <button id="search-button" class="btn btn-default" type="submit">Search!</button>
+                      </span>
+                    <div id="suggestionResults"></div>
+                    <div id="guided-search"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--/Header-->
+
+    <!--Search-->
+    <div class="row search-header hidden">
+        <div class="col-md-12">
+            <h3 class="title">Search Results</h3>
+            <span class="info"></span>
+        </div>
+    </div>
+
+    <div class="row search hidden">
+        <div class="col-md-2">
+            <div class="filters">
+                <h5 class="filter-category-title">Categories</h5>
+                <div class="filter-category">
+                    <ul></ul>
+                </div>
+                <h5 class="filter-price-title">Price Range</h5>
+                <div class="filter-price row">
+                    <div class="col-md-6">
+                        <div id="price-min-text"></div>
+                        <input type="text" id="price-min">
+                    </div>
+                    <div class="col-md-6">
+                        <div id="price-max-text"></div>
+                        <input type="text" id="price-max">
+                    </div>
+                </div>
+                <h5 class="filter-brand-title">Brands</h5>
+                <div class="filter-brand">
+                    <ul></ul>
+                </div>
+                <h5 class="filter-color-title">Color</h5>
+                <div class="filter-color">
+                    <ul></ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="search-results"></div>
+        </div>
+    </div>
+    <hr class="search hidden">
+    <!--/Search-->
+
+    <!--Popular Categories-->
+    <div class="row popular-categories hidden">
+        <div class="col-md-12">
+            <h3>Popular Categories</h3>
+        </div>
+    </div>
+
+    <div class="row popular-categories hidden content"></div>
+    <!--/Popular Categories-->
+
+    <!--Recently viewed products-->
+    <div class="row recently-viewed hidden">
+        <div class="col-md-12">
+            <h3>Recently Viewed Products</h3>
+        </div>
+        <div class="carousel slide col-md-12" id="recently-viewed-carousel">
+            <div class="carousel-inner"></div>
+            <div class="control-box">
+                <a data-slide="prev" href="#recently-viewed-carousel" class="carousel-control left">‹</a>
+                <a data-slide="next" href="#recently-viewed-carousel" class="carousel-control right">›</a>
+            </div>
+        </div>
+    </div>
+    <!--/Recently viewed products-->
+
+    <!--Popular in category-->
+    <div class="row popular-category hidden">
+        <div class="col-md-12">
+            <h3>Popular in "<span class="popular-category-title"></span>"</h3>
+        </div>
+        <div class="carousel slide col-md-12" id="popular-category-carousel">
+            <div class="carousel-inner"></div>
+            <div class="control-box">
+                <a data-slide="prev" href="#popular-category-carousel" class="carousel-control left">‹</a>
+                <a data-slide="next" href="#popular-category-carousel" class="carousel-control right">›</a>
+            </div>
+        </div>
+    </div>
+    <!--/Popular in category-->
+
+    <!--You might be interested in-->
+    <div class="row interested-in hidden">
+        <div class="col-md-12">
+            <h3>You might be interested in</h3>
+        </div>
+        <div class="carousel slide col-md-12" id="interested-in-carousel">
+            <div class="carousel-inner"></div>
+            <div class="control-box">
+                <a data-slide="prev" href="#interested-in-carousel" class="carousel-control left">‹</a>
+                <a data-slide="next" href="#interested-in-carousel" class="carousel-control right">›</a>
+            </div>
+        </div>
+    </div>
+    <!--/You might be interested in-->
+
+    <!--Trending-->
+    <div class="row trending-products hidden">
+        <div class="col-md-12">
+            <h3>Trending in <span class="customer"></span></h3>
+        </div>
+        <div class="carousel slide col-md-12" id="trending-products-carousel">
+            <div class="carousel-inner"></div>
+            <div class="control-box">
+                <a data-slide="prev" href="#trending-products-carousel" class="carousel-control left">‹</a>
+                <a data-slide="next" href="#trending-products-carousel" class="carousel-control right">›</a>
+            </div>
+        </div>
+    </div>
+    <!--/Trending-->
+
+    <!--Footer-->
+    <div class="row footer hidden">
+        <div class="col-md-12 text-center">
+            2016 @ datajet.io
+        </div>
+    </div>
+    <!--/Footer-->
+
+    <!--Modal-->
+    <div id="modal-category" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+    <!--/Modal-->
+
+    <!--Modal-->
+    <div id="modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+    <!--/Modal-->
+</div>
+</body>
+</html>
