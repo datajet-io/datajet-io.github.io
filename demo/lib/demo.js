@@ -11,11 +11,14 @@ dataJetDemo = {
         recentlyViewedUrl: 'http://feed.REGION.datajet.io/1.1/recentlyviewed',
         moreLikeThisUrl: 'http://feed.REGION.datajet.io/1.1/morelikethis',
         bestSellersUrl: 'http://feed.REGION.datajet.io/1.1/bestsellers',
-        trendingProductsUrl: 'http://feed.REGION.datajet.io/1.1/trendingProducts',
+        trendingProductsUrl: 'http://feed.REGION.datajet.io/1.1/trendingproducts',
         popularCategoriesUrl: 'http://feed.REGION.datajet.io/1.1/popularcategories',
+        popularInCategoryUrl: 'http://feed.REGION.datajet.io/1.1/popularincategory',
+        youMightLikeThisUrl: 'http://feed.REGION.datajet.io/1.1/youmightlike',
         searchUrl: 'https://hawk.REGION.datajet.io/1.0/product/',
         rankerUrl: 'https://ranker.datajet.io/0.1/score',
-        imgUrl: 'http://seer.REGION.datajet.io/i'
+        suggesterImgUrl: 'http://seer.REGION.datajet.io/i',
+        dateRange: 'now-1w'
     },
 
     customer: {
@@ -48,6 +51,8 @@ dataJetDemo = {
             this.showSearch();
             this.showProductDetailModal();
             this.showRecentlyViewedFeed();
+            this.showPopularInCategory();
+            this.showYouMightLikeFeed();
             this.showTrendingProductsFeed();
             this.showPopularCategories();
         }
@@ -169,7 +174,7 @@ dataJetDemo = {
                 items += '<a href="http://' + data.items[i].url.replace('http:', '') + '">';
 
             items += '<div class="product-image"><img src="' + imageUrl + '" title="' + data.items[i].title + '" /></div>' +
-            '<div class="product-title"><strong>' + data.items[i].brand.name + '</strong> ' + data.items[i].title + '</div>';
+                '<div class="product-title"><strong>' + data.items[i].brand.name + '</strong> ' + data.items[i].title + '</div>';
 
             if (data.items[i].price) {
                 if (data.items[i].price.current) {
@@ -195,13 +200,17 @@ dataJetDemo = {
     },
 
     showSuggester: function() {
-        if (this.customer[this.getCustomer()].region == 'usw') {
-            window.suggest = Datajet.usw(this.customer[this.getCustomer()].feedKey);
-        } else {
-            window.suggest = Datajet.euw(this.customer[this.getCustomer()].feedKey);
+        var region = this.customer[this.getCustomer()].region;
+
+        if (region == 'usw') {
+            window.suggester = Datajet.usw(this.customer[this.getCustomer()].feedKey);
+        } else if (region == 'sae') {
+            window.suggester = Datajet.sae(this.customer[this.getCustomer()].feedKey);
+        } else if (region == 'euw') {
+            window.suggester = Datajet.euw(this.customer[this.getCustomer()].feedKey);
         }
 
-        window.imgUrl = this.settings.imgUrl.replace('REGION', this.customer[this.getCustomer()].region);
+        window.suggesterImgUrl = this.settings.suggesterImgUrl.replace('REGION', region);
     },
 
     ranker: function() {
@@ -272,7 +281,7 @@ dataJetDemo = {
 
             var url = that.buildUrl(that.settings.bestSellersUrl.replace('REGION', that.customer[that.getCustomer()].region), {
                 size: 6,
-                from: 'now-1d',
+                from: that.settings.dateRange,
                 category: title,
                 key: that.customer[that.getCustomer()].feedKey
             });
@@ -566,20 +575,18 @@ dataJetDemo = {
     },
 
     showRecentlyViewedFeed: function() {
+        var that = this;
+
         var url = this.buildUrl(this.settings.recentlyViewedUrl.replace('REGION', this.customer[this.getCustomer()].region), {
             size: 15,
-            from: 'now-7d',
+            from: this.settings.dateRange,
             key: this.customer[this.getCustomer()].feedKey,
             uuid: this.getUserCookie()
         });
 
-        var that = this;
-
         $.get(url, function(data) {
             if (data && data.items && data.items.length > 0) {
                 that.data.recentlyViewed = data;
-                that.showPopularInCategory();
-                that.showYouMightBeInterestedFeed();
 
                 var items = that.getProductTemplate(data, 5);
 
@@ -591,16 +598,10 @@ dataJetDemo = {
     },
 
     showPopularInCategory: function() {
-        if (this.data.recentlyViewed.items[0]) {
-            var data = this.data.recentlyViewed.items[0].categories[0];
-            var categoryTitle = data[data.length - 1].name;
-        }
-
-        var url = this.buildUrl(this.settings.bestSellersUrl.replace('REGION', this.customer[this.getCustomer()].region), {
-            size: 15,
-            from: 'now-1d',
+        var url = this.buildUrl(this.settings.popularInCategoryUrl.replace('REGION', this.customer[this.getCustomer()].region), {
+            from: this.settings.dateRange,
             key: this.customer[this.getCustomer()].feedKey,
-            category: categoryTitle
+            uuid: this.getUserCookie()
         });
 
         var that = this;
@@ -610,55 +611,37 @@ dataJetDemo = {
                 var items = that.getProductTemplate(data, 5);
 
                 $('.popular-category').removeClass('hidden');
-                $('.popular-category-title').text(that.ucwords(categoryTitle));
+                $('.popular-category-title').text(that.ucwords(data.items[0].categories[0][1].name));
                 $('#popular-category-carousel > .carousel-inner').append(items);
                 $('#popular-category-carousel').carousel({interval: false});
             }
         });
     },
 
-    showYouMightBeInterestedFeed: function() {
+    showYouMightLikeFeed: function() {
+        var url = this.buildUrl(this.settings.youMightLikeThisUrl.replace('REGION', this.customer[this.getCustomer()].region), {
+            from: this.settings.dateRange,
+            key: this.customer[this.getCustomer()].feedKey,
+            uuid: this.getUserCookie()
+        });
+
         var that = this;
 
-        var itemArr = {};
-        itemArr.items = [];
+        $.get(url, function(data) {
+            if (data && data.items && data.items.length > 0) {
+                var items = that.getProductTemplate(data, 5);
 
-        function showItems(itemArr) {
-            itemArr.items = that.shuffle(itemArr.items);
-            var items = that.getProductTemplate(itemArr, 5);
-
-            if (itemArr.items && itemArr.items.length > 0) {
                 $('#interested-in-carousel > .carousel-inner').html(items);
                 $('.interested-in').removeClass('hidden');
                 $('#interested-in-carousel').carousel({interval: false});
             }
-        }
-
-        for (var k = 0; (k<3); k++) {
-            if (that.data.recentlyViewed.items[k]) {
-                var url = that.buildUrl(that.settings.moreLikeThisUrl.replace('REGION', this.customer[this.getCustomer()].region), {
-                    sku: that.data.recentlyViewed.items[k].id,
-                    key: that.customer[that.getCustomer()].feedKey
-                });
-
-                $.get(url, function(data) {
-                    if (data && data.items && data.items.length > 0) {
-                        for (var i = 0; i<5; i++) {
-                            if (itemArr.items.indexOf(data.items[i]) == -1) {
-                                itemArr.items.push(data.items[i]);
-                                showItems(itemArr);
-                            }
-                        }
-                    }
-                });
-            }
-        }
+        });
     },
 
     showTrendingProductsFeed: function() {
         var url = this.buildUrl(this.settings.trendingProductsUrl.replace('REGION', this.customer[this.getCustomer()].region), {
             size: 15,
-            from: 'now-1d',
+            from: this.settings.dateRange,
             key: this.customer[this.getCustomer()].feedKey
         });
 
@@ -679,7 +662,7 @@ dataJetDemo = {
     showPopularCategories: function() {
         var url = this.buildUrl(this.settings.popularCategoriesUrl.replace('REGION', this.customer[this.getCustomer()].region), {
             size: 6,
-            from: 'now-1d',
+            from: this.settings.dateRange,
             key: this.customer[this.getCustomer()].feedKey
         });
 
