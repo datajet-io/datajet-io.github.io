@@ -10,7 +10,7 @@ dataJetDemo = {
 
     settings: {
         recentlyViewedUrl: 'http://feed.REGION.datajet.io/1.1/recentlyviewed',
-        specialDealsUrl: 'http://feed-test.REGION.datajet.io/1.1/specialdeals',
+        specialDealsUrl: 'http://feed.REGION.datajet.io/1.1/specialdeals',
         moreLikeThisUrl: 'http://feed.REGION.datajet.io/1.1/morelikethis',
         bestSellersUrl: 'http://feed.REGION.datajet.io/1.1/bestsellers',
         trendingProductsUrl: 'http://feed.REGION.datajet.io/1.1/trendingproducts',
