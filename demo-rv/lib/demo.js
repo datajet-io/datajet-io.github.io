@@ -53,6 +53,7 @@ dataJetDemo = {
             this.showSearch();
             this.showProductDetailModal();
             this.showRecentlyViewedFeed();
+            this.showSpecialDealsFeed();
             this.showPopularInCategory();
             this.showYouMightLikeFeed();
             this.showTrendingProductsFeed();
