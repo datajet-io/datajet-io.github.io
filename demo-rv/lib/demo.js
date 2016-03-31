@@ -9,14 +9,14 @@ dataJetDemo = {
     },
 
     settings: {
-        recentlyViewedUrl: 'http://feed.REGION.datajet.io/1.1/recentlyviewed',
-        specialDealsUrl: 'http://feed.REGION.datajet.io/1.1/specialdeals',
-        moreLikeThisUrl: 'http://feed.REGION.datajet.io/1.1/morelikethis',
-        bestSellersUrl: 'http://feed.REGION.datajet.io/1.1/bestsellers',
-        trendingProductsUrl: 'http://feed.REGION.datajet.io/1.1/trendingproducts',
-        popularCategoriesUrl: 'http://feed.REGION.datajet.io/1.1/popularcategories',
-        popularInCategoryUrl: 'http://feed.REGION.datajet.io/1.1/popularincategory',
-        youMightLikeThisUrl: 'http://feed.REGION.datajet.io/1.1/youmightlike',
+        recentlyViewedUrl: 'http://feed-test.REGION.datajet.io/1.1/recentlyviewed',
+        specialDealsUrl: 'http://feed-test.REGION.datajet.io/1.1/specialdeals',
+        moreLikeThisUrl: 'http://feed-test.REGION.datajet.io/1.1/morelikethis',
+        bestSellersUrl: 'http://feed-test.REGION.datajet.io/1.1/bestsellers',
+        trendingProductsUrl: 'http://feed-test.REGION.datajet.io/1.1/trendingproducts',
+        popularCategoriesUrl: 'http://feed-test.REGION.datajet.io/1.1/popularcategories',
+        popularInCategoryUrl: 'http://feed-test.REGION.datajet.io/1.1/popularincategory',
+        youMightLikeThisUrl: 'http://feed-test.REGION.datajet.io/1.1/youmightlike',
         searchUrl: 'https://hawk.REGION.datajet.io/1.0/product/',
         rankerUrl: 'https://ranker.datajet.io/0.1/score',
         suggesterImgUrl: 'http://seer.REGION.datajet.io/i',
@@ -701,7 +701,7 @@ dataJetDemo = {
                 $.each(data.items, function(i) {
                     items +=
                         '<div class="col-md-4">' +
-                        '<a id="' + data.items[i].title.replace(/\s+/g, '-') + '" href="#" class="product-link" data-toggle="modal" data-target="#modal-category">' +
+                        '<a id="' + data.items[i].title.replace(' ','-').replace(' ','-') + '" href="#" class="product-link" data-toggle="modal" data-target="#modal-category">' +
                         '<div class="category" style="background-image: url(' + data.items[i].images[0] + ')">' +
                         '<div class="product-title" data-val="' + data.items[i].title + '">' + that.ucwords(data.items[i].title) + '</div>' +
                         '</div></a></div>';
