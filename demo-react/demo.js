@@ -19812,11 +19812,6 @@
 	    }
 
 	    _createClass(Demo, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            this.checkAuth('pYJDcB');
-	        }
-	    }, {
 	        key: 'checkAuth',
 	        value: function checkAuth(id) {
 	            if (customer[id]) {
@@ -19932,7 +19927,7 @@
 	                    type: 'text',
 	                    onChange: this._customerIdChange.bind(this),
 	                    placeholder: 'Enter Customer Id',
-	                    value: 'pYJDc'
+	                    value: ''
 	                }),
 	                this.state.customerId && _react2.default.createElement(
 	                    'div',
