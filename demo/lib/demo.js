@@ -52,6 +52,8 @@ dataJetDemo = {
         }
     },
 
+
+
     init: function() {
         if (this.getCustomer()) {
             this.showSuggester();
