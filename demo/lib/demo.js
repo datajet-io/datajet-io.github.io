@@ -47,12 +47,10 @@ dataJetDemo = {
             name: 'Zalora',
             feedKey: 'lkmifsd2X28mLGpj0sdzvhNhjpXmkI0',
             imgUrl: '//static.zalora.net',
-            region: 'sae',
+            region: 'apse',
             currency: '$'
         }
     },
-
-
 
     init: function() {
         if (this.getCustomer()) {
