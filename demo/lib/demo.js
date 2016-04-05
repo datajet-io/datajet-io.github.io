@@ -48,7 +48,7 @@ dataJetDemo = {
             feedKey: 'lkmifsd2X28mLGpj0sdzvhNhjpXmkI0',
             imgUrl: '//static.zalora.net',
             region: 'apse',
-            currency: '$'
+            currency: 'RP'
         }
     },
 
@@ -313,6 +313,10 @@ dataJetDemo = {
 
     showSearch: function() {
         var that = this;
+
+        if (that.customer[that.getCustomer()].name == 'Zalora') {
+            $('#search-container').hide();
+        }
 
         function search(keyword) {
             if (keyword !== undefined && keyword !== '') {
