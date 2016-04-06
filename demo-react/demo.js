@@ -19725,6 +19725,14 @@
 	        region: 'sae',
 	        currency: 'R$',
 	        dateRange: 'now-1w'
+	    },
+	    lkmifs: {
+	        name: 'Zalora',
+	        feedKey: 'lkmifsd2X28mLGpj0sdzvhNhjpXmkI0',
+	        imgUrl: '//static.zalora.net',
+	        region: 'apse',
+	        currency: 'RP',
+	        dateRange: 'now-1w'
 	    }
 	};
 
@@ -19812,6 +19820,26 @@
 	    }
 
 	    _createClass(Demo, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var key = this.getParameterByName('key');
+
+	            if (key) {
+	                this.checkAuth(key);
+	            }
+	        }
+	    }, {
+	        key: 'getParameterByName',
+	        value: function getParameterByName(name) {
+	            var url = window.location.href;
+	            name = name.replace(/[\[\]]/g, "\\$&");
+	            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
+	                results = regex.exec(url);
+	            if (!results) return null;
+	            if (!results[2]) return '';
+	            return decodeURIComponent(results[2].replace(/\+/g, " "));
+	        }
+	    }, {
 	        key: 'checkAuth',
 	        value: function checkAuth(id) {
 	            if (customer[id]) {
@@ -19847,17 +19875,6 @@
 	        key: 'closeModal',
 	        value: function closeModal() {
 	            this.setState({ showProductModal: false, showCategoryModal: false });
-	        }
-	    }, {
-	        key: '_customerIdChange',
-	        value: function _customerIdChange(event) {
-	            var id = event.target.value;
-	            this.checkAuth(id);
-	        }
-	    }, {
-	        key: '_resetCustomerId',
-	        value: function _resetCustomerId() {
-	            this.setState({ customerId: null, customer: null });
 	        }
 	    }, {
 	        key: 'buildUrl',
@@ -19923,12 +19940,6 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'container' },
-	                !this.state.customerId && _react2.default.createElement('input', {
-	                    type: 'text',
-	                    onChange: this._customerIdChange.bind(this),
-	                    placeholder: 'Enter Customer Id',
-	                    value: ''
-	                }),
 	                this.state.customerId && _react2.default.createElement(
 	                    'div',
 	                    null,
@@ -19938,8 +19949,7 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'col-xs-4' },
-	                            _react2.default.createElement('img', { className: 'logo', src: 'img/' + this.state.customerId + '.png',
-	                                onClick: this._resetCustomerId.bind(this) })
+	                            _react2.default.createElement('img', { className: 'logo', src: '/img/' + this.state.customerId + '.png' })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
