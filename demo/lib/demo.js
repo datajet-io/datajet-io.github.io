@@ -15,6 +15,7 @@ dataJetDemo = {
         popularCategoriesUrl: 'http://feed.REGION.datajet.io/1.1/popularcategories',
         popularInCategoryUrl: 'http://feed.REGION.datajet.io/1.1/popularincategory',
         youMightLikeThisUrl: 'http://feed.REGION.datajet.io/1.1/youmightlike',
+        specialDealsUrl: 'http://feed.REGION.datajet.io/1.1/specialdeals',
         searchUrl: 'https://hawk.REGION.datajet.io/1.0/product/',
         rankerUrl: 'https://ranker.datajet.io/0.1/score',
         suggesterImgUrl: 'http://seer.REGION.datajet.io/i',
@@ -61,6 +62,7 @@ dataJetDemo = {
             this.showPopularInCategory();
             this.showYouMightLikeFeed();
             this.showTrendingProductsFeed();
+            this.showSpecialDealsFeed();
             this.showPopularCategories();
         }
     },
@@ -645,6 +647,26 @@ dataJetDemo = {
                 $('#interested-in-carousel > .carousel-inner').html(items);
                 $('.interested-in').removeClass('hidden');
                 $('#interested-in-carousel').carousel({interval: false});
+            }
+        });
+    },
+
+
+    showSpecialDealsFeed: function() {
+        var url = this.buildUrl(this.settings.specialDealsUrl.replace('REGION', this.customer[this.getCustomer()].region), {
+            key: this.customer[this.getCustomer()].feedKey,
+            uuid: this.getUserCookie()
+        });
+
+        var that = this;
+
+        $.get(url, function(data) {
+            if (data && data.items && data.items.length > 0) {
+                var items = that.getProductTemplate(data, 5);
+
+                $('#special-deals-carousel > .carousel-inner').html(items);
+                $('.special-deals').removeClass('hidden');
+                $('#special-deals-carousel').carousel({interval: false});
             }
         });
     },
