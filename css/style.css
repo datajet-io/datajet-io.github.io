@@ -883,7 +883,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 #data {
-  padding-bottom: 1px;
+  padding: 20px 0;
 }
 
 #team {
