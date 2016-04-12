@@ -867,3 +867,26 @@ fieldset[disabled] .btn-primary.active {
 .pace-inactive {
   display: none;
 }
+
+.profile-images {
+   text-align: center;
+}
+
+.profile-images img {
+  width: 140px;
+  height: 140px;
+  border-radius: 70px;
+}
+
+.profile-row {
+  margin-bottom: 20px;
+}
+
+#data {
+  padding-bottom: 1px;
+}
+
+#team {
+  padding-top: 20px;
+}
+
