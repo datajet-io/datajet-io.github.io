@@ -869,13 +869,28 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .profile-images {
-   text-align: center;
+  text-align: center;
+
 }
 
 .profile-images img {
-  width: 140px;
-  height: 140px;
-  border-radius: 70px;
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  position: relative;
+}
+
+.profile-images .info {
+  display: none;
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  background-color: rgba(15, 9, 6, 0.60);
+  color: white;
+  position: absolute;
+  top: 0;
+  left: 37px;
+  padding-top: 42px;
 }
 
 .profile-row {
@@ -883,10 +898,9 @@ fieldset[disabled] .btn-primary.active {
 }
 
 #data {
-  padding: 20px 0;
+  padding-top: 20px;
 }
 
 #team {
   padding-top: 20px;
 }
-
