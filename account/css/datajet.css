@@ -54,7 +54,7 @@ input.submit {
 
 input.submit:hover, input.submit:focus {
     background-color: #0CB0A1;
-    transition: 0.4s ease all;
+    transition: 0.25s ease all;
 }
 
 .input-holder {
@@ -62,7 +62,7 @@ input.submit:hover, input.submit:focus {
 }
 
 ::-webkit-input-placeholder {
-    color: #aeaeae;
+    color: #9d9d9d;
 }
 
 h3 {
@@ -111,7 +111,7 @@ h4 {
     bottom: 10px;
     position: absolute;
     background: #0CB0A1;
-    transition: 0.2s ease all;
+    transition: 0.5s ease all;
 }
 
 .bar:before {
@@ -129,6 +129,6 @@ h4 {
 
 :focus::-webkit-input-placeholder {
     opacity: 0.25;
-    -webkit-transition: opacity 0.7s ease-in-out;
-    transition: opacity 0.7s ease-in-out;
+    -webkit-transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
 }
