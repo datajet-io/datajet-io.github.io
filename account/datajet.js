@@ -25655,7 +25655,7 @@
 	            } else {
 
 	                var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance
-	                xmlhttp.open("POST", "https://auth.datajet.io/login");
+	                xmlhttp.open("POST", "http://auth.datajet.io/login");
 	                xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	                xmlhttp.send(JSON.stringify({
 	                    email: email,
