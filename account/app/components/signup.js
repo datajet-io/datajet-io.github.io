@@ -24,9 +24,7 @@ class SignupView extends App {
         this.setState({emailWarning: null, passwordWarning: null});
 
         if (!this.validateEmail(email)) {
-            if (email.length > 0) {
-                this.setState({emailWarning: 'Please enter a valid email address'});
-            }
+            this.setState({emailWarning: 'Please enter a valid email address'});
             ReactDOM.findDOMNode(this.refs.email).focus();
         } else if (password.length < 6) {
             if (password.length > 0) {
@@ -41,11 +39,12 @@ class SignupView extends App {
                     password: password
                 })
             }).then((data) => {
-                console.log(data);
                 return data.json();
             }).then((response) => {
-                console.log(response);
-                this.setState({success: true});
+                if (response.status === 'ok')
+                    this.setState({success: true});
+                else if(response.status === 'error')
+                    this.setState({emailWarning: response.message});
             }).catch((e) => {
                 console.log(e);
             });

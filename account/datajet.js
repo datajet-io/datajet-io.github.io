@@ -25641,6 +25641,8 @@
 	    _createClass(LoginView, [{
 	        key: 'onSubmitForm',
 	        value: function onSubmitForm() {
+	            var _this2 = this;
+
 	            var email = this.state.email;
 	            var password = this.state.password;
 
@@ -25664,16 +25666,12 @@
 	                        password: password
 	                    })
 	                }).then(function (data) {
-	                    console.log(data);
-
 	                    return data.json();
 	                }).then(function (response) {
-	                    console.log(response);
-	                    //this.setState({success: true});
+	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ emailWarning: response.message });
 	                }).catch(function (e) {
 	                    console.log(e);
 	                });
-	                //this.setState({success: true});
 	            }
 	        }
 	    }, {
@@ -25734,10 +25732,10 @@
 	                            onFocus: this.handleEmailFocus
 	                        }),
 	                        _react2.default.createElement('span', { className: 'bar' }),
-	                        this.state.usernameWarning && _react2.default.createElement(
+	                        this.state.emailWarning && _react2.default.createElement(
 	                            'div',
 	                            { className: 'warning' },
-	                            this.state.usernameWarning
+	                            this.state.emailWarning
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -25952,9 +25950,7 @@
 	            this.setState({ emailWarning: null, passwordWarning: null });
 
 	            if (!this.validateEmail(email)) {
-	                if (email.length > 0) {
-	                    this.setState({ emailWarning: 'Please enter a valid email address' });
-	                }
+	                this.setState({ emailWarning: 'Please enter a valid email address' });
 	                _reactDom2.default.findDOMNode(this.refs.email).focus();
 	            } else if (password.length < 6) {
 	                if (password.length > 0) {
@@ -25969,11 +25965,9 @@
 	                        password: password
 	                    })
 	                }).then(function (data) {
-	                    console.log(data);
 	                    return data.json();
 	                }).then(function (response) {
-	                    console.log(response);
-	                    _this2.setState({ success: true });
+	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ emailWarning: response.message });
 	                }).catch(function (e) {
 	                    console.log(e);
 	                });

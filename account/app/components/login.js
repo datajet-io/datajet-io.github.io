@@ -41,16 +41,15 @@ class LoginView extends App {
                     password: password
                 })
             }).then((data) => {
-                console.log(data);
-
                 return data.json();
             }).then((response) => {
-                console.log(response);
-                //this.setState({success: true});
+                if (response.status === 'ok')
+                    this.setState({success: true});
+                else if(response.status === 'error')
+                    this.setState({emailWarning: response.message});
             }).catch((e) => {
                 console.log(e);
             });
-            //this.setState({success: true});
         }
     }
 
@@ -97,7 +96,7 @@ class LoginView extends App {
                                onFocus={this.handleEmailFocus}
                         />
                         <span className="bar"></span>
-                        {this.state.usernameWarning && <div className="warning">{this.state.usernameWarning}</div>}
+                        {this.state.emailWarning && <div className="warning">{this.state.emailWarning}</div>}
                     </div>
 
                     <div className="input-holder">
