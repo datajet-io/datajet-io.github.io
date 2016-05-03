@@ -27,9 +27,7 @@ class SignupView extends App {
             this.setState({emailWarning: 'Please enter a valid email address'});
             ReactDOM.findDOMNode(this.refs.email).focus();
         } else if (password.length < 6) {
-            if (password.length > 0) {
-                this.setState({passwordWarning: 'Password should be at least 6 chars'});
-            }
+            this.setState({passwordWarning: 'Password should be at least 6 chars'});
             ReactDOM.findDOMNode(this.refs.password).focus();
         } else {
             fetch('https://auth.datajet.io/register', {
@@ -44,7 +42,7 @@ class SignupView extends App {
                 if (response.status === 'ok')
                     this.setState({success: true});
                 else if(response.status === 'error')
-                    this.setState({emailWarning: response.message});
+                    this.setState({passwordWarning: response.message});
             }).catch((e) => {
                 console.log(e);
             });

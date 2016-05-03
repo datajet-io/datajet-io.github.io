@@ -24,32 +24,21 @@ class LoginView extends App {
         this.setState({emailWarning: null, passwordWarning: null});
 
         if (!this.validateEmail(email)) {
-            if (email.length > 0) {
-                this.setState({emailWarning: 'Please enter a valid email address'});
-            }
+            this.setState({emailWarning: 'Please enter a valid email address'});
             ReactDOM.findDOMNode(this.refs.email).focus();
         } else if (password.length < 6) {
-            if (password.length > 0) {
-                this.setState({passwordWarning: 'Password should be at least 6 chars'});
-            }
+            this.setState({passwordWarning: 'Password should be at least 6 chars'});
             ReactDOM.findDOMNode(this.refs.password).focus();
         } else {
-            fetch('https://auth.datajet.io/login', {
-                method: 'POST',
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
-            }).then((data) => {
-                return data.json();
-            }).then((response) => {
-                if (response.status === 'ok')
-                    this.setState({success: true});
-                else if(response.status === 'error')
-                    this.setState({emailWarning: response.message});
-            }).catch((e) => {
-                console.log(e);
-            });
+
+
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+            xmlhttp.open("POST", "https://auth.datajet.io/login");
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xmlhttp.send(JSON.stringify({
+                email: email,
+                password: password
+            }));
         }
     }
 

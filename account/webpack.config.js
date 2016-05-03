@@ -10,6 +10,9 @@ var plugins = [
             'SERVER': JSON.stringify(process.env['SERVER'] || ''),
             'CLIENT_KEY': JSON.stringify(process.env['CLIENT_KEY'] || '')
         }
+    }),
+    new webpack.ProvidePlugin({
+        'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     })
 ];
 
