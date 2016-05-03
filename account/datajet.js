@@ -62,7 +62,7 @@
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _signup = __webpack_require__(232);
+	var _signup = __webpack_require__(233);
 
 	var _signup2 = _interopRequireDefault(_signup);
 
@@ -74,7 +74,7 @@
 
 	var _notFound2 = _interopRequireDefault(_notFound);
 
-	var _App = __webpack_require__(231);
+	var _App = __webpack_require__(232);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -25590,7 +25590,7 @@
 /* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(fetch) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -25606,7 +25606,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _App2 = __webpack_require__(231);
+	var _App2 = __webpack_require__(232);
 
 	var _App3 = _interopRequireDefault(_App2);
 
@@ -25641,6 +25641,8 @@
 	    _createClass(LoginView, [{
 	        key: 'onSubmitForm',
 	        value: function onSubmitForm() {
+	            var _this2 = this;
+
 	            var email = this.state.email;
 	            var password = this.state.password;
 
@@ -25653,15 +25655,20 @@
 	                this.setState({ passwordWarning: 'Password should be at least 6 chars' });
 	                _reactDom2.default.findDOMNode(this.refs.password).focus();
 	            } else {
-
-	                var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance
-	                xmlhttp.open("POST", "http://auth.datajet.io/login");
-	                xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-	                xmlhttp.withCredentials = true;
-	                xmlhttp.send(JSON.stringify({
-	                    email: email,
-	                    password: password
-	                }));
+	                fetch('https://auth.datajet.io/login', {
+	                    method: 'POST',
+	                    credentials: 'include',
+	                    body: JSON.stringify({
+	                        email: email,
+	                        password: password
+	                    })
+	                }).then(function (data) {
+	                    return data.json();
+	                }).then(function (response) {
+	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
+	                }).catch(function (e) {
+	                    console.log(e);
+	                });
 	            }
 	        }
 	    }, {
@@ -25765,307 +25772,10 @@
 	}(_App3.default);
 
 	exports.default = LoginView;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(231)))
 
 /***/ },
 /* 231 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(165);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var App = function (_React$Component) {
-	    _inherits(App, _React$Component);
-
-	    function App() {
-	        _classCallCheck(this, App);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
-	    }
-
-	    _createClass(App, [{
-	        key: '_bind',
-	        value: function _bind() {
-	            var _this2 = this;
-
-	            for (var _len = arguments.length, methods = Array(_len), _key = 0; _key < _len; _key++) {
-	                methods[_key] = arguments[_key];
-	            }
-
-	            methods.forEach(function (method) {
-	                return _this2[method] = _this2[method].bind(_this2);
-	            });
-	        }
-	    }, {
-	        key: 'validateEmail',
-	        value: function validateEmail(email) {
-	            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	            return re.test(email);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement('img', { className: 'logo', src: 'logo.svg', alt: 'datajet' }),
-	                _react2.default.createElement(
-	                    'ul',
-	                    { className: 'nav' },
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/login' },
-	                            'Login'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/signup' },
-	                            'Signup'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/forgotpassword' },
-	                            'Forgot Password'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'box' },
-	                    _react2.default.createElement(
-	                        'h3',
-	                        null,
-	                        'Welcome to datajet!'
-	                    ),
-	                    this.props && _react2.default.cloneElement(this.props.children)
-	                )
-	            );
-	        }
-	    }]);
-
-	    return App;
-	}(_react2.default.Component);
-
-	exports.default = App;
-
-/***/ },
-/* 232 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(fetch) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(31);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _App2 = __webpack_require__(231);
-
-	var _App3 = _interopRequireDefault(_App2);
-
-	var _reactRouter = __webpack_require__(165);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SignupView = function (_App) {
-	    _inherits(SignupView, _App);
-
-	    function SignupView(props) {
-	        _classCallCheck(this, SignupView);
-
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignupView).call(this, props));
-
-	        _this._bind('handleEmailChange', 'handlePasswordChange', 'handleKeyPress', 'onSubmitForm', 'handleEmailFocus', 'handlePasswordFocus');
-
-	        _this.state = {
-	            email: '',
-	            password: '',
-	            success: false
-	        };
-	        return _this;
-	    }
-
-	    _createClass(SignupView, [{
-	        key: 'onSubmitForm',
-	        value: function onSubmitForm() {
-	            var _this2 = this;
-
-	            var email = this.state.email;
-	            var password = this.state.password;
-
-	            this.setState({ emailWarning: null, passwordWarning: null });
-
-	            if (!this.validateEmail(email)) {
-	                this.setState({ emailWarning: 'Please enter a valid email address' });
-	                _reactDom2.default.findDOMNode(this.refs.email).focus();
-	            } else if (password.length < 6) {
-	                this.setState({ passwordWarning: 'Password should be at least 6 chars' });
-	                _reactDom2.default.findDOMNode(this.refs.password).focus();
-	            } else {
-	                fetch('https://auth.datajet.io/register', {
-	                    method: 'POST',
-	                    body: JSON.stringify({
-	                        email: email,
-	                        password: password
-	                    })
-	                }).then(function (data) {
-	                    return data.json();
-	                }).then(function (response) {
-	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
-	                }).catch(function (e) {
-	                    console.log(e);
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'handleKeyPress',
-	        value: function handleKeyPress(event) {
-	            if (event.key === 'Enter') {
-	                this.onSubmitForm();
-	            }
-	        }
-	    }, {
-	        key: 'handleEmailChange',
-	        value: function handleEmailChange(event) {
-	            this.setState({ email: event.target.value });
-	        }
-	    }, {
-	        key: 'handleEmailFocus',
-	        value: function handleEmailFocus() {
-	            this.setState({ passwordWarning: null });
-	        }
-	    }, {
-	        key: 'handlePasswordChange',
-	        value: function handlePasswordChange(event) {
-	            this.setState({ password: event.target.value });
-	        }
-	    }, {
-	        key: 'handlePasswordFocus',
-	        value: function handlePasswordFocus() {
-	            this.setState({ emailWarning: null });
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            _reactDom2.default.findDOMNode(this.refs.email).focus();
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'container' },
-	                _react2.default.createElement(
-	                    'h4',
-	                    null,
-	                    'Create your free datajet account to get started.'
-	                ),
-	                !this.state.success && _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'input-holder' },
-	                        _react2.default.createElement('input', { className: 'input',
-	                            ref: 'email',
-	                            type: 'text',
-	                            placeholder: 'Enter your e-mail address',
-	                            onChange: this.handleEmailChange,
-	                            onKeyPress: this.handleKeyPress,
-	                            onFocus: this.handleEmailFocus
-	                        }),
-	                        _react2.default.createElement('span', { className: 'bar' }),
-	                        this.state.emailWarning && _react2.default.createElement(
-	                            'div',
-	                            { className: 'warning' },
-	                            this.state.emailWarning
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'input-holder' },
-	                        _react2.default.createElement('input', { className: 'input',
-	                            ref: 'password',
-	                            type: 'password',
-	                            placeholder: 'Choose a password',
-	                            onChange: this.handlePasswordChange,
-	                            onKeyPress: this.handleKeyPress,
-	                            onFocus: this.handlePasswordFocus
-	                        }),
-	                        _react2.default.createElement('span', { className: 'bar' }),
-	                        this.state.passwordWarning && _react2.default.createElement(
-	                            'div',
-	                            { className: 'warning' },
-	                            this.state.passwordWarning
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'input-holder' },
-	                        _react2.default.createElement('input', { type: 'submit', value: 'Sign up', className: 'submit', onClick: this.onSubmitForm })
-	                    )
-	                ),
-	                this.state.success && _react2.default.createElement(
-	                    'div',
-	                    { className: 'success' },
-	                    'Registration successful. Please check your email for instructions'
-	                )
-	            );
-	        }
-	    }]);
-
-	    return SignupView;
-	}(_App3.default);
-
-	exports.default = SignupView;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(233)))
-
-/***/ },
-/* 233 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*** IMPORTS FROM imports-loader ***/
@@ -26512,6 +26222,304 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(165);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var App = function (_React$Component) {
+	    _inherits(App, _React$Component);
+
+	    function App() {
+	        _classCallCheck(this, App);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+	    }
+
+	    _createClass(App, [{
+	        key: '_bind',
+	        value: function _bind() {
+	            var _this2 = this;
+
+	            for (var _len = arguments.length, methods = Array(_len), _key = 0; _key < _len; _key++) {
+	                methods[_key] = arguments[_key];
+	            }
+
+	            methods.forEach(function (method) {
+	                return _this2[method] = _this2[method].bind(_this2);
+	            });
+	        }
+	    }, {
+	        key: 'validateEmail',
+	        value: function validateEmail(email) {
+	            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	            return re.test(email);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement('img', { className: 'logo', src: 'logo.svg', alt: 'datajet' }),
+	                _react2.default.createElement(
+	                    'ul',
+	                    { className: 'nav' },
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/login' },
+	                            'Login'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/signup' },
+	                            'Signup'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/forgotpassword' },
+	                            'Forgot Password'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'box' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Welcome to datajet!'
+	                    ),
+	                    this.props && _react2.default.cloneElement(this.props.children)
+	                )
+	            );
+	        }
+	    }]);
+
+	    return App;
+	}(_react2.default.Component);
+
+	exports.default = App;
+
+/***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(fetch) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(31);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _App2 = __webpack_require__(232);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	var _reactRouter = __webpack_require__(165);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SignupView = function (_App) {
+	    _inherits(SignupView, _App);
+
+	    function SignupView(props) {
+	        _classCallCheck(this, SignupView);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignupView).call(this, props));
+
+	        _this._bind('handleEmailChange', 'handlePasswordChange', 'handleKeyPress', 'onSubmitForm', 'handleEmailFocus', 'handlePasswordFocus');
+
+	        _this.state = {
+	            email: '',
+	            password: '',
+	            success: false
+	        };
+	        return _this;
+	    }
+
+	    _createClass(SignupView, [{
+	        key: 'onSubmitForm',
+	        value: function onSubmitForm() {
+	            var _this2 = this;
+
+	            var email = this.state.email;
+	            var password = this.state.password;
+
+	            this.setState({ emailWarning: null, passwordWarning: null });
+
+	            if (!this.validateEmail(email)) {
+	                this.setState({ emailWarning: 'Please enter a valid email address' });
+	                _reactDom2.default.findDOMNode(this.refs.email).focus();
+	            } else if (password.length < 6) {
+	                this.setState({ passwordWarning: 'Password should be at least 6 chars' });
+	                _reactDom2.default.findDOMNode(this.refs.password).focus();
+	            } else {
+	                fetch('https://auth.datajet.io/register', {
+	                    method: 'POST',
+	                    body: JSON.stringify({
+	                        email: email,
+	                        password: password
+	                    })
+	                }).then(function (data) {
+	                    return data.json();
+	                }).then(function (response) {
+	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
+	                }).catch(function (e) {
+	                    console.log(e);
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'handleKeyPress',
+	        value: function handleKeyPress(event) {
+	            if (event.key === 'Enter') {
+	                this.onSubmitForm();
+	            }
+	        }
+	    }, {
+	        key: 'handleEmailChange',
+	        value: function handleEmailChange(event) {
+	            this.setState({ email: event.target.value });
+	        }
+	    }, {
+	        key: 'handleEmailFocus',
+	        value: function handleEmailFocus() {
+	            this.setState({ passwordWarning: null });
+	        }
+	    }, {
+	        key: 'handlePasswordChange',
+	        value: function handlePasswordChange(event) {
+	            this.setState({ password: event.target.value });
+	        }
+	    }, {
+	        key: 'handlePasswordFocus',
+	        value: function handlePasswordFocus() {
+	            this.setState({ emailWarning: null });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _reactDom2.default.findDOMNode(this.refs.email).focus();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'h4',
+	                    null,
+	                    'Create your free datajet account to get started.'
+	                ),
+	                !this.state.success && _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'input-holder' },
+	                        _react2.default.createElement('input', { className: 'input',
+	                            ref: 'email',
+	                            type: 'text',
+	                            placeholder: 'Enter your e-mail address',
+	                            onChange: this.handleEmailChange,
+	                            onKeyPress: this.handleKeyPress,
+	                            onFocus: this.handleEmailFocus
+	                        }),
+	                        _react2.default.createElement('span', { className: 'bar' }),
+	                        this.state.emailWarning && _react2.default.createElement(
+	                            'div',
+	                            { className: 'warning' },
+	                            this.state.emailWarning
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'input-holder' },
+	                        _react2.default.createElement('input', { className: 'input',
+	                            ref: 'password',
+	                            type: 'password',
+	                            placeholder: 'Choose a password',
+	                            onChange: this.handlePasswordChange,
+	                            onKeyPress: this.handleKeyPress,
+	                            onFocus: this.handlePasswordFocus
+	                        }),
+	                        _react2.default.createElement('span', { className: 'bar' }),
+	                        this.state.passwordWarning && _react2.default.createElement(
+	                            'div',
+	                            { className: 'warning' },
+	                            this.state.passwordWarning
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'input-holder' },
+	                        _react2.default.createElement('input', { type: 'submit', value: 'Sign up', className: 'submit', onClick: this.onSubmitForm })
+	                    )
+	                ),
+	                this.state.success && _react2.default.createElement(
+	                    'div',
+	                    { className: 'success' },
+	                    'Registration successful. Please check your email for instructions'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SignupView;
+	}(_App3.default);
+
+	exports.default = SignupView;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(231)))
+
+/***/ },
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -26531,7 +26539,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _App2 = __webpack_require__(231);
+	var _App2 = __webpack_require__(232);
 
 	var _App3 = _interopRequireDefault(_App2);
 

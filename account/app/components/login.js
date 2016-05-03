@@ -30,16 +30,23 @@ class LoginView extends App {
             this.setState({passwordWarning: 'Password should be at least 6 chars'});
             ReactDOM.findDOMNode(this.refs.password).focus();
         } else {
-
-
-            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-            xmlhttp.open("POST", "http://auth.datajet.io/login");
-            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xmlhttp.withCredentials = true;
-            xmlhttp.send(JSON.stringify({
-                email: email,
-                password: password
-            }));
+            fetch('https://auth.datajet.io/login', {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            }).then((data) => {
+                return data.json();
+            }).then((response) => {
+                if (response.status === 'ok')
+                    this.setState({success: true});
+                else if(response.status === 'error')
+                    this.setState({passwordWarning: response.message});
+            }).catch((e) => {
+                console.log(e);
+            });
         }
     }
 
