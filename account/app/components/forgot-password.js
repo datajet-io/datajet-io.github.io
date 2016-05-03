@@ -57,13 +57,15 @@ class ForgotPasswordView extends App {
                 {!this.state.success &&
                 <div>
                     <div className="input-holder">
-                        <input ref="email"
+                        <input className="input"
+                               ref="email"
                                type="text"
                                placeholder="Enter your e-mail address"
                                onChange={this.handleEmailChange}
                                onKeyPress={this.handleKeyPress}
                                onFocus={this.handleEmailFocus}
                         />
+                        <span className="bar"></span>
                         {this.state.emailWarning && <div className="warning">{this.state.emailWarning}</div>}
                     </div>
 

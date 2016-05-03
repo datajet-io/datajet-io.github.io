@@ -8,7 +8,7 @@ class LoginView extends App {
     constructor(props) {
         super(props);
 
-        this._bind('handleUsernameChange', 'handlePasswordChange', 'handleKeyPress', 'onSubmitForm', 'handleUsernameFocus', 'handlePasswordFocus');
+        this._bind('handleEmailChange', 'handlePasswordChange', 'handleKeyPress', 'onSubmitForm', 'handleEmailFocus', 'handlePasswordFocus');
 
         this.state = {
             username: '',
@@ -18,23 +18,39 @@ class LoginView extends App {
     }
 
     onSubmitForm() {
-        var username = this.state.username;
+        var email = this.state.email;
         var password = this.state.password;
 
-        this.setState({usernameWarning: null, passwordWarning: null});
+        this.setState({emailWarning: null, passwordWarning: null});
 
-        if (username.length < 6) {
-            if (username.length > 0) {
-                this.setState({usernameWarning: 'Username should be at least 6 chars'});
+        if (!this.validateEmail(email)) {
+            if (email.length > 0) {
+                this.setState({emailWarning: 'Please enter a valid email address'});
             }
-            ReactDOM.findDOMNode(this.refs.username).focus();
+            ReactDOM.findDOMNode(this.refs.email).focus();
         } else if (password.length < 6) {
             if (password.length > 0) {
                 this.setState({passwordWarning: 'Password should be at least 6 chars'});
             }
             ReactDOM.findDOMNode(this.refs.password).focus();
         } else {
-            this.setState({success: true});
+            fetch('https://auth.datajet.io/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            }).then((data) => {
+                console.log(data);
+
+                return data.json();
+            }).then((response) => {
+                console.log(response);
+                //this.setState({success: true});
+            }).catch((e) => {
+                console.log(e);
+            });
+            //this.setState({success: true});
         }
     }
 
@@ -44,16 +60,16 @@ class LoginView extends App {
         }
     }
 
-    handleUsernameChange(event) {
-        this.setState({username: event.target.value});
+    handleEmailChange(event) {
+        this.setState({email: event.target.value});
+    }
+
+    handleEmailFocus() {
+        this.setState({passwordWarning: null});
     }
 
     handlePasswordChange(event) {
         this.setState({password: event.target.value});
-    }
-
-    handleUsernameFocus() {
-        this.setState({passwordWarning: null});
     }
 
     handlePasswordFocus() {
@@ -61,7 +77,7 @@ class LoginView extends App {
     }
 
     componentDidMount() {
-        ReactDOM.findDOMNode(this.refs.username).focus();
+        ReactDOM.findDOMNode(this.refs.email).focus();
     }
 
     render() {
@@ -72,24 +88,28 @@ class LoginView extends App {
                 {!this.state.success &&
                 <div>
                     <div className="input-holder">
-                        <input ref="username"
+                        <input className="input"
+                               ref="email"
                                type="text"
-                               placeholder="Enter your username"
-                               onChange={this.handleUsernameChange}
+                               placeholder="Enter your e-mail address"
+                               onChange={this.handleEmailChange}
                                onKeyPress={this.handleKeyPress}
-                               onFocus={this.handleUsernameFocus}
+                               onFocus={this.handleEmailFocus}
                         />
+                        <span className="bar"></span>
                         {this.state.usernameWarning && <div className="warning">{this.state.usernameWarning}</div>}
                     </div>
 
                     <div className="input-holder">
-                        <input ref="password"
+                        <input className="input"
+                               ref="password"
                                type="password"
                                placeholder="Enter your password"
                                onChange={this.handlePasswordChange}
                                onKeyPress={this.handleKeyPress}
                                onFocus={this.handlePasswordFocus}
                         />
+                        <span className="bar"></span>
                         {this.state.passwordWarning && <div className="warning">{this.state.passwordWarning}</div>}
                     </div>
 

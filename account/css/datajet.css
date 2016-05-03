@@ -7,8 +7,9 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Fira Sans', sans-serif;
     margin: 30px;
+    color: #676a6c;
 }
 
 .container {
@@ -18,7 +19,7 @@ body {
     max-width: 360px;
     margin: 0 auto;
     background-color: #f0f0f0;
-    color: black;
+    color: #676a6c;
     padding: 20px 20px 10px 20px;
     border-radius: 10px;
 }
@@ -34,10 +35,9 @@ input {
     padding: 10px 0;
     border: none;
     width: 100%;
-    box-sizing: border-box;
     background-color: transparent;
-    color: black;
-    border-bottom: 1px solid #0CB0A1;
+    color: #676a6c;
+    border-bottom: 1px solid #aeaeae;
 }
 
 input.submit {
@@ -45,11 +45,16 @@ input.submit {
     width: auto;
     border: none;
     color: white;
-    background-color: #0CB0A1;
+    background-color: #5DC5C1;
     border-radius: 5px;
     float: right;
     cursor: pointer;
     padding: 10px 18px;
+}
+
+input.submit:hover, input.submit:focus {
+    background-color: #0CB0A1;
+    transition: 0.4s ease all;
 }
 
 .input-holder {
@@ -57,7 +62,7 @@ input.submit {
 }
 
 ::-webkit-input-placeholder {
-    color: #0CB0A1;
+    color: #aeaeae;
 }
 
 h3 {
@@ -91,4 +96,39 @@ h4 {
 .nav li a {
     color: #0CB0A1;
     text-decoration: none;
+}
+
+.bar {
+     position: relative;
+     display: block;
+ }
+
+.bar:before,
+.bar:after {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 10px;
+    position: absolute;
+    background: #0CB0A1;
+    transition: 0.2s ease all;
+}
+
+.bar:before {
+    left: 50%;
+}
+
+.bar:after {
+    right: 50%;
+}
+
+.input:focus ~ .bar:before,
+.input:focus ~ .bar:after {
+    width: 50%;
+}
+
+:focus::-webkit-input-placeholder {
+    opacity: 0.25;
+    -webkit-transition: opacity 0.7s ease-in-out;
+    transition: opacity 0.7s ease-in-out;
 }
