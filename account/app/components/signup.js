@@ -13,7 +13,7 @@ class SignupView extends App {
         this.state = {
             email: '',
             password: '',
-            success: false
+            auth: false
         };
     }
 
@@ -40,7 +40,7 @@ class SignupView extends App {
                 return data.json();
             }).then((response) => {
                 if (response.status === 'ok')
-                    this.setState({success: true});
+                    this.setState({auth: true});
                 else if(response.status === 'error')
                     this.setState({passwordWarning: response.message});
             }).catch((e) => {
@@ -80,43 +80,48 @@ class SignupView extends App {
             <div className="container">
                 <h4>Create your free datajet account to get started.</h4>
 
-                    {!this.state.success &&
-                    <div>
-                        <div className="input-holder">
-                            <input className="input"
-                                   ref="email"
-                                   type="text"
-                                   placeholder="Enter your e-mail address"
-                                   onChange={this.handleEmailChange}
-                                   onKeyPress={this.handleKeyPress}
-                                   onFocus={this.handleEmailFocus}
-                            />
-                            <span className="bar"></span>
-                            {this.state.emailWarning && <div className="warning">{this.state.emailWarning}</div>}
-                        </div>
-
-                        <div className="input-holder">
-                            <input className="input"
-                                   ref="password"
-                                   type="password"
-                                   placeholder="Choose a password"
-                                   onChange={this.handlePasswordChange}
-                                   onKeyPress={this.handleKeyPress}
-                                   onFocus={this.handlePasswordFocus}
-                            />
-                            <span className="bar"></span>
-                            {this.state.passwordWarning && <div className="warning">{this.state.passwordWarning}</div>}
-                        </div>
-
-                        <div className="input-holder">
-                            <input type="submit" value="Sign up" className="submit" onClick={this.onSubmitForm}/>
-                        </div>
+                {!this.state.auth &&
+                <div>
+                    <div className="input-holder">
+                        <input className="input"
+                               ref="email"
+                               type="text"
+                               placeholder="Enter your e-mail address"
+                               onChange={this.handleEmailChange}
+                               onKeyPress={this.handleKeyPress}
+                               onFocus={this.handleEmailFocus}
+                        />
+                        <span className="bar"></span>
+                        {this.state.emailWarning && <div className="warning">{this.state.emailWarning}</div>}
                     </div>
-                    }
 
-                    {this.state.success &&
-                        <div className="success">Registration successful. Please check your email for instructions</div>
-                    }
+                    <div className="input-holder">
+                        <input className="input"
+                               ref="password"
+                               type="password"
+                               placeholder="Choose a password"
+                               onChange={this.handlePasswordChange}
+                               onKeyPress={this.handleKeyPress}
+                               onFocus={this.handlePasswordFocus}
+                        />
+                        <span className="bar"></span>
+                        {this.state.passwordWarning && <div className="warning">{this.state.passwordWarning}</div>}
+                    </div>
+
+                    <div className="input-holder">
+                        <input type="submit" value="Sign up" className="submit" onClick={this.onSubmitForm}/>
+                    </div>
+                </div>
+                }
+
+                {this.state.auth &&
+                    <div className="success">Registration successful. Please check your email for instructions</div>
+                }
+
+                <div className="nav">
+                    <Link to="/login">Login</Link>
+                    <Link to="/forgotpassword">Forgot Password?</Link>
+                </div>
 
             </div>
         );

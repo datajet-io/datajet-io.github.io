@@ -62,19 +62,27 @@
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _signup = __webpack_require__(233);
+	var _signup = __webpack_require__(235);
 
 	var _signup2 = _interopRequireDefault(_signup);
 
-	var _forgotPassword = __webpack_require__(234);
+	var _forgotPassword = __webpack_require__(236);
 
 	var _forgotPassword2 = _interopRequireDefault(_forgotPassword);
 
-	var _notFound = __webpack_require__(235);
+	var _confirmation = __webpack_require__(237);
+
+	var _confirmation2 = _interopRequireDefault(_confirmation);
+
+	var _logout = __webpack_require__(238);
+
+	var _logout2 = _interopRequireDefault(_logout);
+
+	var _notFound = __webpack_require__(239);
 
 	var _notFound2 = _interopRequireDefault(_notFound);
 
-	var _App = __webpack_require__(232);
+	var _App = __webpack_require__(234);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -89,6 +97,8 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _login2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _signup2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'forgotpassword', component: _forgotPassword2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'confirmation', component: _confirmation2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'logout', component: _logout2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/*', component: _notFound2.default })
 	);
 
@@ -25606,7 +25616,11 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _App2 = __webpack_require__(232);
+	var _reactCookie = __webpack_require__(232);
+
+	var _reactCookie2 = _interopRequireDefault(_reactCookie);
+
+	var _App2 = __webpack_require__(234);
 
 	var _App3 = _interopRequireDefault(_App2);
 
@@ -25633,7 +25647,7 @@
 	        _this.state = {
 	            username: '',
 	            password: '',
-	            success: false
+	            auth: _reactCookie2.default.load('auth_token') ? true : false
 	        };
 	        return _this;
 	    }
@@ -25649,7 +25663,7 @@
 	            this.setState({ emailWarning: null, passwordWarning: null });
 
 	            if (!this.validateEmail(email)) {
-	                this.setState({ emailWarning: 'Please enter a valid email address' });
+	                this.setState({ emailWarning: 'Please enter a valid e-mail address' });
 	                _reactDom2.default.findDOMNode(this.refs.email).focus();
 	            } else if (password.length < 6) {
 	                this.setState({ passwordWarning: 'Password should be at least 6 chars' });
@@ -25665,7 +25679,10 @@
 	                }).then(function (data) {
 	                    return data.json();
 	                }).then(function (response) {
-	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
+	                    if (response.status === 'ok') {
+	                        _this2.setState({ auth: true });
+	                        //document.cookie = "auth_token= MTQ2MjM3NDQ0NXxEdi1CQkFFQ180SUFBUkFCRUFBQVNQLUNBQUVHYzNSeWFXNW5EQWdBQm5WelpYSnBaQVp6ZEhKcGJtY01LZ0FvWWprMk9HVTNPR1ZpTkRJd1pHTmxOelZrTUdFME5USTRNVFpsWldGa09URTBZVFppWXpBMU5nPT186eRL; expires=Thu, 18 Dec 2017 12:00:00 UTC; path=/";
+	                    } else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
 	                }).catch(function (e) {
 	                    console.log(e);
 	                });
@@ -25701,7 +25718,7 @@
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            _reactDom2.default.findDOMNode(this.refs.email).focus();
+	            if (this.state.auth === false) _reactDom2.default.findDOMNode(this.refs.email).focus();
 	        }
 	    }, {
 	        key: 'render',
@@ -25709,14 +25726,14 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'container' },
-	                _react2.default.createElement(
-	                    'h4',
-	                    null,
-	                    'Login to your account'
-	                ),
-	                !this.state.success && _react2.default.createElement(
+	                !this.state.auth && _react2.default.createElement(
 	                    'div',
 	                    null,
+	                    _react2.default.createElement(
+	                        'h4',
+	                        null,
+	                        'Login to your account for awesomeness'
+	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'input-holder' },
@@ -25757,12 +25774,44 @@
 	                        'div',
 	                        { className: 'input-holder' },
 	                        _react2.default.createElement('input', { type: 'submit', value: 'Log in', className: 'submit', onClick: this.onSubmitForm })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'nav' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/signup' },
+	                            'Signup'
+	                        ),
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/forgotpassword' },
+	                            'Forgot Password?'
+	                        )
 	                    )
 	                ),
-	                this.state.success && _react2.default.createElement(
+	                this.state.auth && _react2.default.createElement(
 	                    'div',
-	                    { className: 'success' },
-	                    'Welcome to datajet!'
+	                    null,
+	                    _react2.default.createElement(
+	                        'h4',
+	                        null,
+	                        'You are now logged in'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'nav' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/logout' },
+	                            'Logout'
+	                        ),
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/forgotpassword' },
+	                            'Forgot Password?'
+	                        )
+	                    )
 	                )
 	            );
 	        }
@@ -26225,7 +26274,266 @@
 /* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	var cookie = __webpack_require__(233);
+
+	var _rawCookie = {};
+	var _res = undefined;
+
+	function load(name, doNotParse) {
+	  var cookies = (typeof document === 'undefined') ? _rawCookie : cookie.parse(document.cookie);
+	  var cookieVal = cookies && cookies[name];
+
+	  if (!doNotParse) {
+	    try {
+	      cookieVal = JSON.parse(cookieVal);
+	    } catch(e) {
+	      // Not serialized object
+	    }
+	  }
+
+	  return cookieVal;
+	}
+
+	function save(name, val, opt) {
+	  _rawCookie[name] = val;
+
+	  // allow you to work with cookies as objects.
+	  if (typeof val === 'object') {
+	    _rawCookie[name] = JSON.stringify(val);
+	  }
+
+	  // Cookies only work in the browser
+	  if (typeof document !== 'undefined') {
+	    document.cookie = cookie.serialize(name, _rawCookie[name], opt);
+	  }
+
+	  if (_res && _res.cookie) {
+	    _res.cookie(name, val, opt);
+	  }
+	}
+
+	function remove(name, opt) {
+	  delete _rawCookie[name];
+
+	  if (typeof opt === 'undefined') {
+	    opt = {};
+	  } else if (typeof opt === 'string') {
+	    // Will be deprecated in future versions
+	    opt = { path: opt };
+	  }
+
+	  if (typeof document !== 'undefined') {
+	    opt.expires = new Date(1970, 1, 1, 0, 0, 1);
+	    document.cookie = cookie.serialize(name, '', opt);
+	  }
+
+	  if (_res && _res.clearCookie) {
+	    _res.clearCookie(name, opt);
+	  }
+	}
+
+	function setRawCookie(rawCookie) {
+	  if (rawCookie) {
+	    _rawCookie = cookie.parse(rawCookie);
+	  } else {
+	    _rawCookie = {};
+	  }
+	}
+
+	function plugToRequest(req, res) {
+	  if (req.cookie) {
+	    _rawCookie = req.cookie;
+	  } else if (req.headers && req.headers.cookie) {
+	    setRawCookie(req.headers.cookie);
+	  } else {
+	    _rawCookie = {};
+	  }
+
+	  _res = res;
+	}
+
+	var reactCookie = {
+	  load: load,
+	  save: save,
+	  remove: remove,
+	  setRawCookie: setRawCookie,
+	  plugToRequest: plugToRequest
+	};
+
+	if (typeof window !== 'undefined') {
+	  window['reactCookie'] = reactCookie;
+	}
+
+	module.exports = reactCookie;
+
+
+/***/ },
+/* 233 */
+/***/ function(module, exports) {
+
+	/*!
+	 * cookie
+	 * Copyright(c) 2012-2014 Roman Shtylman
+	 * Copyright(c) 2015 Douglas Christopher Wilson
+	 * MIT Licensed
+	 */
+
+	/**
+	 * Module exports.
+	 * @public
+	 */
+
+	exports.parse = parse;
+	exports.serialize = serialize;
+
+	/**
+	 * Module variables.
+	 * @private
+	 */
+
+	var decode = decodeURIComponent;
+	var encode = encodeURIComponent;
+
+	/**
+	 * RegExp to match field-content in RFC 7230 sec 3.2
+	 *
+	 * field-content = field-vchar [ 1*( SP / HTAB ) field-vchar ]
+	 * field-vchar   = VCHAR / obs-text
+	 * obs-text      = %x80-FF
+	 */
+
+	var fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
+
+	/**
+	 * Parse a cookie header.
+	 *
+	 * Parse the given cookie header string into an object
+	 * The object has the various cookies as keys(names) => values
+	 *
+	 * @param {string} str
+	 * @param {object} [options]
+	 * @return {object}
+	 * @public
+	 */
+
+	function parse(str, options) {
+	  if (typeof str !== 'string') {
+	    throw new TypeError('argument str must be a string');
+	  }
+
+	  var obj = {}
+	  var opt = options || {};
+	  var pairs = str.split(/; */);
+	  var dec = opt.decode || decode;
+
+	  pairs.forEach(function(pair) {
+	    var eq_idx = pair.indexOf('=')
+
+	    // skip things that don't look like key=value
+	    if (eq_idx < 0) {
+	      return;
+	    }
+
+	    var key = pair.substr(0, eq_idx).trim()
+	    var val = pair.substr(++eq_idx, pair.length).trim();
+
+	    // quoted values
+	    if ('"' == val[0]) {
+	      val = val.slice(1, -1);
+	    }
+
+	    // only assign once
+	    if (undefined == obj[key]) {
+	      obj[key] = tryDecode(val, dec);
+	    }
+	  });
+
+	  return obj;
+	}
+
+	/**
+	 * Serialize data into a cookie header.
+	 *
+	 * Serialize the a name value pair into a cookie string suitable for
+	 * http headers. An optional options object specified cookie parameters.
+	 *
+	 * serialize('foo', 'bar', { httpOnly: true })
+	 *   => "foo=bar; httpOnly"
+	 *
+	 * @param {string} name
+	 * @param {string} val
+	 * @param {object} [options]
+	 * @return {string}
+	 * @public
+	 */
+
+	function serialize(name, val, options) {
+	  var opt = options || {};
+	  var enc = opt.encode || encode;
+
+	  if (!fieldContentRegExp.test(name)) {
+	    throw new TypeError('argument name is invalid');
+	  }
+
+	  var value = enc(val);
+
+	  if (value && !fieldContentRegExp.test(value)) {
+	    throw new TypeError('argument val is invalid');
+	  }
+
+	  var pairs = [name + '=' + value];
+
+	  if (null != opt.maxAge) {
+	    var maxAge = opt.maxAge - 0;
+	    if (isNaN(maxAge)) throw new Error('maxAge should be a Number');
+	    pairs.push('Max-Age=' + maxAge);
+	  }
+
+	  if (opt.domain) {
+	    if (!fieldContentRegExp.test(opt.domain)) {
+	      throw new TypeError('option domain is invalid');
+	    }
+
+	    pairs.push('Domain=' + opt.domain);
+	  }
+
+	  if (opt.path) {
+	    if (!fieldContentRegExp.test(opt.path)) {
+	      throw new TypeError('option path is invalid');
+	    }
+
+	    pairs.push('Path=' + opt.path);
+	  }
+
+	  if (opt.expires) pairs.push('Expires=' + opt.expires.toUTCString());
+	  if (opt.httpOnly) pairs.push('HttpOnly');
+	  if (opt.secure) pairs.push('Secure');
+
+	  return pairs.join('; ');
+	}
+
+	/**
+	 * Try decoding a string using a decoding function.
+	 *
+	 * @param {string} str
+	 * @param {function} decode
+	 * @private
+	 */
+
+	function tryDecode(str, decode) {
+	  try {
+	    return decode(str);
+	  } catch (e) {
+	    return str;
+	  }
+	}
+
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -26236,8 +26544,6 @@
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(165);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26257,7 +26563,7 @@
 	    }
 
 	    _createClass(App, [{
-	        key: '_bind',
+	        key: "_bind",
 	        value: function _bind() {
 	            var _this2 = this;
 
@@ -26270,56 +26576,25 @@
 	            });
 	        }
 	    }, {
-	        key: 'validateEmail',
+	        key: "validateEmail",
 	        value: function validateEmail(email) {
 	            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	            return re.test(email);
 	        }
 	    }, {
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
+	                "div",
 	                null,
-	                _react2.default.createElement('img', { className: 'logo', src: 'logo.svg', alt: 'datajet' }),
+	                _react2.default.createElement("img", { className: "logo", src: "logo.svg", alt: "datajet" }),
 	                _react2.default.createElement(
-	                    'ul',
-	                    { className: 'nav' },
+	                    "div",
+	                    { className: "box" },
 	                    _react2.default.createElement(
-	                        'li',
+	                        "h3",
 	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/login' },
-	                            'Login'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/signup' },
-	                            'Signup'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/forgotpassword' },
-	                            'Forgot Password'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'box' },
-	                    _react2.default.createElement(
-	                        'h3',
-	                        null,
-	                        'Welcome to datajet!'
+	                        "Welcome to datajet!"
 	                    ),
 	                    this.props && _react2.default.cloneElement(this.props.children)
 	                )
@@ -26333,7 +26608,7 @@
 	exports.default = App;
 
 /***/ },
-/* 233 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(fetch) {'use strict';
@@ -26352,7 +26627,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _App2 = __webpack_require__(232);
+	var _App2 = __webpack_require__(234);
 
 	var _App3 = _interopRequireDefault(_App2);
 
@@ -26379,7 +26654,7 @@
 	        _this.state = {
 	            email: '',
 	            password: '',
-	            success: false
+	            auth: false
 	        };
 	        return _this;
 	    }
@@ -26410,7 +26685,7 @@
 	                }).then(function (data) {
 	                    return data.json();
 	                }).then(function (response) {
-	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
+	                    if (response.status === 'ok') _this2.setState({ auth: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
 	                }).catch(function (e) {
 	                    console.log(e);
 	                });
@@ -26459,7 +26734,7 @@
 	                    null,
 	                    'Create your free datajet account to get started.'
 	                ),
-	                !this.state.success && _react2.default.createElement(
+	                !this.state.auth && _react2.default.createElement(
 	                    'div',
 	                    null,
 	                    _react2.default.createElement(
@@ -26504,10 +26779,24 @@
 	                        _react2.default.createElement('input', { type: 'submit', value: 'Sign up', className: 'submit', onClick: this.onSubmitForm })
 	                    )
 	                ),
-	                this.state.success && _react2.default.createElement(
+	                this.state.auth && _react2.default.createElement(
 	                    'div',
 	                    { className: 'success' },
 	                    'Registration successful. Please check your email for instructions'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'nav' },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/login' },
+	                        'Login'
+	                    ),
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/forgotpassword' },
+	                        'Forgot Password?'
+	                    )
 	                )
 	            );
 	        }
@@ -26520,7 +26809,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(231)))
 
 /***/ },
-/* 234 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26539,7 +26828,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _App2 = __webpack_require__(232);
+	var _App2 = __webpack_require__(234);
 
 	var _App3 = _interopRequireDefault(_App2);
 
@@ -26650,6 +26939,20 @@
 	                    'div',
 	                    { className: 'success' },
 	                    'Please check your email for resetting your password'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'nav' },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/login' },
+	                        'Login'
+	                    ),
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/signup' },
+	                        'Signup'
+	                    )
 	                )
 	            );
 	        }
@@ -26661,7 +26964,167 @@
 	exports.default = ForgotPasswordView;
 
 /***/ },
-/* 235 */
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(165);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ConfirmationView = _react2.default.createClass({
+	    displayName: 'ConfirmationView',
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'container' },
+	            _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Your email is now confirmed.'
+	            ),
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'nav' },
+	                _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/login' },
+	                    'Login'
+	                ),
+	                _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/signup' },
+	                    'Signup'
+	                ),
+	                _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/forgotpassword' },
+	                    'Forgot Password?'
+	                ),
+	                _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/logout' },
+	                    'Logout'
+	                )
+	            )
+	        );
+	    }
+	});
+
+	exports.default = ConfirmationView;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(fetch) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(31);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactCookie = __webpack_require__(232);
+
+	var _reactCookie2 = _interopRequireDefault(_reactCookie);
+
+	var _App2 = __webpack_require__(234);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	var _reactRouter = __webpack_require__(165);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LogoutView = function (_App) {
+	    _inherits(LogoutView, _App);
+
+	    function LogoutView(props) {
+	        _classCallCheck(this, LogoutView);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LogoutView).call(this, props));
+
+	        _this.state = {
+	            auth: false
+	        };
+
+	        fetch('https://auth.datajet.io/logout', {
+	            method: 'POST',
+	            credentials: 'include'
+	        }).then(function (data) {
+	            return data.json();
+	        }).then(function (response) {
+	            if (response.status === 'ok') {
+	                _this.setState({ auth: true });
+	                //ReactCookie.remove('auth_token');
+	            } else if (response.status === 'error') _this.setState({ auth: false });
+	        }).catch(function (e) {
+	            console.log(e);
+	        });
+	        return _this;
+	    }
+
+	    _createClass(LogoutView, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                this.state.auth && _react2.default.createElement(
+	                    'div',
+	                    { className: 'success' },
+	                    'You are now safely logged out.'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'nav' },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/login' },
+	                        'Login'
+	                    ),
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/forgotpassword' },
+	                        'Forgot Password?'
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return LogoutView;
+	}(_App3.default);
+
+	exports.default = LogoutView;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(231)))
+
+/***/ },
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

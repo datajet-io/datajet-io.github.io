@@ -1,5 +1,4 @@
 import React from 'react';
-import { Router, Link } from 'react-router';
 
 class App extends React.Component {
 
@@ -16,13 +15,6 @@ class App extends React.Component {
         return (
             <div>
                 <img className="logo" src="logo.svg" alt="datajet" />
-
-                <ul className="nav">
-                    <li><Link to="/login">Login</Link></li>
-                    <li><Link to="/signup">Signup</Link></li>
-                    <li><Link to="/forgotpassword">Forgot Password</Link></li>
-                </ul>
-
                 <div className="box">
                     <h3>Welcome to datajet!</h3>
                     {this.props && React.cloneElement(this.props.children)}

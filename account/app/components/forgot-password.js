@@ -79,6 +79,10 @@ class ForgotPasswordView extends App {
                 <div className="success">Please check your email for resetting your password</div>
                 }
 
+                <div className="nav">
+                    <Link to="/login">Login</Link>
+                    <Link to="/signup">Signup</Link>
+                </div>
             </div>
         );
     }

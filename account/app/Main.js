@@ -5,6 +5,8 @@ import { createHashHistory } from 'history';
 import LoginView from 'components/login';
 import SignupView from 'components/signup';
 import ForgotPasswordView from 'components/forgot-password';
+import ConfirmationView from 'components/confirmation';
+import LogoutView from 'components/logout';
 import NotFoundView from 'components/not-found';
 
 import App from 'App';
@@ -17,6 +19,8 @@ let routes = (
         <Route path="login" component={LoginView} />
         <Route path="signup" component={SignupView} />
         <Route path="forgotpassword" component={ForgotPasswordView} />
+        <Route path="confirmation" component={ConfirmationView} />
+        <Route path="logout" component={LogoutView} />
         <Route path="/*" component={NotFoundView} />
     </Route>
 );
