@@ -27018,7 +27018,7 @@
 	                }).then(function (data) {
 	                    return data.json();
 	                }).then(function (response) {
-	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
+	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ emailWarning: response.message });
 	                }).catch(function (e) {
 	                    console.log(e);
 	                });
