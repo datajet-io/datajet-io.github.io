@@ -70,15 +70,19 @@
 
 	var _forgotPassword2 = _interopRequireDefault(_forgotPassword);
 
-	var _welcome = __webpack_require__(239);
+	var _resetPassword = __webpack_require__(239);
+
+	var _resetPassword2 = _interopRequireDefault(_resetPassword);
+
+	var _welcome = __webpack_require__(240);
 
 	var _welcome2 = _interopRequireDefault(_welcome);
 
-	var _logout = __webpack_require__(240);
+	var _logout = __webpack_require__(241);
 
 	var _logout2 = _interopRequireDefault(_logout);
 
-	var _notFound = __webpack_require__(241);
+	var _notFound = __webpack_require__(242);
 
 	var _notFound2 = _interopRequireDefault(_notFound);
 
@@ -97,6 +101,7 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _login2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _signup2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'forgotpassword', component: _forgotPassword2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'resetpassword', component: _resetPassword2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'welcome', component: _welcome2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'logout', component: _logout2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/*', component: _notFound2.default })
@@ -25812,10 +25817,7 @@
 	                }).then(function (data) {
 	                    return data.json();
 	                }).then(function (response) {
-	                    if (response.status === 'ok') {
-	                        _this2.setState({ auth: true });
-	                        //document.cookie = "auth_token= MTQ2MjM3NDQ0NXxEdi1CQkFFQ180SUFBUkFCRUFBQVNQLUNBQUVHYzNSeWFXNW5EQWdBQm5WelpYSnBaQVp6ZEhKcGJtY01LZ0FvWWprMk9HVTNPR1ZpTkRJd1pHTmxOelZrTUdFME5USTRNVFpsWldGa09URTBZVFppWXpBMU5nPT186eRL; expires=Thu, 18 Dec 2017 12:00:00 UTC; path=/";
-	                    } else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
+	                    if (response.status === 'ok') _this2.setState({ auth: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
 	                }).catch(function (e) {
 	                    console.log(e);
 	                });
@@ -25824,9 +25826,7 @@
 	    }, {
 	        key: 'handleKeyPress',
 	        value: function handleKeyPress(event) {
-	            if (event.key === 'Enter') {
-	                this.onSubmitForm();
-	            }
+	            if (event.key === 'Enter') this.onSubmitForm();
 	        }
 	    }, {
 	        key: 'handleEmailChange',
@@ -25862,6 +25862,11 @@
 	                !this.state.auth && _react2.default.createElement(
 	                    'div',
 	                    null,
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Welcome to datajet!'
+	                    ),
 	                    _react2.default.createElement(
 	                        'h4',
 	                        null,
@@ -26710,6 +26715,17 @@
 	            return re.test(email);
 	        }
 	    }, {
+	        key: "getParameterByName",
+	        value: function getParameterByName(name, url) {
+	            if (!url) url = window.location.href;
+	            name = name.replace(/[\[\]]/g, "\\$&");
+	            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+	                results = regex.exec(url);
+	            if (!results) return null;
+	            if (!results[2]) return '';
+	            return decodeURIComponent(results[2].replace(/\+/g, " "));
+	        }
+	    }, {
 	        key: "render",
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -26719,11 +26735,6 @@
 	                _react2.default.createElement(
 	                    "div",
 	                    { className: "box" },
-	                    _react2.default.createElement(
-	                        "h3",
-	                        null,
-	                        "Welcome to datajet!"
-	                    ),
 	                    this.props && _react2.default.cloneElement(this.props.children)
 	                )
 	            );
@@ -26940,7 +26951,7 @@
 /* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(fetch) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -26990,6 +27001,8 @@
 	    _createClass(ForgotPasswordView, [{
 	        key: 'onSubmitForm',
 	        value: function onSubmitForm() {
+	            var _this2 = this;
+
 	            var email = this.state.email;
 
 	            this.setState({ emailWarning: null });
@@ -27000,7 +27013,15 @@
 	                }
 	                _reactDom2.default.findDOMNode(this.refs.email).focus();
 	            } else {
-	                this.setState({ success: true });
+	                fetch('https://auth.datajet.io/reset-password/submit?email=' + email, {
+	                    method: 'POST'
+	                }).then(function (data) {
+	                    return data.json();
+	                }).then(function (response) {
+	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
+	                }).catch(function (e) {
+	                    console.log(e);
+	                });
 	            }
 	        }
 	    }, {
@@ -27090,9 +27111,170 @@
 	}(_App3.default);
 
 	exports.default = ForgotPasswordView;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(233)))
 
 /***/ },
 /* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(fetch) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _App2 = __webpack_require__(236);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	var _reactRouter = __webpack_require__(167);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ResetPasswordView = function (_App) {
+	    _inherits(ResetPasswordView, _App);
+
+	    function ResetPasswordView(props) {
+	        _classCallCheck(this, ResetPasswordView);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ResetPasswordView).call(this, props));
+
+	        _this._bind('handlePasswordChange', 'handleKeyPress', 'onSubmitForm');
+
+	        _this.state = {
+	            password: '',
+	            success: false
+	        };
+	        return _this;
+	    }
+
+	    _createClass(ResetPasswordView, [{
+	        key: 'onSubmitForm',
+	        value: function onSubmitForm() {
+	            var _this2 = this;
+
+	            var password = this.state.password;
+
+	            this.setState({ passwordWarning: null });
+
+	            if (!password.length > 0) {
+	                this.setState({ passwordWarning: 'Please enter a valid password' });
+	                _reactDom2.default.findDOMNode(this.refs.password).focus();
+	            } else {
+
+	                var token = this.getParameterByName('token', window.location);
+
+	                fetch('https://auth.datajet.io/reset-password/complete?token=' + token, {
+	                    method: 'POST',
+	                    body: JSON.stringify({
+	                        password: password
+	                    })
+	                }).then(function (data) {
+	                    return data.json();
+	                }).then(function (response) {
+	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
+	                }).catch(function (e) {
+	                    console.log(e);
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'handleKeyPress',
+	        value: function handleKeyPress(event) {
+	            if (event.key === 'Enter') {
+	                this.onSubmitForm();
+	            }
+	        }
+	    }, {
+	        key: 'handlePasswordChange',
+	        value: function handlePasswordChange(event) {
+	            this.setState({ password: event.target.value });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _reactDom2.default.findDOMNode(this.refs.password).focus();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'h4',
+	                    null,
+	                    'Enter new password to reset'
+	                ),
+	                !this.state.success && _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'input-holder' },
+	                        _react2.default.createElement('input', { className: 'input',
+	                            ref: 'password',
+	                            type: 'password',
+	                            placeholder: 'Enter your password',
+	                            onChange: this.handlePasswordChange,
+	                            onKeyPress: this.handleKeyPress,
+	                            onFocus: this.handlePasswordFocus
+	                        }),
+	                        _react2.default.createElement('span', { className: 'bar' }),
+	                        this.state.passwordWarning && _react2.default.createElement(
+	                            'div',
+	                            { className: 'warning' },
+	                            this.state.passwordWarning
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'input-holder' },
+	                        _react2.default.createElement('input', { type: 'submit', value: 'Change my password', className: 'submit', onClick: this.onSubmitForm })
+	                    )
+	                ),
+	                this.state.success && _react2.default.createElement(
+	                    'div',
+	                    { className: 'success' },
+	                    'Your password is changed successfully'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'nav' },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/login' },
+	                        'Login'
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return ResetPasswordView;
+	}(_App3.default);
+
+	exports.default = ResetPasswordView;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(233)))
+
+/***/ },
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(fetch) {'use strict';
@@ -27149,17 +27331,6 @@
 	    }
 
 	    _createClass(WelcomeView, [{
-	        key: 'getParameterByName',
-	        value: function getParameterByName(name, url) {
-	            if (!url) url = window.location.href;
-	            name = name.replace(/[\[\]]/g, "\\$&");
-	            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-	                results = regex.exec(url);
-	            if (!results) return null;
-	            if (!results[2]) return '';
-	            return decodeURIComponent(results[2].replace(/\+/g, " "));
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -27195,7 +27366,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(233)))
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(fetch) {'use strict';
@@ -27296,7 +27467,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(233)))
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
