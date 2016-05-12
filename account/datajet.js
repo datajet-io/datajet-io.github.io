@@ -25791,10 +25791,28 @@
 	    }
 
 	    _createClass(LoginView, [{
-	        key: 'onSubmitForm',
-	        value: function onSubmitForm() {
+	        key: 'fetchData',
+	        value: function fetchData() {
 	            var _this2 = this;
 
+	            fetch('https://auth.datajet.io/login', {
+	                method: 'POST',
+	                credentials: 'include',
+	                body: JSON.stringify({
+	                    email: this.state.email,
+	                    password: this.state.password
+	                })
+	            }).then(function (data) {
+	                return data.json();
+	            }).then(function (response) {
+	                if (response.status === 'ok') _this2.setState({ auth: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
+	            }).catch(function (e) {
+	                console.log(e);
+	            });
+	        }
+	    }, {
+	        key: 'onSubmitForm',
+	        value: function onSubmitForm() {
 	            var email = this.state.email;
 	            var password = this.state.password;
 
@@ -25807,20 +25825,7 @@
 	                this.setState({ passwordWarning: 'Password should be at least 6 chars' });
 	                _reactDom2.default.findDOMNode(this.refs.password).focus();
 	            } else {
-	                fetch('https://auth.datajet.io/login', {
-	                    method: 'POST',
-	                    credentials: 'include',
-	                    body: JSON.stringify({
-	                        email: email,
-	                        password: password
-	                    })
-	                }).then(function (data) {
-	                    return data.json();
-	                }).then(function (response) {
-	                    if (response.status === 'ok') _this2.setState({ auth: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
-	                }).catch(function (e) {
-	                    console.log(e);
-	                });
+	                this.fetchData();
 	            }
 	        }
 	    }, {
@@ -27190,13 +27195,27 @@
 	    }
 
 	    _createClass(SignupView, [{
-	        key: 'onSubmitForm',
-	        value: function onSubmitForm() {
+	        key: 'fetchData',
+	        value: function fetchData() {
 	            var _this2 = this;
 
-	            var email = this.state.email;
-	            var password = this.state.password;
-
+	            fetch('https://auth.datajet.io/register', {
+	                method: 'POST',
+	                body: JSON.stringify({
+	                    email: this.state.email,
+	                    password: this.state.password
+	                })
+	            }).then(function (data) {
+	                return data.json();
+	            }).then(function (response) {
+	                if (response.status === 'ok') _this2.setState({ auth: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
+	            }).catch(function (e) {
+	                console.log(e);
+	            });
+	        }
+	    }, {
+	        key: 'onSubmitForm',
+	        value: function onSubmitForm() {
 	            this.setState({ emailWarning: null, passwordWarning: null });
 
 	            if (!this.validateEmail(email)) {
@@ -27206,19 +27225,7 @@
 	                this.setState({ passwordWarning: 'Password should be at least 6 chars' });
 	                _reactDom2.default.findDOMNode(this.refs.password).focus();
 	            } else {
-	                fetch('https://auth.datajet.io/register', {
-	                    method: 'POST',
-	                    body: JSON.stringify({
-	                        email: email,
-	                        password: password
-	                    })
-	                }).then(function (data) {
-	                    return data.json();
-	                }).then(function (response) {
-	                    if (response.status === 'ok') _this2.setState({ auth: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
-	                }).catch(function (e) {
-	                    console.log(e);
-	                });
+	                this.fetchData();
 	            }
 	        }
 	    }, {
@@ -27556,10 +27563,27 @@
 	    }
 
 	    _createClass(ResetPasswordView, [{
-	        key: 'onSubmitForm',
-	        value: function onSubmitForm() {
+	        key: 'fetchData',
+	        value: function fetchData() {
 	            var _this2 = this;
 
+	            var token = this.getParameterByName('token', window.location);
+	            fetch('https://auth.datajet.io/reset-password/complete?token=' + token, {
+	                method: 'POST',
+	                body: JSON.stringify({
+	                    password: this.state.password
+	                })
+	            }).then(function (data) {
+	                return data.json();
+	            }).then(function (response) {
+	                if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
+	            }).catch(function (e) {
+	                console.log(e);
+	            });
+	        }
+	    }, {
+	        key: 'onSubmitForm',
+	        value: function onSubmitForm() {
 	            var password = this.state.password;
 
 	            this.setState({ passwordWarning: null });
@@ -27568,21 +27592,7 @@
 	                this.setState({ passwordWarning: 'Please enter a valid password' });
 	                _reactDom2.default.findDOMNode(this.refs.password).focus();
 	            } else {
-
-	                var token = this.getParameterByName('token', window.location);
-
-	                fetch('https://auth.datajet.io/reset-password/complete?token=' + token, {
-	                    method: 'POST',
-	                    body: JSON.stringify({
-	                        password: password
-	                    })
-	                }).then(function (data) {
-	                    return data.json();
-	                }).then(function (response) {
-	                    if (response.status === 'ok') _this2.setState({ success: true });else if (response.status === 'error') _this2.setState({ passwordWarning: response.message });
-	                }).catch(function (e) {
-	                    console.log(e);
-	                });
+	                this.fetchData();
 	            }
 	        }
 	    }, {
@@ -27707,22 +27717,28 @@
 	            auth: false
 	        };
 
-	        var token = _this.getParameterByName('token', window.location);
-
-	        fetch('https://auth.datajet.io/register-confirm?token=' + token, {
-	            method: 'POST',
-	            credentials: 'include'
-	        }).then(function (data) {
-	            return data.json();
-	        }).then(function (response) {
-	            if (response.status === 'ok') _this.setState({ auth: true });else if (response.status === 'error') _this.setState({ auth: false, warning: response.message });
-	        }).catch(function (e) {
-	            console.log(e);
-	        });
+	        _this.fetchData();
 	        return _this;
 	    }
 
 	    _createClass(WelcomeView, [{
+	        key: 'fetchData',
+	        value: function fetchData() {
+	            var _this2 = this;
+
+	            var token = this.getParameterByName('token', window.location);
+	            fetch('https://auth.datajet.io/register-confirm?token=' + token, {
+	                method: 'POST',
+	                credentials: 'include'
+	            }).then(function (data) {
+	                return data.json();
+	            }).then(function (response) {
+	                if (response.status === 'ok') _this2.setState({ auth: true });else if (response.status === 'error') _this2.setState({ auth: false, warning: response.message });
+	            }).catch(function (e) {
+	                console.log(e);
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -27812,23 +27828,29 @@
 	            auth: false
 	        };
 
-	        fetch('https://auth.datajet.io/logout', {
-	            method: 'POST',
-	            credentials: 'include'
-	        }).then(function (data) {
-	            return data.json();
-	        }).then(function (response) {
-	            if (response.status === 'ok') {
-	                _this.setState({ auth: true });
-	                //ReactCookie.remove('auth_token');
-	            } else if (response.status === 'error') _this.setState({ auth: false });
-	        }).catch(function (e) {
-	            console.log(e);
-	        });
+	        _this.fetchData();
 	        return _this;
 	    }
 
 	    _createClass(LogoutView, [{
+	        key: 'fetchData',
+	        value: function fetchData() {
+	            var _this2 = this;
+
+	            fetch('https://auth.datajet.io/logout', {
+	                method: 'POST',
+	                credentials: 'include'
+	            }).then(function (data) {
+	                return data.json();
+	            }).then(function (response) {
+	                if (response.status === 'ok') {
+	                    _this2.setState({ auth: true });
+	                } else if (response.status === 'error') _this2.setState({ auth: false });
+	            }).catch(function (e) {
+	                console.log(e);
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
