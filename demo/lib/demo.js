@@ -50,6 +50,12 @@ dataJetDemo = {
             imgUrl: '//static.zalora.net',
             region: 'apse',
             currency: 'RP'
+        },
+        xOniZZ: {
+            name: 'Namshi',
+            feedKey: 'xOniZZ6EIiyjNsL0tASVC1MSVPRknQe',
+            region: 'euw',
+            currency: 'AED'
         }
     },
 
