@@ -27,7 +27,7 @@ dataJetDemo = {
             name: 'Linio',
             feedKey: 'pYJDcBMdGR4tUM1OADt42LGvFSj7U5U',
             imgUrl: '//media.linio.com.mx',
-            region: 'usw',
+            region: 'use',
             currency: '$'
         },
         jYNzew: {
