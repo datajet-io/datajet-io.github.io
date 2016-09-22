@@ -19,7 +19,7 @@ dataJetDemo = {
         searchUrl: 'https://hawk.REGION.datajet.io/1.0/product/',
         rankerUrl: 'https://ranker.datajet.io/0.1/score',
         suggesterImgUrl: 'http://seer.REGION.datajet.io/i',
-        dateRange: '7'
+        from: 'now-7d'
     },
 
     customer: {
@@ -296,7 +296,7 @@ dataJetDemo = {
 
             var url = that.buildUrl(that.settings.bestSellersUrl.replace('REGION', that.customer[that.getCustomer()].region), {
                 size: 6,
-                days: that.settings.dateRange,
+                from: that.settings.from,
                 category: title,
                 key: that.customer[that.getCustomer()].feedKey
             });
@@ -598,7 +598,7 @@ dataJetDemo = {
 
         var url = this.buildUrl(this.settings.recentlyViewedUrl.replace('REGION', this.customer[this.getCustomer()].region), {
             size: 15,
-            days: this.settings.dateRange,
+            from: this.settings.from,
             key: this.customer[this.getCustomer()].feedKey,
             uuid: this.getUserCookie()
         });
@@ -618,7 +618,7 @@ dataJetDemo = {
 
     showPopularInCategory: function() {
         var url = this.buildUrl(this.settings.popularInCategoryUrl.replace('REGION', this.customer[this.getCustomer()].region), {
-            days: this.settings.dateRange,
+            from: this.settings.from,
             key: this.customer[this.getCustomer()].feedKey,
             uuid: this.getUserCookie()
         });
@@ -639,7 +639,7 @@ dataJetDemo = {
 
     showYouMightLikeFeed: function() {
         var url = this.buildUrl(this.settings.youMightLikeThisUrl.replace('REGION', this.customer[this.getCustomer()].region), {
-            days: this.settings.dateRange,
+            from: this.settings.from,
             key: this.customer[this.getCustomer()].feedKey,
             uuid: this.getUserCookie()
         });
@@ -680,7 +680,7 @@ dataJetDemo = {
     showTrendingProductsFeed: function() {
         var url = this.buildUrl(this.settings.trendingProductsUrl.replace('REGION', this.customer[this.getCustomer()].region), {
             size: 15,
-            days: this.settings.dateRange,
+            from: this.settings.from,
             key: this.customer[this.getCustomer()].feedKey
         });
 
@@ -701,7 +701,7 @@ dataJetDemo = {
     showPopularCategories: function() {
         var url = this.buildUrl(this.settings.popularCategoriesUrl.replace('REGION', this.customer[this.getCustomer()].region), {
             size: 6,
-            days: this.settings.dateRange,
+            from: this.settings.from,
             key: this.customer[this.getCustomer()].feedKey
         });
 
