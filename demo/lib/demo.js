@@ -56,6 +56,12 @@ dataJetDemo = {
             feedKey: 'xOniZZ6EIiyjNsL0tASVC1MSVPRknQe',
             region: 'euw',
             currency: 'AED'
+        },
+        vcWHfS: {
+            name: 'Iconic',
+            feedKey: 'vcWHfS2aVTiuhr4QnoBBpYmNh1sjaSe',
+            region: 'apse',
+            currency: 'AUD'
         }
     },
 
