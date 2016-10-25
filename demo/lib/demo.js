@@ -235,6 +235,8 @@ dataJetDemo = {
             window.suggester = Datajet.sae(this.customer[this.getCustomer()].feedKey);
         } else if (region == 'euw') {
             window.suggester = Datajet.euw(this.customer[this.getCustomer()].feedKey);
+        } else if (region == 'apse') {
+            window.suggester = Datajet.apse(this.customer[this.getCustomer()].feedKey);
         }
 
         window.suggesterImgUrl = this.settings.suggesterImgUrl.replace('REGION', region);
