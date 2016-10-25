@@ -729,7 +729,7 @@ dataJetDemo = {
                     items +=
                         '<div class="col-md-4">' +
                         '<a id="' + data.items[i].title.replace(/\s+/g, '-') + '" href="#" class="product-link" data-toggle="modal" data-target="#modal-category">' +
-                        '<div class="category" style="background-image: url(' + data.items[i].images[0] + ')">' +
+                        '<div class="category" style="background-image: url(\'' + data.items[i].images[0] + '\')">' +
                         '<div class="product-title" data-val="' + data.items[i].title + '">' + that.ucwords(data.items[i].title) + '</div>' +
                         '</div></a></div>';
                 });
