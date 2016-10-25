@@ -62,6 +62,12 @@ dataJetDemo = {
             feedKey: 'vcWHfS2aVTiuhr4QnoBBpYmNh1sjaSe',
             region: 'apse',
             currency: 'AUD'
+        },
+        honmyK: {
+            name: 'Stylelounge',
+            feedKey: 'honmyK0WLDHFuBqT8tfe8EIDEbbbbT5',
+            region: 'euw',
+            currency: '€'
         }
     },
 
