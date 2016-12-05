@@ -174,7 +174,8 @@ dataJetDemo = {
     },
 
     getUserCookie: function() {
-        return this.getCookie('DJUCID');
+      return 'assd';
+        //return this.getCookie('DJUCID');
     },
 
     getProductTemplate: function(data, limit, isSearch) {
@@ -644,7 +645,7 @@ dataJetDemo = {
                 var items = that.getProductTemplate(data, 5);
 
                 $('.popular-category').removeClass('hidden');
-                $('.popular-category-title').text(that.ucwords(data.items[0].categories[0][1].name));
+                $('.popular-category-title').text(that.ucwords(data.items[0].categories[0][0].name));
                 $('#popular-category-carousel > .carousel-inner').append(items);
                 $('#popular-category-carousel').carousel({interval: false});
             }
