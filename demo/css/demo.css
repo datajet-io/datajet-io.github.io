@@ -431,7 +431,7 @@ h3 {
 }
 
 .logo img {
-    width: 150px;
+    width: 300px;
     margin-top: 5px;
 }
 
@@ -648,6 +648,10 @@ h3 {
 
 .filter-category li li{
     margin-left: 15px;
+}
+
+.product-image {
+  min-height: 270px;
 }
 
 .eNU8ds .product-image {
