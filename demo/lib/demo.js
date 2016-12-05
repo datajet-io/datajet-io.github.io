@@ -174,8 +174,7 @@ dataJetDemo = {
     },
 
     getUserCookie: function() {
-      return 'assd';
-        //return this.getCookie('DJUCID');
+      return this.getCookie('DJUCID');
     },
 
     getProductTemplate: function(data, limit, isSearch) {
