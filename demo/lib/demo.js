@@ -16,7 +16,7 @@ dataJetDemo = {
         popularInCategoryUrl: 'http://feed.REGION.datajet.io/1.1/popularincategory',
         youMightLikeThisUrl: 'http://feed.REGION.datajet.io/1.1/youmightlike',
         specialDealsUrl: 'http://feed.REGION.datajet.io/1.1/specialdeals',
-        searchUrl: 'https://hawk.REGION.datajet.io/1.0/product/',
+        searchUrl: 'https://hawk.REGION.datajet.io/2.0/product/',
         rankerUrl: 'https://ranker.datajet.io/0.1/score',
         suggesterImgUrl: 'http://seer.REGION.datajet.io/i',
         dateRange: 'now-1w'
