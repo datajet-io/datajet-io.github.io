@@ -224,10 +224,18 @@ dataJetDemo = {
             if (data.items[i].url)
                 items += '</a>';
 
+            categories = [];
+            if (data.items[i].categories.length > 0) {
+                data.items[i].categories[0].map(function(category){
+                    categories.push(category.name);
+                });
+            }
+
             items += '<a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal">more like this</a>';
             items += '<br><a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal-nextbuy">next buy</a>';
             items += '<div class="product-brand hide">' + data.items[i].brand.name + '</div>';
             items += '<div class="product-group-id hide">' + data.items[i].group_id + '</div>';
+            items += '<div class="product-category">' + categories.join(' > ') + '</div>';
             items += '</div>';
         });
 
@@ -329,7 +337,9 @@ dataJetDemo = {
 
                     var items = '<img class="modal-image" src="'+ $('#' + id).parent().find('.product-image > img').attr('src') +'" title="'+ $('#' + id).parent().find('.product-title').text() +'" />';
 
-                    items += '<div class="modal-text"><div class="modal-brand">' + $('#' + id).parent().find('.product-brand').text() + '</div>' + title + '</div><div style="clear: both"></div>';
+                    items += '<div class="modal-text"><div class="modal-brand">' + $('#' + id).parent().find('.product-brand').text() + '</div>' + title;
+                    items += '<div class="modal-brand">' + $('#' + id).parent().find('.product-category').text() + '</div>' + '</div>';
+                    items += '<div style="clear: both"></div>';
                     items += '<hr /><h4>Next Purchase</h4>';
 
                     items += that.getProductTemplate(data);
