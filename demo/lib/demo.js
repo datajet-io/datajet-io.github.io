@@ -224,8 +224,8 @@ dataJetDemo = {
             if (data.items[i].url)
                 items += '</a>';
 
-            items += '<div><a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal">more like this</a></div>';
-            items += '<div><a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal-nextbuy">next buy</a></div>';
+            items += '<a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal">more like this</a>';
+            items += '<br><a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal-nextbuy">next buy</a>';
             items += '<div class="product-brand hide">' + data.items[i].brand.name + '</div>';
             items += '<div class="product-group-id hide">' + data.items[i].group_id + '</div>';
             items += '</div>';
