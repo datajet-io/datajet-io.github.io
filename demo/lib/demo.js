@@ -10,6 +10,7 @@ dataJetDemo = {
     settings: {
         recentlyViewedUrl: 'http://feed.REGION.datajet.io/1.1/recentlyviewed',
         moreLikeThisUrl: 'http://feed.REGION.datajet.io/1.1/morelikethis',
+        nextbuyUrl: 'http://feed.REGION.datajet.io/1.1/nextbuy',
         bestSellersUrl: 'http://feed.REGION.datajet.io/1.1/bestsellers',
         trendingProductsUrl: 'http://feed.REGION.datajet.io/1.1/trendingproducts',
         popularCategoriesUrl: 'http://feed.REGION.datajet.io/1.1/popularcategories',
@@ -50,6 +51,13 @@ dataJetDemo = {
             imgUrl: '//static.zalora.net',
             region: 'apse',
             currency: 'RP'
+        },
+        yzW12g: {
+            name: 'Zalora SG',
+            feedKey: 'yzW12gk2wZDvax25BtVHgBgPPOBb8Lx',
+            imgUrl: '//static.zalora.net',
+            region: 'apse',
+            currency: 'SGD'
         },
         xOniZZ: {
             name: 'Namshi',
@@ -216,7 +224,8 @@ dataJetDemo = {
             if (data.items[i].url)
                 items += '</a>';
 
-            items += '<a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal">more like this</a>';
+            items += '<div><a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal">more like this</a></div>';
+            items += '<div><a id="' + data.items[i].id.replace('mx:','') + '" href="#" data-toggle="modal" data-target="#modal-nextbuy">next buy</a></div>';
             items += '<div class="product-brand hide">' + data.items[i].brand.name + '</div>';
             items += '<div class="product-group-id hide">' + data.items[i].group_id + '</div>';
             items += '</div>';
@@ -304,6 +313,34 @@ dataJetDemo = {
             });
         });
 
+        $('#modal-nextbuy').on('shown.bs.modal', function (e) {
+            var id = $(e.relatedTarget)[0].id;
+            var title = $('#' + id).parent().find('.product-title').text();
+
+            $('#modal-nextbuy .modal-title').text(title);
+
+            var url = that.buildUrl(that.settings.nextbuyUrl.replace('REGION', that.customer[that.getCustomer()].region), {
+                sku: id.replace('mx--', ''),
+                key: that.customer[that.getCustomer()].feedKey
+            });
+
+            $.get(url, function(data) {
+                if (data && data.items) {
+
+                    var items = '<img class="modal-image" src="'+ $('#' + id).parent().find('.product-image > img').attr('src') +'" title="'+ $('#' + id).parent().find('.product-title').text() +'" />';
+
+                    items += '<div class="modal-text"><div class="modal-brand">' + $('#' + id).parent().find('.product-brand').text() + '</div>' + title + '</div><div style="clear: both"></div>';
+                    items += '<hr /><h4>Next Purchase</h4>';
+
+                    items += that.getProductTemplate(data);
+
+                    $('#modal-nextbuy .modal-body').html(items, 3);
+                } else {
+                    $('#modal-nextbuy .modal-body').html('Sorry, we couldnt find any similar items');
+                }
+            });
+        });
+
         $('#modal-category').on('shown.bs.modal', function (e) {
             var id = $(e.relatedTarget)[0].id;
             var title = $('#' + id).find('.product-title').attr('data-val');
@@ -326,7 +363,7 @@ dataJetDemo = {
             });
         });
 
-        $('#modal, #modal-category').on('hidden.bs.modal', function () {
+        $('#modal, #modal-category, #modal-nextbuy').on('hidden.bs.modal', function () {
             var el = $(this);
             el.find('.modal-title').text('');
             el.find('.modal-body').text('')
