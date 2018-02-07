@@ -81,7 +81,7 @@ theme = "hugo-elate-theme"
       alt = "Isabelle Bénard"
     [[params.testimonials.item]]
       quote = "&ldquo;As a Latam's market leader in fashion e-commerce, Dafiti have the challenge to find the most relevant and personalized item for the customers. Datajet has been a valuable partner in providing us a fast and reliable search."
-      person = 'Roosevelt Nascimento Junior <span class="subtext">Chief Product Office</span> <a href="http://www.dafiti.com/" target="_blank">DAFITI</a> '
+      person = 'Roosevelt Nascimento Junior <span class="subtext">Chief Product Officer</span> <a href="http://www.dafiti.com/" target="_blank">DAFITI</a> '
       img = "roosevelt_nascimento_junior.jpg"
       alt = "Roosevelt Nascimento Junior"
   # Services section
